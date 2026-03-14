@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Tools School - Sekertaris</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#2a5298,#0f2027);color:white;min-height:100vh;}
+header{text-align:center;padding:25px;font-size:30px;font-weight:700;}
+.container{max-width:1000px;margin:auto;padding:20px;}
+.hero{text-align:center;background:rgba(255,255,255,.12);padding:30px;border-radius:20px;margin-bottom:25px;box-shadow:0 15px 35px rgba(0,0,0,.35);}
+.hero h1{color:#ffd369;}
+input,select{width:100%;padding:12px;margin:8px 0;border-radius:12px;border:none;}
+button{background:#f3c969;color:#1f2d3d;border:none;padding:14px;margin:1px 0;width:100%;border-radius:18px;font-weight:bold;font-size:13px;cursor:pointer;transition:0.25s ease;}
+button:hover{background:#e6b85c;transform:scale(1.02);}
+button:active{transform:scale(0.97);}
+.card{display:none;background:rgba(255,255,255,.15);padding:25px;border-radius:20px;margin-bottom:20px;}
+.card.active-card{display:block !important;}
+.result{text-align:center;margin-top:10px;font-size:18px;color:#ffeb99;}
+.footer-wrapper{text-align:center;padding:15px 0;margin-top:25px;opacity:0.7;font-size:14px;}
+.badge{display:inline-flex;align-items:center;justify-content:center;background:#fbbf24;color:#111;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-top:18px;box-shadow:0 6px 15px rgba(0,0,0,.25);}
+.mode-btn{width:100%;max-width:350px;padding:14px;margin:20px auto;display:block;background:#eec36d;color:#000000;border:none;border-radius:20px;font-size:13px;font-weight:bold;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.15);}
+.mode-btn:active{transform:scale(0.97);}
+body.light{background:radial-gradient(circle at top,#f0f0f0,#dcdcdc);color:#111;}
+body.dark{background:radial-gradient(circle at top,#2a5298,#0f2027);color:#fff;}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
+.table-wrapper{
+  width: 100%;
+  overflow-x: auto;  
+}
+
+table{
+  border-collapse: collapse;
+  min-width: 800px; 
+}
+
+button {
+  background: #f3c969;
+  color: #1f2d3d;
+  border: none;
+  padding: 14px;
+  margin: -5px 0;
+  width: 100%;
+  border-radius: 18px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+button:hover {
+  background: #e6b85c;
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+.card button {
+  margin: 10px 0;
+}
+
+.menu-btn {
+  width: 100%;
+  max-width: 350px;
+  padding: 14px;
+  margin: 12px auto; 
+  display: block;
+  background: #ffffff;
+  color: #1f3c88;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+  transform: translateY(-2px);
+}
+
+.menu-btn:active {
+  transform: scale(0.97);
+}
+</style>
+</head>
+<body class="dark">
+
+<header>Star Tools Sekertaris</header>
+<div class="container">
+
+<div class="hero">
+<h1>Selamat Datang Sekertaris!</h1>
+<div class="badge">v1.3</div>
+</div>
+
+<div style="text-align:center; margin-bottom:15px; width:180px; margin:auto;">
+  <button id="modeToggle" class="mode-btn">Gelap/Terang</button>
+</div>
+
+<!-- Menu Sekertaris -->
+<div class="menu">
+  <button onclick="showCard('setupBox')">Absensi</button>
+  <button onclick="logoutSekertaris()">Logout</button>
+</div>
+
+<!-- ABSENSI -->
+<div class="card" id="setupBox">
+  <h2>Setup Absensi</h2>
+  <input type="text" id="namaKelas" placeholder="Nama Kelas">
+  <input type="password" id="pwKelas" placeholder="Buat Password">
+  <button onclick="simpanPassword()">Simpan Password</button>
+
+  <div id="loginBox" style="margin-top:20px;">
+    <h3>Login Kelas</h3>
+    <input type="password" id="loginPw" placeholder="Masukkan Password">
+    <button onclick="loginKelas()">Masuk</button>
+  </div>
+
+  <div id="absenBox" style="display:none;">
+    <h3>Tambah Murid Baru</h3>
+    <input type="text" id="namaMuridBaru" placeholder="Nama Murid">
+    <button onclick="tambahMurid()">Tambah Murid</button>
+
+    <h3>Pilih Bulan</h3>
+    <select id="bulanSelect" onchange="loadTabel()">
+      <option value="Januari">Januari</option>
+      <option value="Februari">Februari</option>
+      <option value="Maret">Maret</option>
+      <option value="April">April</option>
+      <option value="Mei">Mei</option>
+      <option value="Juni">Juni</option>
+      <option value="Juli">Juli</option>
+      <option value="Agustus">Agustus</option>
+      <option value="September">September</option>
+      <option value="Oktober">Oktober</option>
+      <option value="November">November</option>
+      <option value="Desember">Desember</option>
+    </select>
+
+<div class="table-wrapper">
+  <table>
+    <h3>Tabel Absensi</h3>
+    <div id="tabelAbsen"></div>
+  </table>
+</div>
+
+    <h3>Tidak Masuk Hari Ini</h3>
+    <div id="tidakMasuk">Semua hadir hari ini!</div>
+
+<div class="table-wrapper">
+    <table>
+      <h3>Rekap Bulanan</h3>
+    <div id="rekapBulanan">Pilih bulan untuk melihat rekap</div>
+    </table>
+</div>
+
+    <h3>Isi Absen Harian</h3>
+    <select id="namaSiswaAbsenForm"></select>
+    <select id="statusAbsenForm">
+      <option value="Hadir">Hadir</option>
+      <option value="Izin">Izin</option>
+      <option value="Sakit">Sakit</option>
+      <option value="Alpa">Alpa</option>
+    </select>
+    <button onclick="tambahAbsen()">Simpan Absen</button>
+    <button onclick="hadirSemua()">Hadir Semua</button>
+    <button onclick="resetBulanBaru()">Reset Bulan Ini</button>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrapper">
+  <div class="sponsor">Created By Star Prosperous</div>
+  <div style="text-align:center; margin-top:15px;">
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+
+// Mode Gelap/Terang
+document.getElementById('modeToggle').addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  document.body.classList.toggle('light');
+});
+
+// Show card
+function showCard(id){
+  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyA7foZX8BpYVX6JC1rOpTRiKOuCpmL8BPc",
+  authDomain: "absensi-bintang-586a1.firebaseapp.com",
+  databaseURL: "https://absensi-bintang-586a1-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "absensi-bintang-586a1",
+  storageBucket: "absensi-bintang-586a1.appspot.com",
+  messagingSenderId: "805938764052",
+  appId: "1:805938764052:web:a59bf3afc8176308ea8a01",
+  measurementId: "G-NQ8DFVNBN1"
+};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+let kelasAktif="";
+
+// Auto login
+window.addEventListener("load",()=>{
+  const kelasStored=localStorage.getItem("kelasAktif");
+  const pwStored=localStorage.getItem("pwAktif");
+  if(kelasStored&&pwStored){
+    kelasAktif=kelasStored;
+    document.getElementById("setupBox").style.display="none";
+    document.getElementById("absenBox").style.display="block";
+    loadTabel();
+  }
+});
+
+// Setup kelas
+function simpanPassword(){
+  const kelas=document.getElementById("namaKelas").value;
+  const pw=document.getElementById("pwKelas").value;
+  if(!kelas||!pw) return alert("Isi dulu kelas & password!");
+  db.ref("kelas/"+kelas).set({password:pw}).then(()=>{
+    alert("Password kelas berhasil dibuat!");
+    kelasAktif=kelas;
+    document.getElementById("loginBox").style.display="block";
+    document.getElementById("setupBox").style.display="none";
+  });
+}
+
+// Login kelas
+function loginKelas(){
+  const pwInput=document.getElementById("loginPw").value;
+  db.ref("kelas").once("value",snap=>{
+    let berhasil=false;
+    snap.forEach(child=>{
+      if(child.val().password===pwInput){
+        kelasAktif=child.key;
+        document.getElementById("loginBox").style.display="none";
+        document.getElementById("absenBox").style.display="block";
+        localStorage.setItem("kelasAktif",kelasAktif);
+        localStorage.setItem("pwAktif",pwInput);
+        berhasil=true;
+        loadTabel();
+      }
+    });
+    if(!berhasil) alert("Password salah!");
+  });
+}
+
+// Tambah murid
+function tambahMurid(){
+  const nama=document.getElementById("namaMuridBaru").value;
+  if(!nama) return alert("Isi nama dulu!");
+  db.ref(`kelas/${kelasAktif}/siswa/${nama}`).set({nama:nama}).then(()=>{
+    document.getElementById("namaMuridBaru").value="";
+    loadTabel();
+  });
+}
+
+// Tambah absen
+function tambahAbsen(){
+  const nama=document.getElementById("namaSiswaAbsenForm").value;
+  const status=document.getElementById("statusAbsenForm").value;
+  const bulan=document.getElementById("bulanSelect").value;
+  const tanggal=new Date().getDate();
+  if(!nama) return alert("Pilih murid dulu!");
+  db.ref(`kelas/${kelasAktif}/siswa/${nama}/absen/${bulan}/${tanggal}`).set({status:status})
+  .then(()=>updateRekapBulanan().then(()=>{loadTabel(); updateTidakMasuk(); loadRekapBulanan();}));
+}
+
+function updateTidakMasuk(){
+  const bulan=document.getElementById("bulanSelect").value;
+  const tanggal=new Date().getDate();
+  let arr=[];
+  db.ref(`kelas/${kelasAktif}/siswa`).once("value",snap=>{
+    let total=snap.numChildren(),done=0;
+    snap.forEach(child=>{
+      const nama=child.key;
+      db.ref(`kelas/${kelasAktif}/siswa/${nama}/absen/${bulan}/${tanggal}`).once("value",snapAbsen=>{
+        const status=snapAbsen.val()?snapAbsen.val().status:"Hadir";
+        if(status!=="Hadir") arr.push(`${nama} - ${status}`);
+        done++;
+        if(done===total) document.getElementById("tidakMasuk").innerHTML=arr.length?arr.join("<br>"):"Semua hadir hari ini!";
+      });
+    });
+  });
+}
+
+function loadTabel(){
+  const bulan=document.getElementById("bulanSelect").value;
+  db.ref(`kelas/${kelasAktif}/siswa`).once("value",snap=>{
+    let tabel="<table border='1' style='border-collapse: collapse; width:100%;'><tr><th>No</th><th>Nama</th>";
+    for(let i=1;i<=31;i++) tabel+=`<th>${i}</th>`;
+    tabel+="</tr>";
+    let no=1,options="";
+    snap.forEach(child=>{
+      const nama=child.key;
+      options+=`<option value="${nama}">${nama}</option>`;
+      tabel+=`<tr><td>${no}</td><td>${nama}</td>`;
+      for(let t=1;t<=31;t++) tabel+=`<td id="${nama}-${t}"></td>`;
+      tabel+="</tr>";
+      no++;
+    });
+    document.getElementById("tabelAbsen").innerHTML=tabel;
+    document.getElementById("namaSiswaAbsenForm").innerHTML=options;
+    snap.forEach(child=>{
+      const nama=child.key;
+      db.ref(`kelas/${kelasAktif}/siswa/${nama}/absen/${bulan}`).once("value",snapAbsen=>{
+        snapAbsen.forEach(a=>{
+          const td=document.getElementById(`${nama}-${a.key}`);
+          if(td) td.innerText=a.val().status;
+        });
+      });
+    });
+  });
+}
+
+function updateRekapBulanan(){
+  const bulan=document.getElementById("bulanSelect").value;
+  return db.ref(`kelas/${kelasAktif}/siswa`).once("value").then(snap=>{
+    const promises=[];
+    snap.forEach(child=>{
+      const nama=child.key;
+      const p=db.ref(`kelas/${kelasAktif}/siswa/${nama}/absen/${bulan}`).once("value")
+        .then(absenSnap=>{
+          let hitung={Hadir:0,Izin:0,Sakit:0,Alpa:0};
+          absenSnap.forEach(t=>{if(hitung[t.val().status]!==undefined) hitung[t.val().status]++;});
+          return db.ref(`kelas/${kelasAktif}/rekapBulanan/${bulan}/${nama}`).set(hitung);
+        });
+      promises.push(p);
+    });
+    return Promise.all(promises);
+  });
+}
+
+function loadRekapBulanan(){
+  const bulan=document.getElementById("bulanSelect").value;
+  db.ref(`kelas/${kelasAktif}/rekapBulanan/${bulan}`).once("value").then(snap=>{
+    let html="<table border='1' style='border-collapse: collapse; width:100%;'><tr><th>Nama</th><th>Hadir</th><th>Izin</th><th>Sakit</th><th>Alpa</th></tr>";
+    snap.forEach(child=>{
+      const data=child.val();
+      html+=`<tr>
+        <td>${child.key}</td>
+        <td>${data.Hadir||0}</td>
+        <td>${data.Izin||0}</td>
+        <td>${data.Sakit||0}</td>
+        <td>${data.Alpa||0}</td>
+      </tr>`;
+    });
+    html+="</table>";
+    document.getElementById("rekapBulanan").innerHTML=html;
+  });
+}
+
+// Hadir semua
+function hadirSemua(){
+  const bulan=document.getElementById("bulanSelect").value;
+  const tanggal=new Date().getDate();
+  db.ref(`kelas/${kelasAktif}/siswa`).once("value",snap=>{
+    snap.forEach(child=>{
+      db.ref(`kelas/${kelasAktif}/siswa/${child.key}/absen/${bulan}/${tanggal}`).set({status:"Hadir"});
+    });
+    loadTabel();
+    updateTidakMasuk();
+    updateRekapBulanan().then(()=>loadRekapBulanan());
+  });
+}
+
+// Reset bulan
+function resetBulanBaru(){
+  const bulan=document.getElementById("bulanSelect").value;
+  if(confirm(`Yakin reset semua absen bulan ${bulan}?`)){
+    db.ref(`kelas/${kelasAktif}/rekapBulanan/${bulan}`).remove();
+    db.ref(`kelas/${kelasAktif}/siswa`).once("value",snap=>{
+      snap.forEach(child=>{
+        db.ref(`kelas/${kelasAktif}/siswa/${child.key}/absen/${bulan}`).remove();
+      });
+      loadTabel();
+      updateTidakMasuk();
+      document.getElementById("rekapBulanan").innerHTML="Data bulan di-reset!";
+    });
+  }
+}
+
+// Logout Sekertaris 
+function logoutSekertaris() {
+  localStorage.removeItem("profil");       // Hapus profil
+  localStorage.removeItem("kelasAktif");   // Hapus kelas aktif
+  localStorage.removeItem("pwAktif");      // Hapus password aktif
+  window.location.href = "index.html";     // Redirect ke index
+}
+</script>
+
+</body>
+</html>
+
