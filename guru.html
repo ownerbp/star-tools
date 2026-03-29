@@ -466,8 +466,24 @@ window.addEventListener("load",()=>{
 function simpanPassword(){  
   const k = document.getElementById("namaKelas").value;  
   const p = document.getElementById("pwKelas").value;  
-  if(!k || !p) return alert("Lengkapi data!");  
-  db.ref("kelas/"+k).set({password:p}).then(() => { alert("Kelas Terdaftar!"); location.reload(); });
+
+  if(!k || !p){
+    alert("Lengkapi data!");
+    return;
+  }
+
+   db.ref("kelas/" + k).set({
+  password: p
+})
+
+  .then(() => { 
+    alert("Kelas Terdaftar!"); 
+    location.reload(); 
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Gagal menyimpan!");
+  });
 }
 
 function loginKelas(){  
@@ -529,13 +545,29 @@ function loadTabel(){
   });  
 }
 
+
 function tambahAbsen(){  
   const n = document.getElementById("namaSiswaAbsenForm").value;  
-  const s = document.getElementById("statusAbsenForm").value.replace(/[^a-zA-Z]/g, "");  
+  const s = document.getElementById("statusAbsenForm").value.trim();  
   const b = document.getElementById("bulanSelect").value;  
   const t = new Date().getDate();  
-  db.ref(`kelas/${kelasAktif}/siswa/${n}/absen/${b}/${t}`).set({status:s}).then(() => {
-    updateRekapBulanan().then(() => loadTabel());
+
+  if(!n){
+    alert("Pilih murid dulu!");
+    return;
+  }
+
+  // ✅ VALIDASI DI SINI
+  const allowed = ["Hadir","Izin","Sakit","Alpa"];
+  if(!allowed.includes(s)){
+    alert("Status tidak valid!");
+    return;
+  }
+
+  db.ref(`kelas/${kelasAktif}/siswa/${n}/absen/${b}/${t}`).set({status:s})
+  .then(()=>{
+    console.log("ABSEN MASUK:", n, b, t, s); // debug
+    updateRekapBulanan().then(()=>loadTabel());
   });
 }
 
