@@ -4,189 +4,297 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Star Tools School - Bendahara</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#2a5298,#0f2027);color:white;min-height:100vh;}
-header{text-align:center;padding:25px;font-size:30px;font-weight:700;}
-.container{max-width:1000px;margin:auto;padding:20px;}
-.hero{text-align:center;background:rgba(255,255,255,.12);padding:30px;border-radius:20px;margin-bottom:25px;box-shadow:0 15px 35px rgba(0,0,0,.35);}
-.hero h1{color:#ffd369;}
-input,select{width:100%;padding:12px;margin:8px 0;border-radius:12px;border:none;}
-button{background:#f3c969;color:#1f2d3d;border:none;padding:14px;margin:1px 0;width:100%;border-radius:18px;font-weight:bold;font-size:13px;cursor:pointer;transition:0.25s ease;}
-button:hover{background:#e6b85c;transform:scale(1.02);}
-button:active{transform:scale(0.97);}
-table{width:100%;border-collapse:collapse;margin-top:15px;}
-th,td{border:1px solid #fff;padding:8px;text-align:center;}
-td[contenteditable]{background:rgba(255,255,255,0.1);}
-.card{display:none;background:rgba(255,255,255,.15);padding:25px;border-radius:20px;margin-bottom:20px;}
-.card.active-card{display:block !important;}
-.result{text-align:center;margin-top:10px;font-size:18px;color:#ffeb99;}
-.footer-wrapper{text-align:center;padding:15px 0;margin-top:25px;opacity:0.7;font-size:14px;}
-.badge{display:inline-flex;align-items:center;justify-content:center;background:#fbbf24;color:#111;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-top:18px;box-shadow:0 6px 15px rgba(0,0,0,.25);}
-.mode-btn{width:100%;max-width:350px;padding:14px;margin:20px auto;display:block;background:#eec36d;color:#000000;border:none;border-radius:20px;font-size:13px;font-weight:bold;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.15);}
-.mode-btn:active{transform:scale(0.97);}
-body.light{background:radial-gradient(circle at top,#f0f0f0,#dcdcdc);color:#111;}
-body.dark{background:radial-gradient(circle at top,#2a5298,#0f2027);color:#fff;}
-.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
-.table-wrapper{
-  width: 100%;
-  overflow-x: auto;  
+    :root {
+      --primary: #ffd369;
+      --secondary: #2a5298;
+      --accent: #f3c969;
+      --dark-bg: #0f172a;
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-glow: 0 0 10px rgba(255, 211, 105, 0.4);
+    }
+
+    * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: #e2e8f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --dark-bg: #f1f5f9;
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-border: rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 50%);
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #fff, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(var(--text-glow));
+    }
+
+    .container { max-width: 1100px; margin: auto; padding: 0 20px 50px; }
+
+    .hero {
+      text-align: center;
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      padding: 35px;
+      border-radius: 30px;
+      border: 1px solid var(--glass-border);
+      margin-bottom: 25px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    .hero h1 { margin: 0; font-size: 26px; font-weight: 600; }
+    
+    .badge {
+      background: var(--primary);
+      color: #000;
+      padding: 4px 15px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-block;
+      margin-top: 12px;
+    }
+
+    /* Menu Grid */
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .menu button {
+      background: var(--glass);
+      color: white;
+      border: 1px solid var(--glass-border);
+      padding: 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    body.light .menu button { color: #1e3c72; border-color: #cbd5e1; }
+
+    .menu button:hover {
+      background: var(--primary);
+      color: #000;
+      transform: translateY(-3px);
+    }
+
+    /* Cards */
+    .card {
+      display: none;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 30px;
+      border-radius: 25px;
+      border: 1px solid var(--glass-border);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    h2, h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; font-size: 20px; }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.05);
+      color: inherit;
+      font-family: inherit;
+    }
+
+    body.light input, body.light select { background: white; border: 1px solid #ddd; }
+
+    .action-btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 15px;
+      border-radius: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .action-btn:hover { background: #e6b85c; transform: scale(1.01); }
+
+    /* Tables */
+    .table-wrapper {
+      margin: 20px 0;
+      border-radius: 18px;
+      overflow-x: auto;
+      border: 1px solid var(--glass-border);
+      background: rgba(0,0,0,0.2);
+    }
+
+    table { width: 100%; border-collapse: collapse; min-width: 700px; }
+    th { background: rgba(255,211,105,0.15); padding: 15px; text-align: left; font-size: 13px; color: var(--primary); }
+    td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 13px; }
+    
+    td[contenteditable="true"] {
+      background: rgba(255,255,255,0.03);
+      font-family: 'JetBrains Mono', monospace;
+      outline: 1px solid transparent;
+    }
+    
+    td[contenteditable="true"]:focus {
+      background: rgba(255,211,105,0.1);
+      outline: 1px solid var(--primary);
+    }
+
+    .btn-delete {
+      background: #ff7675;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+
+/* Footer */
+.footer-wrapper {
+  margin-top: auto;
+  padding: 50px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
 }
 
-table{
-  border-collapse: collapse;
-  min-width: 800px; 
-}
-button {
-  background: #f3c969;
-  color: #1f2d3d;
-  border: none;
-  padding: 14px;
-  margin: -5px 0;
-  width: 100%;
-  border-radius: 18px;
-  font-weight: bold;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
+.sponsor { font-size: 14px; margin-bottom: 5px; }
+.sponsor strong { color: var(--primary); }
 
-button:hover {
-  background: #e6b85c;
-  transform: scale(1.02);
-}
+    .mode-btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto 30px;
+    }
 
-button:active {
-  transform: scale(0.97);
-}
-.card button {
-  margin: 10px 0;
-}
-
-.menu-btn {
-  width: 100%;
-  max-width: 350px;
-  padding: 14px;
-  margin: 12px auto; 
-  display: block;
-  background: #ffffff;
-  color: #1f3c88;
-  border: none;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  transition: all 0.2s ease;
-}
-
-.menu-btn:hover {
-  transform: translateY(-2px);
-}
-
-.menu-btn:active {
-  transform: scale(0.97);
-}
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--dark-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 </style>
 </head>
 <body class="dark">
 
-<header>Star Tools Bendahara</header>
+<header>Star Tools</header>
+
 <div class="container">
+  <div class="hero">
+    <h1>Dashboard Bendahara</h1>
+    <div class="badge">SECURE ACCESS V1.4</div>
+  </div>
 
-<div class="hero">
-<h1>Selamat Datang Bendahara!</h1>
-<div class="badge">v1.3</div>
-</div>
+  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
-<div style="text-align:center; margin-bottom:15px; width:180px; margin:auto;">
-  <button id="modeToggle" class="mode-btn">Gelap/Terang</button>
-</div>
+  <div class="menu">
+    <button onclick="showCard('loginCard')">Kelola Kas</button>
+    <button onclick="logoutBendahara()" style="color:#ff7675; border-color:#ff7675">Logout</button>
+  </div>
 
+  <div class="card" id="loginCard" style="max-width: 500px; margin: auto;">
+    <h2>Akses Database</h2>
+    <input type="text" id="kelasName" placeholder="ID Kelas">
+    <input type="password" id="kelasPW" placeholder="Password Kelas">
+    <button class="action-btn" onclick="loginKelas()">Sinkronisasi Data</button>
+  </div>
 
-<!-- Menu Guru -->
-<div class="menu">
-  <button onclick="showCard('loginCard')">Kelola Kas</button>
-  <button onclick="logoutBendahara()">Logout</button>
-</div>
+  <div class="card" id="dashboardCard">
+    <h2>Dashboard Keuangan</h2>
 
-<!-- LOGIN KELAS -->
-<div class="card" id="loginCard">
-  <h2>Login Kelas</h2>
-  <input type="text" id="kelasName" placeholder="Nama Kelas">
-  <input type="password" id="kelasPW" placeholder="Password Kelas">
-  <button onclick="loginKelas()">Masuk</button>
-</div>
+    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px; border: 1px solid var(--glass-border);">
+      <h3>Tambah Siswa Baru</h3>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="tambahmurid" placeholder="Nama Lengkap Siswa">
+        <button class="action-btn" style="width:150px; margin:10px 0" onclick="tambahBaris()">Daftarkan</button>
+      </div>
+    </div>
 
-<!-- DASHBOARD -->
-<div class="card" id="dashboardCard">
-  <h2>Kelola Kas & Absensi</h2>
+    <div style="margin-top: 30px;">
+      <h3>Pengaturan Periode</h3>
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
+        <select id="bulan">
+          <option value="0">Januari</option><option value="1">Februari</option><option value="2">Maret</option>
+          <option value="3">April</option><option value="4">Mei</option><option value="5">Juni</option>
+          <option value="6">Juli</option><option value="7">Agustus</option><option value="8">September</option>
+          <option value="9">Oktober</option><option value="10">November</option><option value="11">Desember</option>
+        </select>
+        <input type="number" id="tahun" value="2026">
+      </div>
+      <button class="action-btn" onclick="renderTable()">Tampilkan Tabel Kas</button>
+    </div>
+    
+    <div class="table-wrapper">
+      <div id="tabelContainer"></div>
+    </div>
 
-  <!-- Tambahkan murid -->
-  <h3>Masukan Murid</h3>
-  <input type="text" id="tambahmurid" style="width:270px">
-  <button onclick="tambahBaris()">Tambah Siswa</button>
-
-
-  <!-- Pilih Bulan & Tahun -->
-  <h3>Pilih Bulan & Tahun</h3>
-  <select id="bulan">
-    <option value="0">Januari</option>
-    <option value="1">Februari</option>
-    <option value="2">Maret</option>
-    <option value="3">April</option>
-    <option value="4">Mei</option>
-    <option value="5">Juni</option>
-    <option value="6">Juli</option>
-    <option value="7">Agustus</option>
-    <option value="8">September</option>
-    <option value="9">Oktober</option>
-    <option value="10">November</option>
-    <option value="11">Desember</option>
-  </select>
-  <input type="number" id="tahun" value="2026" style="width:270px">
-  <button onclick="renderTable()">Tampilkan Bulan</button>
-  
-  <!-- Tabel Kas -->
-<div class="table-wrapper">
-  <table>
-    <h3>Tabel Kas</h3>
-    <div id="tabelContainer"></div>
-  </table>
-</div>
-
-  <button onclick="resetBulan()">Reset Bulan</button>
-  <button onclick="logout()">Logout</button>
-</div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer-wrapper">
-  <div class="sponsor">Created By Star Prosperous</div>
-  <div style="text-align:center; margin-top:15px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
+      <button class="action-btn" style="background:transparent; border:1px solid var(--primary); color:var(--primary)" onclick="resetBulan()">Reset Bulan Ini</button>
+      <button class="action-btn" style="background:#ff7675; color:white;" onclick="logout()">Tutup Sesi</button>
+    </div>
   </div>
 </div>
 
-<!-- Firebase SDK -->
+<div class="footer-wrapper">
+  <div class="sponsor">Created By <strong>Star Prosperous</strong></div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-// Mode Gelap/Terang
+// UI Theme Logic
 document.getElementById('modeToggle').addEventListener('click', ()=>{
   document.body.classList.toggle('dark');
   document.body.classList.toggle('light');
 });
 
-// Show Card
 function showCard(id){
   document.querySelectorAll('.card').forEach(c=>c.style.display='none');
-  document.getElementById(id).style.display='block';
+  const target = document.getElementById(id);
+  target.style.display='block';
 }
 
-// ======= FIREBASE CONFIG =======
+// Firebase Initialization
 const firebaseConfig = {
  apiKey: "AIzaSyA7foZX8BpYVX6JC1rOpTRiKOuCpmL8BPc",
  authDomain: "absensi-bintang-586a1.firebaseapp.com",
@@ -194,49 +302,39 @@ const firebaseConfig = {
  projectId: "absensi-bintang-586a1",
  storageBucket: "absensi-bintang-586a1.appspot.com",
  messagingSenderId: "805938764052",
- appId: "1:805938764052:web:a59bf3afc8176308ea8a01",
- measurementId: "G-NQ8DFVNBN1"
+ appId: "1:805938764052:web:a59bf3afc8176308ea8a01"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// ======= GLOBAL =======
 let kelasRef = null;
 let siswa = [];
 
-// ======= LOGIN =======
+// Login & Persistence
 function loginKelas(){
-  const namaInput = document.getElementById("kelasName").value.trim();
-  const pwInput = document.getElementById("kelasPW").value.trim();
-
-  // cek localStorage dulu
+  const nInput = document.getElementById("kelasName").value.trim();
+  const pInput = document.getElementById("kelasPW").value.trim();
   const stored = JSON.parse(localStorage.getItem("kelasLogin"));
-  if(stored){
-    document.getElementById("kelasName").value = stored.nama;
-    document.getElementById("kelasPW").value = stored.pw;
-  }
 
-  const nama = namaInput || stored?.nama;
-  const pw = pwInput || stored?.pw;
+  const nama = nInput || (stored ? stored.nama : null);
+  const pw = pInput || (stored ? stored.pw : null);
 
-  if(!nama || !pw) return alert("Isi semua kolom!");
+  if(!nama || !pw) return alert("Lengkapi data login!");
 
   kelasRef = db.ref("kelas/"+nama);
   kelasRef.once("value", snap=>{
     const data = snap.val();
-    if(!data || data.password!==pw) return alert("Kelas/Password salah!");
+    if(!data || data.password!==pw) return alert("Kombinasi ID/PW Salah!");
 
-    // simpan ke localStorage
-    localStorage.setItem("kelasLogin", JSON.stringify({nama,pw}));
-
+    localStorage.setItem("kelasLogin", JSON.stringify({nama, pw}));
     document.getElementById("loginCard").style.display="none";
     document.getElementById("dashboardCard").style.display="block";
     loadSiswa();
   });
 }
 
-// ======= LOAD SISWA =======
 function loadSiswa(){
+  if(!kelasRef) return;
   kelasRef.child("siswa").once("value", snap=>{
     siswa=[];
     snap.forEach(child=>{
@@ -246,7 +344,6 @@ function loadSiswa(){
   });
 }
 
-// ======= GET ALL MONDAYS =======
 function getMondays(month, year){
   let d = new Date(year, month, 1);
   let mondays = [];
@@ -257,46 +354,40 @@ function getMondays(month, year){
   return mondays;
 }
 
-// ======= TAMBAH BARIS SISWA =======
 function tambahBaris() {
   const input = document.getElementById("tambahmurid");
   const namaBaru = input.value.trim();
-  if (!namaBaru) return alert("Isi nama siswa dulu!");
+  if (!namaBaru) return alert("Nama tidak valid!");
 
-  // Tambah ke Firebase
-  const siswaRef = kelasRef.child("siswa/" + namaBaru);
-  siswaRef.once("value", snap => {
-    if (snap.exists()) return alert("Siswa sudah ada!");
-    siswaRef.set({ nama: namaBaru, pembayaran: {} }, () => {
+  const sRef = kelasRef.child("siswa/" + namaBaru);
+  sRef.once("value", snap => {
+    if (snap.exists()) return alert("Siswa sudah terdaftar!");
+    sRef.set({ nama: namaBaru, pembayaran: {} }, () => {
       input.value = "";
-      loadSiswa(); // reload data dari Firebase supaya tabel update
+      loadSiswa();
     });
   });
 }
 
-// ======= RENDER TABEL DENGAN TOMBOL HAPUS =======
 function renderTable(){
   const bulan = parseInt(document.getElementById("bulan").value);
   const tahun = parseInt(document.getElementById("tahun").value);
   const mondays = getMondays(bulan, tahun);
   const container = document.getElementById("tabelContainer");
   
-  let html=`<table><thead><tr><th>No</th><th>Nama</th>`;
-  mondays.forEach(d=>{
-    html+=`<th>${d.getDate()}</th>`;
-  });
-  html+="<th>Aksi</th></tr></thead><tbody>";
+  let html=`<table><thead><tr><th>Nama Siswa</th>`;
+  mondays.forEach(d=>{ html+=`<th title="Senin">Senin ${d.getDate()}</th>`; });
+  html+="<th style='background:rgba(255,255,255,0.1)'>Aksi</th></tr></thead><tbody>";
   
   siswa.forEach((s,i)=>{
     html+=`<tr>
-      <td>${i+1}</td>
-      <td contenteditable="true" data-siswa="${i}" class="namaSiswa">${s.nama||""}</td>`;
+      <td contenteditable="true" data-siswa="${i}" class="namaSiswa" style="font-weight:600">${s.nama||""}</td>`;
     mondays.forEach(d=>{
       const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
       const val = s.pembayaran?.[key]||"";
       html+=`<td contenteditable="true" data-siswa="${i}" data-tanggal="${key}">${val}</td>`;
     });
-    html+=`<td><button onclick="hapusSiswa('${s.nama}')">Hapus</button></td>`;
+    html+=`<td><button class="btn-delete" onclick="hapusSiswa('${s.id}')">Hapus</button></td>`;
     html+="</tr>";
   });
   
@@ -304,93 +395,63 @@ function renderTable(){
   container.innerHTML=html;
 }
 
-// ======= HAPUS SISWA =======
-function hapusSiswa(nama){
-  if(!confirm(`Yakin mau hapus siswa ${nama}?`)) return;
-  kelasRef.child("siswa/"+nama).remove(()=>{
-    loadSiswa(); // reload tabel setelah hapus
-  });
+function hapusSiswa(id){
+  if(!confirm(`Hapus data ${id}? Tindakan ini permanen.`)) return;
+  kelasRef.child("siswa/"+id).remove(()=>{ loadSiswa(); });
 }
 
-// ======= RESET BULAN =======
 function resetBulan(){
-  siswa.forEach(s=>{
-    s.pembayaran={};
-  });
+  if(!confirm("Kosongkan semua inputan di tabel bulan ini?")) return;
+  siswa.forEach(s=> s.pembayaran={} );
   renderTable();
 }
 
-// ======= LOGOUT =======
 function logout(){
-  kelasRef=null;
-  siswa=[];
-  localStorage.removeItem("kelasLogin"); // hapus login
-  document.getElementById("dashboardCard").style.display="none";
-  document.getElementById("loginCard").style.display="block";
+  localStorage.removeItem("kelasLogin");
+  location.reload();
 }
 
-// ======= AUTO LOGIN JIKA ADA LOCALSTORAGE =======
-window.onload = ()=>{
-  const stored = JSON.parse(localStorage.getItem("kelasLogin"));
-  if(stored){
-    document.getElementById("kelasName").value = stored.nama;
-    document.getElementById("kelasPW").value = stored.pw;
-    loginKelas();
-  }
-  // dropdown otomatis update setelah siswa load
-  setTimeout(loadSiswaDropdown, 1000);
-};
+function logoutBendahara() {
+  localStorage.clear();
+  window.location.href = "index.html";
+}
 
-// ======= SIMPAN OTOMATIS KE FIREBASE SAAT EDIT TABEL =======
+// Auto-Save Event
 document.addEventListener("input", function(e){
   const target = e.target;
   
-  // Update nominal di tanggal
   if(target.tagName==="TD" && target.dataset.siswa!==undefined && target.dataset.tanggal){
     const i = parseInt(target.dataset.siswa);
     const key = target.dataset.tanggal;
-    const val = parseInt(target.innerText) || 0;
+    const val = target.innerText.trim();
 
-    const siswaId = siswa[i].id;
-
-    // update local object
     if(!siswa[i].pembayaran) siswa[i].pembayaran = {};
     siswa[i].pembayaran[key] = val;
-
-    // update Firebase
-    kelasRef.child(`siswa/${siswaId}/pembayaran/${key}`).set(val, ()=>{
-      console.log(`Update ${siswa[i].nama} tanggal ${key}: ${val}`);
-    });
+    kelasRef.child(`siswa/${siswa[i].id}/pembayaran/${key}`).set(val);
   }
 
-  // Update nama siswa
-  if(target.tagName==="TD" && target.classList.contains("namaSiswa") && target.dataset.siswa!==undefined){
+  if(target.tagName==="TD" && target.classList.contains("namaSiswa")){
     const i = parseInt(target.dataset.siswa);
-    const val = target.innerText.trim() || "Siswa";
+    const newVal = target.innerText.trim();
     const oldId = siswa[i].id;
-    siswa[i].nama = val;
-    siswa[i].id = val; // pakai nama baru sebagai key
+    if(!newVal || newVal === oldId) return;
 
-    // Update Firebase
-    // Hapus data lama, pindahkan ke key baru
     kelasRef.child(`siswa/${oldId}`).once("value", snap=>{
       const data = snap.val();
-      kelasRef.child(`siswa/${oldId}`).remove(()=>{
-        kelasRef.child(`siswa/${val}`).set(data, ()=>{
-          console.log(`Nama siswa update: ${val}`);
-        });
+      data.nama = newVal;
+      kelasRef.child(`siswa/${newVal}`).set(data, ()=>{
+        kelasRef.child(`siswa/${oldId}`).remove();
+        siswa[i].id = newVal;
+        siswa[i].nama = newVal;
       });
     });
   }
 });
 
-// Logout Bendahara 
-function logoutBendahara() {
-  localStorage.removeItem("profil");       // Hapus profil
-  localStorage.removeItem("kelasAktif");   // Hapus kelas aktif
-  localStorage.removeItem("pwAktif");      // Hapus password aktif
-  window.location.href = "index.html";     // Redirect ke index
-}
+window.onload = ()=>{
+  const stored = JSON.parse(localStorage.getItem("kelasLogin"));
+  if(stored) loginKelas();
+};
 </script>
 
 </body>

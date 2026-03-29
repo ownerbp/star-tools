@@ -3,107 +3,297 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools School v1.3</title>
-<link rel="icon" type="image/png" sizes="32x32" href="/logo.png">
-<meta property="og:image" content="https://startools.web.id/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Star Tools V1.4</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#2a5298,#0f2027);color:white;min-height:100vh;}
-header{text-align:center;padding:25px;font-size:30px;font-weight:700;}
-.container{max-width:1000px;margin:auto;padding:20px;}
-.hero{text-align:center;background:rgba(255,255,255,.12);padding:30px;border-radius:20px;margin-bottom:25px;box-shadow:0 15px 35px rgba(0,0,0,.35);}
-.hero h1{color:#ffd369;}
-input,select{width:100%;padding:12px;margin:8px 0;border-radius:12px;border:none;}
-button{background:#f3c969;color:#1f2d3d;border:none;padding:14px;margin:1px 0;width:100%;border-radius:18px;font-weight:bold;font-size:13px;cursor:pointer;transition:0.25s ease;}
-button:hover{background:#e6b85c;transform:scale(1.02);}
-button:active{transform:scale(0.97);}
-.footer-wrapper{text-align:center;padding:15px 0;margin-top:25px;opacity:0.7;font-size:14px;}
-body.light {background: radial-gradient(circle at top,#f0f0f0,#dcdcdc); color:#111;}
-body.light button{color:#1f3c88;}
-body.dark {background: radial-gradient(circle at top,#2a5298,#0f2027); color:#fff;}
-.badge{display:inline-flex;align-items:center;justify-content:center;background:#fbbf24;color:#111;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-top:18px;box-shadow:0 6px 15px rgba(0,0,0,.25);}
-.mode-btn{width:100%;max-width:350px;padding:14px;margin:10px auto;display:block;background:#eec36d;color:#000000;border:none;border-radius:20px;font-size:13px;font-weight:bold;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.15);}
-.mode-btn:active{transform:scale(0.97);}
-  .logo{
-  width:50px;
-  display:block;
-  margin:auto;
-  }
+:root {
+  --primary: #ffd369;
+  --secondary: #2a5298;
+  --accent: #f3c969;
+  --dark-bg: #0f172a;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(15, 23, 42, 0.6);
+}
+
+* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark-bg);
+  color: #e2e8f0;
+  overflow-x: hidden;
+}
+
+body.light {
+  --dark-bg: #f1f5f9;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --input-bg: #ffffff;
+  color: #1e293b;
+}
+
+/* Cosmic Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 20% 30%, #1e3c72 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, #2a5298 0%, transparent 40%);
+  z-index: -1;
+  opacity: 0.4;
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  padding: 50px 20px 20px;
+  animation: fadeInDown 0.8s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.main-title {
+  font-size: 45px;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(to right, #fff, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+}
+
+.badge {
+  background: var(--primary);
+  color: #000;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 10px;
+  display: inline-block;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+}
+
+/* Container */
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero Section (Vision & Mission) */
+.hero {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 28px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 25px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.hero h1 { 
+  color: var(--primary); 
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hero h1::before, .hero h1::after { content: "✨"; font-size: 14px; }
+
+.visi-misi {
+  font-size: 13px;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+.visi-misi ul { padding-left: 20px; margin: 10px 0; list-style-type: '⚡ '; }
+
+/* Form Card */
+#formProfil {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  padding: 35px;
+  border-radius: 28px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+h2 { 
+  font-size: 22px; 
+  font-weight: 700;
+  margin-bottom: 25px; 
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 16px 20px;
+  margin: 12px 0;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: var(--input-bg);
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 0 4px rgba(255, 211, 105, 0.15);
+}
+
+body.light input, body.light select {
+  border: 1px solid #cbd5e1;
+}
+
+button[type="submit"] {
+  background: linear-gradient(135deg, var(--primary), #e6b85c);
+  color: #000;
+  border: none;
+  padding: 18px;
+  width: 100%;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 10px 25px rgba(255, 211, 105, 0.2);
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(255, 211, 105, 0.4);
+}
+
+/* Mode Toggle */
+.mode-btn {
+  background: var(--glass);
+  color: inherit;
+  border: 1px solid var(--glass-border);
+  padding: 10px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 auto 25px;
+  display: block;
+}
+
+/* Footer */
+.footer-wrapper {
+  margin-top: auto;
+  padding: 50px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.sponsor { font-size: 14px; margin-bottom: 5px; }
+.sponsor strong { color: var(--primary); }
+
+/* Report Link */
+.report-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 15px;
+  padding: 5px 12px;
+  border: 1px dashed var(--primary);
+  border-radius: 8px;
+}
+
+.report-link:hover { background: rgba(255, 211, 105, 0.1); }
+
 </style>
 </head>
 <body class="dark">
 
-  <img src="logo.png" alt="Star Tools Logo" class="logo">
+<div class="header-section">
+  <h1 class="main-title">Star Tools</h1>
+  <div class="badge">SECURE ACCESS V1.4</div>
+</div>
 
-<header>Star Tools School</header>
 <div class="container">
+  <div class="hero">
+    <h1>Platform Edukasi Masa Depan</h1>
+    <div class="visi-misi">
+      <p><strong>Visi:</strong> Digitalisasi pendidikan yang cerdas, inklusif, dan menginspirasi untuk generasi emas.</p>
+      <p><strong>Misi:</strong></p>
+      <ul>
+        <li>Akses tanpa batas ke alat bantu edukasi digital.</li>
+        <li>Integrasi monitoring cerdas antara Guru & Siswa.</li>
+        <li>Ekosistem berkelanjutan berbasis Sains & Teknologi.</li>
+      </ul>
+      <div style="text-align: center;">
+        <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">⚠️ Report System Bug</a>
+      </div>
+    </div>
+  </div>
 
-<div class="hero">
-<h1>Selamat Datang di Star Tools School</h1>
-Visi :<br><br>Mewujudkan pendidikan modern, digital, dan merata untuk semua siswa.<br>
-<br>Misi :<br><br>1.Menyediakan platform edukasi digital yang mudah diakses.<br><br>
-2.Membantu siswa mencatat dan memantau pembelajaran secara rutin.<br><br>
-3.Memberikan fitur yang berguna dan dipakai berulang untuk sekolah dan orang tua.<br><br>
-4.Terus mengembangkan sistem berdasarkan feedback pengguna.<br><br>
-Jika terdapat kesalahan mohon berikan laporan.<br>
-<a href="mailto:starprosperous21@gmail.com" style="color:#ffd369">Laporkan Bug (Email)</a><br>
-<div class="badge">v1.3</div>
-</div>
+  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
-<!-- Mode Gelap/Terang -->
-<div style="text-align:center; margin-bottom:15px; width:180px; margin-left:auto; margin-right:auto;">
-  <button id="modeToggle" class="mode-btn">Gelap/Terang</button>
-</div>
+  <form id="formProfil">
+    <h2>Akses Dashboard</h2>
+    <input type="text" id="nama" placeholder="Nama Lengkap Anda" required>
+    <select id="role" required>
+      <option value="" disabled selected>Pilih Peran Akun</option>
+      <option value="guru">Guru</option>
+      <option value="murid">Murid</option>
+      <option value="bendahara">Bendahara</option>
+      <option value="sekertaris">Sekertaris</option>
+    </select>
+    <input type="text" id="sekolah" placeholder="Institusi / Nama Sekolah" required>
+    <button type="submit">Autentikasi Sekarang</button>
+  </form>
 
-<!-- Form Login / Profil -->
-<form id="formProfil">
-  <h2>Login / Profil</h2>
-  <input type="text" id="nama" placeholder="Nama" required>
-  <select id="role" required>
-    <option value="">Pilih Role</option>
-    <option value="guru">Guru</option>
-    <option value="murid">Murid</option>
-    <option value="bendahara">Bendahara</option>
-    <option value="sekertaris">Sekertaris</option>
-  </select>
-  <input type="text" id="sekolah" placeholder="Sekolah" required>
-  <button type="submit">Masuk</button>
-</form>
-
-<!-- FOOTER -->
-<div class="footer-wrapper">
-  <div class="sponsor">Created By Star Prosperous</div>
-  <div style="text-align:center; margin-top:15px;">
-    <p style="margin:0;">© 2026 Star Tools School</p>
+  <div class="footer-wrapper">
+    <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+    <p>© 2026 Star Tools School.</p>
   </div>
 </div>
 
 <script>
-// Ambil element form
+// --- LOGIKA JAVASCRIPT (TIDAK DIUBAH) ---
 const form = document.getElementById('formProfil');
-
-// Ambil data profil dari localStorage
 let profil = JSON.parse(localStorage.getItem('profil'));
 
-// Fungsi cek login pas load halaman
 function cekLogin() {
   if(profil && profil.nama && profil.role && profil.sekolah) {
-    // Redirect sesuai role
-    if(profil.role === "guru") {
-      window.location.href = "guru.html";
-    } else if(profil.role === "bendahara") {
-       window.location.href = "bendahara.html";
-    } else if(profil.role === "sekertaris") {
-       window.location.href = "sekertaris.html";
-    } else if(profil.role === "murid") {
-      window.location.href = "murid.html";
-    }
+    if(profil.role === "guru") window.location.href = "guru.html";
+    else if(profil.role === "bendahara") window.location.href = "bendahara.html";
+    else if(profil.role === "sekertaris") window.location.href = "sekertaris.html";
+    else if(profil.role === "murid") window.location.href = "murid.html";
   }
 }
-cekLogin(); // jalankan saat load
+cekLogin();
 
-// Handle submit form
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = {
@@ -113,46 +303,22 @@ form.addEventListener('submit', (e) => {
   };
 
   if(!data.nama || !data.role || !data.sekolah){
-    alert("Isi semua form dulu bre!");
+    alert("Mohon lengkapi semua data!");
     return;
   }
 
-  // Simpan ke localStorage
   localStorage.setItem('profil', JSON.stringify(data));
-  profil = data;
-
-  // Redirect sesuai role
-  if(data.role === "guru") {
-    window.location.href = "guru.html";
-  } else if(data.role === "bendahara") {
-    window.location.href = "bendahara.html";
-  } else if(data.role === "sekertaris") {
-    window.location.href = "sekertaris.html";
-  } else {
-    window.location.href = "murid.html";
-  }
+  
+  if(data.role === "guru") window.location.href = "guru.html";
+  else if(data.role === "bendahara") window.location.href = "bendahara.html";
+  else if(data.role === "sekertaris") window.location.href = "sekertaris.html";
+  else window.location.href = "murid.html";
 });
 
-// Mode Gelap/Terang
 const modeToggle = document.getElementById('modeToggle');
 modeToggle.addEventListener('click', () => {
-  if(document.body.classList.contains('dark')){
-    document.body.classList.remove('dark');
-    document.body.classList.add('light');
-  } else {
-    document.body.classList.remove('light');
-    document.body.classList.add('dark');
-  }
-});
-
-window.addEventListener("load", () => {
-  const profil = JSON.parse(localStorage.getItem("profil"));
-  if(profil && profil.role){
-    if(profil.role === "guru") window.location.href = "guru.html";
-    if(profil.role === "bendahara") window.location.href = "bendahara.html";
-    if(profil.role === "sekertaris") window.location.href = "sekertaris.html";
-    if(profil.role === "murid") window.location.href = "murid.html";
-  }
+  document.body.classList.toggle('dark');
+  document.body.classList.toggle('light');
 });
 </script>
 
