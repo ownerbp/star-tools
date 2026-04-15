@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Tools - Murid</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --primary: #ffd369;
+  --secondary: #2a5298;
+  --accent: #f3c969;
+  --dark-bg: #0f172a;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --text-glow: 0 0 12px rgba(255, 211, 105, 0.4);
+}
+
+* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--dark-bg);
+  color: #e2e8f0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+body.light {
+  --dark-bg: #f1f5f9;
+  --glass: rgba(0, 0, 0, 0.05);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  color: #1e293b;
+}
+
+/* Background Effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 70%);
+  z-index: -1;
+  opacity: 0.5;
+}
+
+header {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(to bottom, #fff, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(var(--text-glow));
+}
+
+.container { max-width: 900px; margin: auto; padding: 0 20px 60px; }
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  padding: 40px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 30px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.hero h1 { margin: 0; font-size: 28px; font-weight: 700; }
+
+.badge {
+  background: var(--primary);
+  color: #000;
+  padding: 5px 16px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-block;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+}
+
+/* Menu & Buttons */
+.menu, #pilihMode, #sd, #smp, #sma {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+  background: var(--glass);
+  color: white;
+  border: 1px solid var(--glass-border);
+  padding: 16px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+}
+
+body.light button { color: #1e293b; background: #fff; }
+
+button:hover {
+  background: var(--primary);
+  color: #000;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  border-color: transparent;
+}
+
+button:active { transform: scale(0.98); }
+
+.mode-btn {
+  width: auto;
+  min-width: 180px;
+  padding: 10px 25px;
+  margin: 0 auto 30px;
+  display: block;
+  border-radius: 50px;
+  background: var(--primary);
+  color: #000;
+  font-size: 12px;
+}
+
+/* Cards */
+
+.card {
+  display: none;
+  background: var(--glass);
+  backdrop-filter: blur(25px);
+  padding: 35px;
+  border-radius: 32px;
+  border: 1px solid var(--glass-border);
+  margin-top: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+h2 {
+  color: var(--primary);
+  font-size: 22px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: rgba(0,0,0,0.2);
+  color: #fff;
+  font-family: inherit;
+  outline: none;
+}
+
+body.light input, body.light select {
+  background: #fff;
+  color: #333;
+  border: 1px solid #cbd5e1;
+}
+
+input:focus { border-color: var(--primary); }
+
+.result {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 211, 105, 0.1);
+  border-radius: 18px;
+  border-left: 4px solid var(--primary);
+  font-weight: 600;
+}
+
+.example-box {
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 15px;
+  font-size: 13px;
+  margin-bottom: 15px;
+  border-left: 3px solid #64748b;
+}
+
+/* Checkbox Styling */
+.label-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--dark-bg); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+   
+/* Footer */
+.footer-wrapper {
+  margin-top: auto;
+  padding: 50px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.sponsor { font-size: 14px; margin-bottom: 5px; }
+.sponsor strong { color: var(--primary); }
+
+</style>
+</head>
+<body class="dark">
+
+
+<header>Star Tools</header>
+<div class="container">
+
+
+<div class="hero">
+<h1>Dashboard Murid</h1>
+<div class="badge">SECURE ACCESS V1.5</div>
+</div>
+
+<button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
+
+
+<div id="pilihMode">
+<h2>Pilih Kelas</h2>
+  <button id="btnKelas7">Kelas 7</button>
+  <button id="btnKelas8">Kelas 8</button>
+  <button id="btnKelas9">Kelas 9</button>
+  <h2>Kembali Pilih Jenjang</h2>
+  <button onclick="goPage('murid.html')">Kembali</button>
+</div>
+
+
+<!-- SMP -->
+<div id="kelas7" style="display:none">
+  <h2>Semester 1</h2>
+  <button onclick="showCard('bilanganBulatFeature')">Bilangan Bulat</button>
+  <button onclick="showCard('aljabar-card')">Bentuk Aljabar</button>
+  <h2>Semester 2</h2>
+  <button onclick="showCard('kosong')">Kosong</button>
+  <button onclick="showCard('kosong')">Kosong</button>
+  <h2>Kembali Pilih Kelas</h2>
+  <button onclick="backToMode()">Kembali</button>
+</div>
+
+
+<!-- Aljabar -->
+<div class="card" id="aljabar-card">
+  <h2>Bentuk Aljabar</h2>
+  <input type="text" id="aljabar-input" placeholder="Masukkan bentuk aljabar, misal 2x + 3x - 5">
+  <button onclick="sederhanakanAljabar()">Sederhanakan</button>
+  <button onclick="copyAljabar()">Copy Hasil</button>
+  <button onclick="resetAljabar()">Reset</button>
+  <div id="aljabar-result" class="result"></div>
+</div>
+
+<!-- Bilangan Bulat -->
+<div class="card" id="bilanganBulatFeature">
+  <h2>Bilangan Bulat</h2>
+  <label>Bilangan 1:</label>
+  <input type="number" id="num1_bulat"><br><br>
+  <label>Bilangan 2:</label>
+  <input type="number" id="num2_bulat"><br><br>
+  <label>Operasi:</label>
+  <select id="operation_bulat">
+    <option value="add">+</option>
+    <option value="subtract">-</option>
+    <option value="multiply">×</option>
+    <option value="divide">÷</option>
+  </select><br><br>
+  <button onclick="calculateBulat()">Hitung</button>
+  <button onclick="copycalculateBulat()">Copy Hasil</button>
+  <button onclick="resetcalculateBulat()">Reset</button>
+  <div class="result" id="result_bulat"></div>
+</div>
+
+
+<!-- SMP -->
+<div id="kelas8" style="display:none">
+  <h2>Semester 1</h2>
+  <button onclick="showCard('bangunRuangLengkung')">Ruang Lengkung</button>
+  <button onclick="showCard('cartesius')">Kordinat Cartsesius</button>
+  <h2>Semester 2</h2>
+  <button onclick="showCard('kosong')">Kosong</button>
+  <button onclick="showCard('kosong')">Kosong</button>
+  <h2>Kembali Pilih Kelas</h2>
+  <button onclick="backToMode()">Kembali</button>
+</div>
+
+<!-- Koordinat Cartesius -->
+<div class="card" id="cartesius">
+  <h2>Koordinat Cartesius</h2>
+  <div class="example-box">
+    <b>Contoh Soal:</b><br>
+    Titik (3, 2) berada di kuadran mana?
+  </div>
+  <input type="number" id="xCart" placeholder="Masukkan nilai X">
+  <input type="number" id="yCart" placeholder="Masukkan nilai Y">
+  <div class="label-checkbox">
+    Tampilkan Cara
+    <input type="checkbox" id="modeCart">
+  </div>
+  <canvas id="graphCart" width="300" height="300" style="background:white;border-radius:10px;margin-top:10px;"></canvas>
+  <div class="result" id="hasilCart"></div>
+  <div class="result" id="caraCart" style="font-size:14px;color:white"></div>
+  <button onclick="hitungCartesius()">Tampilkan Titik</button>
+  <button onclick="copyCart()">Copy Hasil</button>
+  <button onclick="resetCart()">Reset</button>
+</div>
+
+<!-- Bangun Ruang Lengkung -->
+<div class="card" id="bangunRuangLengkung">
+  <h2>Bangun Ruang Sisi Lengkung</h2>
+  <label>Pilih Bangun:</label>
+  <select id="jenisBangun">
+    <option value="tabung">Tabung</option>
+    <option value="kerucut">Kerucut</option>
+    <option value="bola">Bola</option>
+  </select>
+  <label>Jari-jari (r):</label>
+  <input type="number" id="jariLengkung" placeholder="Masukkan jari-jari">
+  <label>Tinggi (t) - kosongkan jika bola:</label>
+  <input type="number" id="tinggiLengkung" placeholder="Masukkan tinggi">
+  <button onclick="hitungLengkung()">Hitung</button>
+  <button onclick="copyLengkung()">Copy Hasil</button>
+  <button onclick="resetLengkung()">Reset</button>
+  <div class="result" id="hasilLengkung"></div>
+</div>
+
+
+<!-- SMP -->
+<div id="kelas9" style="display:none">
+  <h2>Semester 1</h2>
+  <button onclick="showCard('transformasi')">Transformasi Geometri</button>
+  <button onclick="showCard('persamaanKuadrat')">Persamaan Kuadrat</button>
+  <h2>Semester 2</h2>
+  <button onclick="showCard('kosong')">Kosong</button>
+  <button onclick="showCard('kosong')">Kosong</button>
+  <h2>Kembali Pilih Kelas</h2>
+  <button onclick="backToMode()">Kembali</button>
+</div>
+
+<!-- Tranformasi Geometri -->
+<div class="card" id="transformasi">
+  <h2>Transformasi Geometri</h2>
+  <label for="koordinatX">Koordinat X:</label>
+  <input type="number" id="koordinatX" placeholder="Masukkan X titik">
+  <label for="koordinatY">Koordinat Y:</label>
+  <input type="number" id="koordinatY" placeholder="Masukkan Y titik">
+  <label for="jenisTransformasi">Pilih Transformasi:</label>
+  <select id="jenisTransformasi">
+    <option value="translasi">Translasi</option>
+    <option value="rotasi">Rotasi</option>
+    <option value="refleksi">Refleksi</option>
+    <option value="dilatasi">Dilatasi</option>
+  </select>
+  <label for="parameter">Parameter (misal: dx, dy / sudut / skala):</label>
+  <input type="text" id="parameter" placeholder="Isi sesuai transformasi">
+  <button onclick="hitungTransformasi()">Hitung</button>
+  <button onclick="copyTransformasi()">Copy Hasil</button>
+  <button onclick="resetTransformasi()">Reset</button>
+  <div class="result" id="hasilTransformasi"></div>
+</div>
+
+<!-- Persamaan Kuadrat -->
+<div class="card" id="persamaanKuadrat">
+  <h2>Persamaan Kuadrat</h2>
+  <label>a:</label>
+  <input type="number" id="a_quad" placeholder="Masukkan a"><br><br>
+  <label>b:</label>
+  <input type="number" id="b_quad" placeholder="Masukkan b"><br><br>
+  <label>c:</label>
+  <input type="number" id="c_quad" placeholder="Masukkan c"><br><br>
+  <button onclick="hitungKuadrat()">Hitung</button>
+  <button onclick="copyKuadrat()">Copy Hasil</button>
+  <button onclick="resetKuadrat()">Reset</button>
+  <div class="result" id="hasilKuadrat"></div>
+</div>
+
+
+<div class="footer-wrapper">
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.12.0/math.min.js"></script>
+
+
+<script>
+// Mode Gelap/Terang
+document.getElementById('modeToggle').addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  document.body.classList.toggle('light');
+});
+
+
+//AlJABAR
+function sederhanakanAljabar() {
+  let input = document.getElementById('aljabar-input').value;
+
+  try {
+    // pake math.js untuk simplifikasi
+    let result = math.simplify(input).toString();
+    document.getElementById('aljabar-result').innerText = `Hasil: ${result}`;
+  } catch(err) {
+    document.getElementById('aljabar-result').innerText = "Format salah, coba lagi!";
+  }
+}
+
+function resetAljabar(){
+  document.getElementById("aljabar-input").value="";
+  document.getElementById("aljabar-result").innerText="";}
+
+function copyAljabar() {
+  let el = document.getElementById("aljabar-result");
+  let text = el.innerText || el.textContent;
+
+  if(!text || text.trim() === ""){
+    alert("Belum ada hasil untuk dicopy");
+    return;
+  }
+
+  let temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  temp.setSelectionRange(0,99999);
+
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+
+  alert("Hasil berhasil dicopy");
+}
+
+
+//BILANGAN BULAT
+function calculateBulat() {
+  const num1 = parseInt(document.getElementById('num1_bulat').value);
+  const num2 = parseInt(document.getElementById('num2_bulat').value);
+  const op = document.getElementById('operation_bulat').value;
+  let res = '';
+
+  if (isNaN(num1) || isNaN(num2)) {
+    res = 'Masukkan kedua bilangan!';
+  } else {
+    switch(op) {
+      case 'add': res = num1 + num2; break;
+      case 'subtract': res = num1 - num2; break;
+      case 'multiply': res = num1 * num2; break;
+      case 'divide': 
+        if(num2 === 0) res = 'Tidak bisa dibagi 0';
+        else res = num1 / num2; 
+        break;
+    }
+  }
+
+  document.getElementById('result_bulat').textContent = res;
+}
+
+function resetcalculateBulat(){
+  document.getElementById('num1_bulat').value='';
+  document.getElementById('num2_bulat').value='';
+  document.getElementById('operation_bulat').value='add';
+  document.getElementById('result_bulat').innerText='';}
+
+
+function copycalculateBulat() {
+  let el = document.getElementById("result_bulat");
+  let text = el.innerText || el.textContent;
+
+  if(!text || text.trim() === ""){
+    alert("Belum ada hasil untuk dicopy");
+    return;
+  }
+
+  let temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  temp.setSelectionRange(0,99999);
+
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+
+  alert("Hasil berhasil dicopy");
+}
+
+//KORDINAT CARTESIUS
+function hitungCartesius(){
+  let x = Number(document.getElementById("xCart").value);
+  let y = Number(document.getElementById("yCart").value);
+  let canvas = document.getElementById("graphCart");
+  let ctx = canvas.getContext("2d");
+
+  if(isNaN(x) || isNaN(y)){
+    document.getElementById("hasilCart").innerText = "Isi dulu X dan Y bre!";
+    return;
+  }
+
+  ctx.clearRect(0,0,300,300);
+
+  // Garis sumbu
+  ctx.beginPath();
+  ctx.moveTo(150,0);
+  ctx.lineTo(150,300);
+  ctx.moveTo(0,150);
+  ctx.lineTo(300,150);
+  ctx.strokeStyle="black";
+  ctx.stroke();
+
+  // Plot titik
+  ctx.beginPath();
+  ctx.arc(150 + x*10, 150 - y*10, 5, 0, 2*Math.PI);
+  ctx.fillStyle="red";
+  ctx.fill();
+
+  // Tentukan kuadran
+  let kuadran = "";
+  if(x>0 && y>0) kuadran="Kuadran I";
+  else if(x<0 && y>0) kuadran="Kuadran II";
+  else if(x<0 && y<0) kuadran="Kuadran III";
+  else if(x>0 && y<0) kuadran="Kuadran IV";
+  else kuadran="Berada di sumbu";
+
+  document.getElementById("hasilCart").innerText = 
+    `Titik (${x}, ${y}) berada di ${kuadran}`;
+
+  let cara = `
+  Langkah:
+  1. Tentukan nilai X dan Y
+  2. Jika X positif → kanan, negatif → kiri
+  3. Jika Y positif → atas, negatif → bawah
+  4. Tentukan posisi kuadran
+  `;
+
+  document.getElementById("caraCart").innerText =
+    document.getElementById("modeCart").checked ? cara : "";
+}
+
+function resetCart(){
+  document.getElementById("xCart").value="";
+  document.getElementById("yCart").value="";
+  document.getElementById("hasilCart").innerText="";
+  document.getElementById("caraCart").innerText="";
+  
+  let ctx = document.getElementById("graphCart").getContext("2d");
+  ctx.clearRect(0,0,300,300);
+}
+
+function copyCart(){
+  let el = document.getElementById("hasilCart");
+  let text = el.innerText || el.textContent;
+  if(!text || text.trim() === ""){
+    alert("Belum ada hasil untuk dicopy");
+    return;
+  }
+  let temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+  alert("Hasil berhasil dicopy");
+}
+
+//BANGUN RUANG LENGKUNG
+function hitungLengkung() {
+
+const jenis = document.getElementById("jenisBangun").value
+const r = parseFloat(document.getElementById("jariLengkung").value)
+const t = parseFloat(document.getElementById("tinggiLengkung").value)
+
+let hasil = ""
+
+if(isNaN(r)){
+alert("Masukkan jari-jari dulu bre!")
+return
+}
+
+if(jenis === "tabung"){
+
+if(isNaN(t)){
+alert("Masukkan tinggi tabung!")
+return
+}
+
+let volume = Math.PI * r * r * t
+let luas = 2 * Math.PI * r * (r + t)
+
+hasil = `
+Volume Tabung = ${volume.toFixed(2)} <br>
+Luas Permukaan = ${luas.toFixed(2)}
+`
+
+}
+
+if(jenis === "kerucut"){
+
+if(isNaN(t)){
+alert("Masukkan tinggi kerucut!")
+return
+}
+
+let volume = (1/3) * Math.PI * r * r * t
+let s = Math.sqrt(r*r + t*t)
+let luas = Math.PI * r * (r + s)
+
+hasil = `
+Volume Kerucut = ${volume.toFixed(2)} <br>
+Luas Permukaan = ${luas.toFixed(2)}
+`
+
+}
+
+if(jenis === "bola"){
+
+let volume = (4/3) * Math.PI * r * r * r
+let luas = 4 * Math.PI * r * r
+
+hasil = `
+Volume Bola = ${volume.toFixed(2)} <br>
+Luas Permukaan = ${luas.toFixed(2)}
+`
+
+}
+
+document.getElementById("hasilLengkung").innerHTML = hasil
+
+}
+
+function resetLengkung(){
+
+document.getElementById("jariLengkung").value = ""
+document.getElementById("tinggiLengkung").value = ""
+document.getElementById("hasilLengkung").innerHTML = ""
+
+}
+
+function copyLengkung(){
+  let el = document.getElementById("hasilLengkung");
+  let text = el.innerText || el.textContent;
+  if(!text || text.trim() === ""){
+    alert("Belum ada hasil untuk dicopy");
+    return;
+  }
+  let temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+  alert("Hasil berhasil dicopy");
+}
+
+//TRANSFORMASI GEOMETRI
+function hitungTransformasi() {
+  let x = parseFloat(document.getElementById('koordinatX').value);
+  let y = parseFloat(document.getElementById('koordinatY').value);
+  let jenis = document.getElementById('jenisTransformasi').value;
+  let param = document.getElementById('parameter').value;
+
+  if(isNaN(x) || isNaN(y) || !param) {
+    alert("Isi semua input bre");
+    return;
+  }
+
+  let hasilX = x;
+  let hasilY = y;
+  let steps = "";
+
+  switch(jenis) {
+    case "translasi":
+      // parameter format: dx,dy
+      let [dx, dy] = param.split(",").map(Number);
+      hasilX += dx;
+      hasilY += dy;
+      steps = `Titik (${x},${y}) ditranslasi menjadi (${hasilX},${hasilY})`;
+      break;
+
+    case "rotasi":
+      // parameter format: sudut dalam derajat
+      let sudut = parseFloat(param) * Math.PI / 180;
+      hasilX = Math.round(x * Math.cos(sudut) - y * Math.sin(sudut));
+      hasilY = Math.round(x * Math.sin(sudut) + y * Math.cos(sudut));
+      steps = `Titik (${x},${y}) dirotasi ${param}° menjadi (${hasilX},${hasilY})`;
+      break;
+
+    case "refleksi":
+      if(param === "x") hasilY = -y;
+      else if(param === "y") hasilX = -x;
+      steps = `Titik (${x},${y}) direfleksi terhadap sumbu ${param} menjadi (${hasilX},${hasilY})`;
+      break;
+
+    case "dilatasi":
+      let skala = parseFloat(param);
+      hasilX = x * skala;
+      hasilY = y * skala;
+      steps = `Titik (${x},${y}) didilatasi dengan faktor ${param} menjadi (${hasilX},${hasilY})`;
+      break;
+  }
+
+  document.getElementById('hasilTransformasi').innerText = steps;
+}
+
+function copyTransformasi() {
+  let text = document.getElementById('hasilTransformasi').innerText;
+  if(!text){ alert("Belum ada hasil untuk dicopy"); return; }
+  navigator.clipboard.writeText(text);
+  alert("Hasil berhasil dicopy");
+}
+
+function resetTransformasi() {
+  document.getElementById('koordinatX').value = '';
+  document.getElementById('koordinatY').value = '';
+  document.getElementById('parameter').value = '';
+  document.getElementById('hasilTransformasi').innerText = '';
+}
+
+
+//PERSAMAAN KUADRAT
+function hitungKuadrat() {
+  let a = parseFloat(document.getElementById('a_quad').value);
+  let b = parseFloat(document.getElementById('b_quad').value);
+  let c = parseFloat(document.getElementById('c_quad').value);
+  let hasilText = "";
+
+  if (isNaN(a) || isNaN(b) || isNaN(c)) {
+    hasilText = "Isi semua nilai dulu bre!";
+  } else if(a === 0) {
+    hasilText = "Ini bukan persamaan kuadrat (a=0)";
+  } else {
+    let D = b*b - 4*a*c;
+    if(D < 0){
+      hasilText = `Diskriminan = ${D}, tidak ada akar real`;
+    } else if(D === 0){
+      let x = -b / (2*a);
+      hasilText = `Akar tunggal: x = ${x}`;
+    } else {
+      let x1 = (-b + Math.sqrt(D)) / (2*a);
+      let x2 = (-b - Math.sqrt(D)) / (2*a);
+      hasilText = `Akar: x1 = ${x1}, x2 = ${x2}`;
+    }
+  }
+
+  document.getElementById('hasilKuadrat').innerText = hasilText;
+}
+
+function resetKuadrat(){
+  document.getElementById("a_quad").value="";
+  document.getElementById("b_quad").value="";
+  document.getElementById("c_quad").value="";
+  document.getElementById("hasilKuadrat").innerText="";
+}
+
+function copyKuadrat(){
+  let el = document.getElementById("hasilKuadrat");
+  let text = el.innerText || el.textContent;
+  if(!text || text.trim() === ""){
+    alert("Belum ada hasil untuk dicopy");
+    return;
+  }
+  let temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+  alert("Hasil berhasil dicopy");
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const kelas7 = document.getElementById('kelas7');
+  const kelas8 = document.getElementById('kelas8');
+  const kelas9 = document.getElementById('kelas9');
+  const pilihMode = document.getElementById('pilihMode');
+
+  // Fungsi buat reset semua mode
+  function hideAllModes() {
+    if(kelas7) kelas7.style.display = 'none';
+    if(kelas8) kelas8.style.display = 'none';
+    if(kelas9) kelas9.style.display = 'none';
+    if(pilihMode) pilihMode.style.display = 'none';
+  }
+
+  // Kelas 7
+  const btnKelas7 = document.getElementById('btnKelas7');
+  if(btnKelas7){
+    btnKelas7.addEventListener('click', () => {
+      hideAllModes();
+      if(kelas7) kelas7.style.display = 'block';
+    });
+  }
+
+  // Kelas 8
+  const btnKelas8 = document.getElementById('btnKelas8');
+  if(btnKelas8){
+    btnKelas8.addEventListener('click', () => {
+      hideAllModes();
+      if(kelas8) kelas8.style.display = 'block';
+    });
+  }
+
+  // Kelas 9
+  const btnKelas9 = document.getElementById('btnKelas9');
+  if(btnKelas9){
+    btnKelas9.addEventListener('click', () => {
+      hideAllModes();
+      if(kelas9) kelas9.style.display = 'block';
+    });
+  }
+
+});
+
+// ===== SHOW CARD =====
+function showCard(cardId) {
+  document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+  document.getElementById(cardId).style.display = 'block';
+}
+
+
+// ===== KEMBALI KE MODE =====
+function backToMode(){
+
+  // Hide semua card
+  document.querySelectorAll('.card')
+    .forEach(c => c.style.display = 'none');
+
+  // Hide semua halaman utama juga
+  const kelas7 = document.getElementById('kelas7');
+  const kelas8 = document.getElementById('kelas8');
+  const kelas9 = document.getElementById('kelas9');
+
+
+  if(kelas7) kelas7.style.display = 'none';
+  if(kelas8) kelas8.style.display = 'none';
+  if(kelas9) kelas9.style.display = 'none';
+
+  // Tampilkan menu pilih mode
+  const pilihMode = document.getElementById('pilihMode');
+  if(pilihMode) pilihMode.style.display = 'block';
+}
+
+
+// BAHASA
+function goPage(page) {
+  window.location.href = page;
+}
+
+</script>
+</body>
+</html>

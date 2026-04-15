@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Star Tools - Guru Dashboard</title>
+  <title>Star Tools - Guru</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -214,6 +214,10 @@
   color: #64748b;
 }
 
+h3 {
+ text-align: center;
+}
+
 .sponsor { font-size: 14px; margin-bottom: 5px; }
 .sponsor strong { color: var(--primary); }
 
@@ -230,7 +234,7 @@
 <div class="container">
   <div class="hero">
     <h1>Dashboard Guru</h1>
-    <div class="badge">SECURE ACCESS V1.4</div>
+    <div class="badge">SECURE ACCESS V1.5</div>
   </div>
 
   <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
@@ -322,19 +326,19 @@
 
     <div id="loginBox" style="margin-top:20px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
       <h3>Login Akses Kelas</h3>
-      <input type="password" id="loginPw" placeholder="Masukkan Password Kelas">
+       <input type="text" id="loginKelasNama" placeholder="Nama Kelas">
+       <input type="password" id="loginPw" placeholder="Password Kelas">
       <button class="action-btn" onclick="loginKelas()">Masuk ke Panel Absen</button>
     </div>
 
     <div id="absenBox" style="display:none;">
-      <div class="badge" style="margin-bottom:20px;">ACCESS GRANTED</div>
-      <h3>Panel Manajemen Murid</h3>
+      <h3>Masukan/Daftarkan Murid</h3>
       <div style="display:flex; gap:10px;">
         <input type="text" id="namaMuridBaru" placeholder="Nama Murid">
         <button class="action-btn" style="width:150px; margin:10px 0" onclick="tambahMurid()">Daftarkan</button>
       </div>
 
-      <h3>Kalender & Tabel Absensi</h3>
+      <h3>Pilih Bulan</h3>
       <select id="bulanSelect" onchange="loadTabel()">
         <option value="Januari">Januari</option><option value="Februari">Februari</option>
         <option value="Maret">Maret</option><option value="April">April</option>
@@ -344,6 +348,7 @@
         <option value="November">November</option><option value="Desember">Desember</option>
       </select>
 
+      <h3>Tabel Data Kehadiran</h3>
       <div class="table-wrapper">
         <div id="tabelAbsen"></div>
       </div>
@@ -353,13 +358,13 @@
         <div id="tidakMasuk" style="margin-top:5px; color:#ff7675;">Semua hadir hari ini!</div>
       </div>
 
-      <h3>Rekapitulasi Bulanan</h3>
+      <h3>Rekap Bulanan</h3>
       <div class="table-wrapper">
         <div id="rekapBulanan">Pilih bulan...</div>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-top: 25px;">
-        <h3>Input Absen Harian</h3>
+        <h3>Isi Kehadiran Siswa Harian</h3>
         <select id="namaSiswaAbsenForm"></select>
         <select id="statusAbsenForm">
           <option value="Hadir">Hadir</option>
@@ -386,18 +391,25 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 <script>
 // --- KONFIGURASI FIREBASE ---
-const firebaseConfig = {  
-  apiKey: "AIzaSyA7foZX8BpYVX6JC1rOpTRiKOuCpmL8BPc",  
-  authDomain: "absensi-bintang-586a1.firebaseapp.com",  
-  databaseURL: "https://absensi-bintang-586a1-default-rtdb.asia-southeast1.firebasedatabase.app",  
-  projectId: "absensi-bintang-586a1",  
-  storageBucket: "absensi-bintang-586a1.appspot.com",  
-  messagingSenderId: "805938764052",  
-  appId: "1:805938764052:web:a59bf3afc8176308ea8a01"
-};  
-firebase.initializeApp(firebaseConfig);  
-const db = firebase.database();  
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDgr_nHqvpMsiG4lBkYckzxRErkskXj_6E",
+  authDomain: "laporanstartools-c18b2.firebaseapp.com",
+  databaseURL: "https://laporanstartools-c18b2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "laporanstartools-c18b2",
+  storageBucket: "laporanstartools-c18b2.firebasestorage.app",
+  messagingSenderId: "596585220522",
+  appId: "1:596585220522:web:d61e13c60daff6daca43d3",
+  measurementId: "G-L22M87LZY4"
+};
+
+// INIT
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.database();
 let kelasAktif = "";
+
 
 // --- SISTEM TEMA ---
 document.getElementById('modeToggle').addEventListener('click', ()=>{  
@@ -487,21 +499,43 @@ function simpanPassword(){
 }
 
 function loginKelas(){  
-  const pIn = document.getElementById("loginPw").value;  
-  db.ref("kelas").once("value", snap => {  
-    let auth = false;  
-    snap.forEach(c => {  
-      if(c.val().password === pIn){  
-        kelasAktif = c.key;  
-        localStorage.setItem("kelasAktif", kelasAktif);  
-        document.getElementById("loginBox").style.display = "none";  
-        document.getElementById("absenBox").style.display = "block";  
-        auth = true; loadTabel();  
-      }  
-    });  
-    if(!auth) alert("Password Salah!");  
-  });  
+  const namaKelas = document.getElementById("loginKelasNama").value.trim();
+  const pIn = document.getElementById("loginPw").value.trim();
+
+  if(!namaKelas || !pIn){
+    alert("Isi semua data!");
+    return;
+  }
+
+  db.ref("kelas/" + namaKelas).once("value").then(snap => {
+
+    if(!snap.exists()){
+      alert("Kelas tidak ditemukan!");
+      return;
+    }
+
+    const data = snap.val();
+
+    if(data.password === pIn){
+      kelasAktif = namaKelas;
+      localStorage.setItem("kelasAktif", kelasAktif);
+
+      document.getElementById("loginBox").style.display = "none";  
+      document.getElementById("setupForm").style.display = "none";
+      document.getElementById("absenBox").style.display = "block";  
+
+      loadTabel();
+    } else {
+      alert("Password salah!");
+    }
+
+  }).catch(err => {
+    console.error(err);
+    alert("Error login!");
+  });
 }
+
+
 
 function tambahMurid(){  
   const n = document.getElementById("namaMuridBaru").value;  
@@ -511,40 +545,74 @@ function tambahMurid(){
   });  
 }
 
+
 function loadTabel(){  
-  const bln = document.getElementById("bulanSelect").value;  
-  db.ref(`kelas/${kelasAktif}/siswa`).once("value", snap => {  
+  let bln = document.getElementById("bulanSelect").value;
+
+  // 🔥 FIX 1: auto set bulan kalau kosong
+  if(!bln){
+    bln = new Date().getMonth() + 1;
+    document.getElementById("bulanSelect").value = bln;
+  }
+
+  db.ref(`kelas/${kelasAktif}/siswa`).on("value", snap => {  
+
     let h = "<table><tr><th>Nama</th>";  
-    for(let i=1; i<=31; i++) h += `<th style="font-size:9px">${i}</th>`;  
+    for(let i=1; i<=31; i++) {
+      h += `<th style="font-size:9px">${i}</th>`;
+    }
     h += "</tr>";  
+
     let opts = "";  
+
     snap.forEach(c => {  
-      const n = c.key; opts += `<option value="${n}">${n}</option>`;  
+      const n = c.key;  
+      const safeName = n.replace(/\s/g, "_"); // 🔥 FIX 2: amanin ID
+
+      opts += `<option value="${n}">${n}</option>`;  
+
       h += `<tr><td style="font-weight:600; min-width:120px">${n}</td>`;  
-      for(let t=1; t<=31; t++) h += `<td id="${n}-${t}" style="font-size:10px; text-align:center">-</td>`;  
+
+      for(let t=1; t<=31; t++) {
+        h += `<td id="${safeName}-${t}" style="font-size:10px; text-align:center">-</td>`;
+      }
+
       h += "</tr>";  
     });  
+
     h += "</table>";  
+
     document.getElementById("tabelAbsen").innerHTML = h;  
     document.getElementById("namaSiswaAbsenForm").innerHTML = opts;  
-    
-    // Fill data
+
+    // 🔥 LOAD DATA ABSEN
     snap.forEach(c => {  
-      db.ref(`kelas/${kelasAktif}/siswa/${c.key}/absen/${bln}`).once("value", sA => {  
+      const safeName = c.key.replace(/\s/g, "_");
+
+      db.ref(`kelas/${kelasAktif}/siswa/${c.key}/absen/${bln}`).on("value", sA => {  
         sA.forEach(a => {  
-          const el = document.getElementById(`${c.key}-${a.key}`);  
-          if(el) {
+          const el = document.getElementById(`${safeName}-${a.key}`);  
+          
+          if(el){
             const st = a.val().status;
+
             el.innerText = st === "Hadir" ? "H" : st.charAt(0);
-            if(st !== "Hadir") el.style.color = "#ff7675";
+
+            if(st !== "Hadir"){
+              el.style.color = "#ff7675";
+            } else {
+              el.style.color = "#fff";
+            }
           }
         });  
       });  
     });
-    updateTidakMasuk(); loadRekapBulanan();
+
+    updateTidakMasuk();  
+    loadRekapBulanan();
+
   });  
 }
-
 
 function tambahAbsen(){  
   const n = document.getElementById("namaSiswaAbsenForm").value;  
@@ -624,7 +692,6 @@ function updateTidakMasuk(){
   });  
 }
 
-
 function hadirSemua(){  
   const b = document.getElementById("bulanSelect").value;  
   const t = new Date().getDate();  
@@ -638,7 +705,12 @@ function hadirSemua(){
     });  
 
     Promise.all(promises).then(() => {
-      loadTabel();
+
+      // 🔥 INI KUNCINYA
+      updateRekapBulanan().then(() => {
+        loadTabel();
+      });
+
     });
 
   });  
