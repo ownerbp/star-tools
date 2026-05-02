@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Murid</title>
+<title>Star Tools - SD</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 
@@ -45,44 +45,43 @@ body::before {
   opacity: 0.5;
 }
 
-header {
+
+@keyframes fadeDown {
+  from {opacity:0; transform:translateY(-30px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+/* HEADER */
+.header {
   text-align: center;
-  padding: 40px 20px;
-  font-size: 34px;
+  padding: 40px 20px 20px;
+  animation: fadeDown 0.6s ease;
+}
+
+.header h1 {
+  font-size: 40px;
   font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(to bottom, #fff, var(--primary));
+  background: linear-gradient(to right, #fff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(var(--text-glow));
 }
-
-.container { max-width: 900px; margin: auto; padding: 0 20px 60px; }
-
-/* Hero Section */
-.hero {
-  text-align: center;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 40px 20px;
-  border-radius: 30px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 30px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-.hero h1 { margin: 0; font-size: 28px; font-weight: 700; }
 
 .badge {
   background: var(--primary);
   color: #000;
-  padding: 5px 16px;
+  padding: 5px 15px;
   border-radius: 50px;
-  font-size: 11px;
   font-weight: 800;
+  font-size: 10px;
   display: inline-block;
-  margin-top: 15px;
+  margin-top: 10px;
   box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
 }
 
 /* Menu & Buttons */
@@ -136,24 +135,36 @@ button:active { transform: scale(0.98); }
 }
 
 /* Cards */
-
 .card {
-  display: none;
   background: var(--glass);
-  backdrop-filter: blur(25px);
-  padding: 35px;
-  border-radius: 32px;
+  padding: 20px;
+  border-radius: 20px;
   border: 1px solid var(--glass-border);
-  margin-top: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
 }
 
+.card:nth-child(1){ animation-delay: 0.2s; }
+.card:nth-child(2){ animation-delay: 0.4s; }
+
+.cardjudul {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.cardjudul:nth-child(1){ animation-delay: 0.2s; }
+.cardjudul:nth-child(2){ animation-delay: 0.4s; }
+
+
 h2 {
-  color: var(--primary);
-  font-size: 22px;
-  margin-top: 25px;
-  margin-bottom: 15px;
   text-align: center;
+  font-size: 18.72px;
 }
 
 input, select {
@@ -230,19 +241,39 @@ input[type="checkbox"] {
 .sponsor { font-size: 14px; margin-bottom: 5px; }
 .sponsor strong { color: var(--primary); }
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 </style>
 </head>
 <body class="dark">
 
 
-<header>Star Tools</header>
+<div class="header">
 <div class="container">
-
-
-<div class="hero">
-<h1>Dashboard Murid</h1>
-<div class="badge">SECURE ACCESS V1.5</div>
+  <h1>Star Tools</h1>
+  <div class="badge">Versi 1.6.0</div>
 </div>
+
+
+<div class="cardjudul">
+<p>Star Tools untuk SD membantu siswa memahami dasar matematika dengan cara yang sederhana dan mudah digunakan. Fitur disusun agar siswa bisa belajar secara bertahap sesuai kelasnya.</p>
+</div>
+
 
 <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
@@ -256,12 +287,12 @@ input[type="checkbox"] {
   <button id="btnKelas5">Kelas 5</button>
   <button id="btnKelas6">Kelas 6</button>
   <h2>Kembali Pilih Jenjang</h2>
-  <button onclick="goPage('murid.html')">Kembali</button>
+  <button onclick="goPage('mtk.html')">Kembali</button>
 </div>
 
 
 <!-- SD -->
-<div id="kelas1" style="display:none">
+<div id="kelas1" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('sd1-2')">Bangun Ruang</button>
   <button onclick="showCard('bandingangka')">Perbandingan Angka</button>
@@ -273,7 +304,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Geometri -->
-<div class="card" id="sd1-2">
+<div class="card" id="sd1-2" style="display:none">
 <h2>Geometri SD Kelas 1-2</h2>
   <p>Klik bangun datar untuk tahu nama dan jumlah sisinya.</p>
   <button onclick="showShapeInfo('persegi')">Persegi</button>
@@ -284,7 +315,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Bandingkan Angka -->
-<div class="card" id="bandingangka">
+<div class="card" id="bandingangka" style="display:none">
   <h2>Bandingin Angka</h2>
   <p>Bandingkan Angka Mana Yang Lebih Besar</p>
   <input type="number" id="angka1" placeholder="Angka pertama">
@@ -294,7 +325,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Pecahan -->
-<div class="card" id="pecahan">
+<div class="card" id="pecahan" style="display:none">
 <h2>Mengenal Pecahan</h2>
 <p>Klik gambar untuk belajar 1/2, 1/3, 1/4</p>
 <div id="pecahanVisual"></div>
@@ -303,7 +334,7 @@ input[type="checkbox"] {
 
 
 <!-- SD -->
-<div id="kelas2" style="display:none">
+<div id="kelas2" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('bandingsimbol')">Perbandingan Angka (simbol)</button>
   <button onclick="showCard('penyebutan')">Penyebutan Angka</button>
@@ -315,7 +346,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Bandingkan Simbol -->
-<div class="card" id="bandingsimbol">
+<div class="card" id="bandingsimbol" style="display:none">
   <h2>Bandingin Angka</h2>
   <p>Bandingkan Angka Menggunakan Simbol</p>
   <input type="number" id="angkasimbol1" placeholder="Angka pertama">
@@ -325,7 +356,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Penyebutan Angka -->
-<div class="card" id="penyebutan">
+<div class="card" id="penyebutan" style="display:none">
   <h2>Angka ke Penyebutan</h2>
   <input type="number" id="angkaInput" class="input" placeholder="Masukkan angka...">
   <button onclick="convertAngka()">Jawaban</button>
@@ -333,7 +364,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Penjumlahan & Pengurangan -->
-<div class="card" id="penjumlahan2">
+<div class="card" id="penjumlahan2" style="display:none">
 <h2>Penjumlahan & Pengurangan</h2>
 <input type="number" id="angka1_k2" placeholder="Angka pertama">
 <input type="number" id="angka2_k2" placeholder="Angka kedua">
@@ -343,7 +374,7 @@ input[type="checkbox"] {
 
 
 <!-- SD -->
-<div id="kelas3" style="display:none">
+<div id="kelas3" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('pengenalanpecahan')">Pengenalan Pecahan</button>
   <button onclick="showCard('nilaiangka')">Nilai Tempat</button>
@@ -355,7 +386,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Pengenalan Pecahan -->
-<div class="card" id="pengenalanpecahan">
+<div class="card" id="pengenalanpecahan" style="display:none">
   <h2>Pengenalan Pecahan</h2>
   <p>Pecahan adalah bagian dari keseluruhan.</p>
   <p>Contoh: 1/2 artinya 1 dari 2 bagian.</p>
@@ -369,7 +400,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Nilai Tempat -->
-<div class="card" id="nilaiangka">
+<div class="card" id="nilaiangka" style="display:none">
   <h2>Nilai Tempat</h2>
   <p>Masukkan angka untuk melihat nilai tempatnya</p>
   <input type="number" id="inputAngka" class="input" placeholder="Contoh: 2345">
@@ -378,7 +409,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Operasi Pecahan -->
-<div class="card" id="pecahanOperasi">
+<div class="card" id="pecahanOperasi" style="display:none">
 <h2>Operasi Pecahan</h2>
 <input type="number" id="num1_p3" placeholder="Pembilang 1">
 <input type="number" id="num2_p3" placeholder="Penyebut 1">
@@ -394,7 +425,7 @@ input[type="checkbox"] {
 
 
 <!-- SD -->
-<div id="kelas4" style="display:none">
+<div id="kelas4" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('bilanganbesar')">Bilangan Cacah</button>
   <button onclick="showCard('bulatbilangan')">Pembulatan Bilangan</button>
@@ -406,7 +437,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Bilangan Cacah Besar -->
-<div class="card" id="bilanganbesar">
+<div class="card" id="bilanganbesar" style="display:none">
   <h2>Bilangan Cacah Besar</h2>
   <p>Masukkan angka besar (hingga triliun)</p>
   <input type="number" id="inputBesar" class="input" placeholder="Contoh: 123456789">
@@ -416,7 +447,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Pembulatan Bilangan -->
-<div class="card" id="bulatbilangan">
+<div class="card" id="bulatbilangan" style="display:none">
 <h2>Pembulatan Bilangan</h2>
 <input type="number" id="angka" placeholder="Masukkan angka">
 <select id="tipePembulatan">
@@ -428,7 +459,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Operasi Bilangan Besar -->
-<div class="card" id="operasiBesar">
+<div class="card" id="operasiBesar" style="display:none">
 <h2>Operasi Bilangan Besar</h2>
 <input type="number" id="angka1_k4" placeholder="Angka pertama">
 <input type="number" id="angka2_k4" placeholder="Angka kedua">
@@ -442,7 +473,7 @@ input[type="checkbox"] {
 
 
 <!-- SD -->
-<div id="kelas5" style="display:none">
+<div id="kelas5" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('kpk')">Kelipatan Persekutuan Terkecil</button>
   <button onclick="showCard('fpb')">Faktor Persekutuan Terbesar</button>
@@ -454,7 +485,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Kpk -->
-<div class="card" id="kpk">
+<div class="card" id="kpk" style="display:none">
     <h2>Kalkulator KPK</h2>
     <input type="number" id="num1" placeholder="Masukkan angka pertama" />
     <input type="number" id="num2" placeholder="Masukkan angka kedua" />
@@ -465,7 +496,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Fpb -->
-<div class="card" id="fpb">
+<div class="card" id="fpb" style="display:none">
 <h2>Kalkulator FPB</h2>
 <input type="number" id="angka1" placeholder="Masukkan angka pertama">
 <input type="number" id="angka2" placeholder="Masukkan angka kedua">
@@ -477,7 +508,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Perkalian & Pembagian -->
-<div class="card" id="perkalianBesar">
+<div class="card" id="perkalianBesar" style="display:none">
 <h2>Perkalian & Pembagian</h2>
 <input type="number" id="angka1_k5" placeholder="Angka pertama">
 <input type="number" id="angka2_k5" placeholder="Angka kedua">
@@ -491,7 +522,7 @@ input[type="checkbox"] {
 
 
 <!-- SD -->
-<div id="kelas6" style="display:none">
+<div id="kelas6" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('pecahanFeature')">Pecahan Sederhana</button>
   <button onclick="showCard('volume')">Hitung Volume</button>
@@ -503,7 +534,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Pecahan Sederhana -->
-<div class="card" id="pecahanFeature">
+<div class="card" id="pecahanFeature" style="display:none">
   <h2>Pecahan Sederhana</h2>
   <label>Pecahan 1:</label>
   <input type="number" id="num1_p1" placeholder="Pembilang"> /
@@ -525,7 +556,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Volume -->
-<div class="card" id="volume">
+<div class="card" id="volume" style="display:none">
 <h2>Hitung Volume</h2>
 <div class="example-box">
 <p>Klik opsi bangun, lalu masukan angka yang kamu inginkan.</p>
@@ -537,7 +568,7 @@ input[type="checkbox"] {
 <input type="number" id="lebar" placeholder="Lebar balok">
 <input type="number" id="tinggi" placeholder="Tinggi balok">
 <div class="label-checkbox">Tampilkan Cara
-  <input type="checkbox" id="modeSatuan">
+  <input type="checkbox" id="modeVolume">
 </div>
 <button onclick="calcVolume()">Jawaban</button>
 <button onclick="copyVolume()">Copy Hasil</button>
@@ -547,7 +578,7 @@ input[type="checkbox"] {
 </div>
 
 <!-- Operasi Pecahan Lanjutan -->
-<div class="card" id="pecahanLanjutan">
+<div class="card" id="pecahanLanjutan" style="display:none">
 <h2>Operasi Pecahan Lanjutan</h2>
 <input type="number" id="num1_p6" placeholder="Pembilang 1">
 <input type="number" id="num2_p6" placeholder="Penyebut 1">
@@ -561,6 +592,8 @@ input[type="checkbox"] {
 </select>
 <button onclick="hitungPecahan6()">Jawaban</button>
 <div class="result" id="hasilPecahan6"></div>
+</div>
+</div>
 </div>
 
 
@@ -1123,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas1){
     btnKelas1.addEventListener('click', () => {
       hideAllModes();
-      if(kelas1) kelas1.style.display = 'block';
+      if(kelas1) kelas1.style.display = 'flex';
     });
   }
 
@@ -1132,7 +1165,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas2){
     btnKelas2.addEventListener('click', () => {
       hideAllModes();
-      if(kelas2) kelas2.style.display = 'block';
+      if(kelas2) kelas2.style.display = 'flex';
     });
   }
 
@@ -1141,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas3){
     btnKelas3.addEventListener('click', () => {
       hideAllModes();
-      if(kelas3) kelas3.style.display = 'block';
+      if(kelas3) kelas3.style.display = 'flex';
     });
   }
 
@@ -1150,7 +1183,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas4){
     btnKelas4.addEventListener('click', () => {
       hideAllModes();
-      if(kelas4) kelas4.style.display = 'block';
+      if(kelas4) kelas4.style.display = 'flex';
     });
   }
 
@@ -1159,7 +1192,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas5){
     btnKelas5.addEventListener('click', () => {
       hideAllModes();
-      if(kelas5) kelas5.style.display = 'block';
+      if(kelas5) kelas5.style.display = 'flex';
     });
   }
 
@@ -1168,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas6){
     btnKelas6.addEventListener('click', () => {
       hideAllModes();
-      if(kelas6) kelas6.style.display = 'block';
+      if(kelas6) kelas6.style.display = 'flex';
     });
   }
 
@@ -1206,7 +1239,7 @@ function backToMode(){
 
   // Tampilkan menu pilih mode
   const pilihMode = document.getElementById('pilihMode');
-  if(pilihMode) pilihMode.style.display = 'block';
+  if(pilihMode) pilihMode.style.display = 'flex';
 }
 
 

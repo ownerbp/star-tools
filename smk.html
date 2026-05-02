@@ -45,44 +45,36 @@ body::before {
   opacity: 0.5;
 }
 
-header {
+.header {
   text-align: center;
-  padding: 40px 20px;
-  font-size: 34px;
+  padding: 40px 20px 20px;
+  animation: fadeDown 0.6s ease;
+}
+
+.header h1 {
+  font-size: 40px;
   font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(to bottom, #fff, var(--primary));
+  background: linear-gradient(to right, #fff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(var(--text-glow));
 }
-
-.container { max-width: 900px; margin: auto; padding: 0 20px 60px; }
-
-/* Hero Section */
-.hero {
-  text-align: center;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 40px 20px;
-  border-radius: 30px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 30px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-.hero h1 { margin: 0; font-size: 28px; font-weight: 700; }
 
 .badge {
   background: var(--primary);
   color: #000;
-  padding: 5px 16px;
+  padding: 5px 15px;
   border-radius: 50px;
-  font-size: 11px;
   font-weight: 800;
+  font-size: 10px;
   display: inline-block;
-  margin-top: 15px;
+  margin-top: 10px;
   box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
 }
 
 /* Menu & Buttons */
@@ -136,24 +128,37 @@ button:active { transform: scale(0.98); }
 }
 
 /* Cards */
-
 .card {
   display: none;
   background: var(--glass);
-  backdrop-filter: blur(25px);
-  padding: 35px;
-  border-radius: 32px;
+  padding: 20px;
+  border-radius: 20px;
   border: 1px solid var(--glass-border);
-  margin-top: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
 }
 
+.card:nth-child(1){ animation-delay: 0.2s; }
+.card:nth-child(2){ animation-delay: 0.4s; }
+
+.cardjudul {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.cardjudul:nth-child(1){ animation-delay: 0.2s; }
+.cardjudul:nth-child(2){ animation-delay: 0.4s; }
+
+
 h2 {
-  color: var(--primary);
-  font-size: 22px;
-  margin-top: 25px;
-  margin-bottom: 15px;
   text-align: center;
+  font-size: 18.72px;
 }
 
 input, select {
@@ -230,19 +235,39 @@ input[type="checkbox"] {
 .sponsor { font-size: 14px; margin-bottom: 5px; }
 .sponsor strong { color: var(--primary); }
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 </style>
 </head>
 <body class="dark">
 
 
-<header>Star Tools</header>
+<div class="header">
 <div class="container">
-
-
-<div class="hero">
-<h1>Dashboard Murid</h1>
-<div class="badge">SECURE ACCESS V1.5</div>
+  <h1>Star Tools</h1>
+  <div class="badge">Versi 1.6.0</div>
 </div>
+
+
+<div class="cardjudul">
+<p>Star Tools untuk SMK membantu dalam perhitungan dan melatih ketelitian. Dapat digunakan sebagai alat bantu belajar yang lebih praktis dan efisien.</p>
+</div>
+
 
 <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
@@ -258,7 +283,7 @@ input[type="checkbox"] {
 
 
 <!-- SMK -->
-<div id="kelas10" style="display:none">
+<div id="kelas10" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('nilai')">Konversi Nilai</button>
   <button onclick="showCard('trigo')">Trigonometri</button>
@@ -355,7 +380,7 @@ x − y + z = 2<br>
 
 
 <!-- SMK -->
-<div id="kelas11" style="display:none">
+<div id="kelas11" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('turunanCard')">Derivatif</button>
   <button onclick="showCard('Polinomial')">Polinomial</button>
@@ -394,7 +419,7 @@ x − y + z = 2<br>
 
 
 <!-- SMK -->
-<div id="kelas12" style="display:none">
+<div id="kelas12" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('peluang')">Peluang</button>
   <button onclick="showCard('limitCard')">Limit Trigonometri</button>
@@ -1078,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas10){
     btnKelas10.addEventListener('click', () => {
       hideAllModes();
-      if(kelas10) kelas10.style.display = 'block';
+      if(kelas10) kelas10.style.display = 'flex';
     });
   }
 
@@ -1087,7 +1112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas11){
     btnKelas11.addEventListener('click', () => {
       hideAllModes();
-      if(kelas11) kelas11.style.display = 'block';
+      if(kelas11) kelas11.style.display = 'flex';
     });
   }
 
@@ -1096,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas12){
     btnKelas12.addEventListener('click', () => {
       hideAllModes();
-      if(kelas12) kelas12.style.display = 'block';
+      if(kelas12) kelas12.style.display = 'flex';
     });
   }
 
@@ -1128,7 +1153,7 @@ function backToMode(){
 
   // Tampilkan menu pilih mode
   const pilihMode = document.getElementById('pilihMode');
-  if(pilihMode) pilihMode.style.display = 'block';
+  if(pilihMode) pilihMode.style.display = 'flex';
 }
 
 

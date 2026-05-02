@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Tools - Total Nilai</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --primary: #ffd369;
+      --secondary: #2a5298;
+      --accent: #f3c969;
+      --dark-bg: #0f172a;
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-glow: 0 0 10px rgba(255, 211, 105, 0.5);
+    }
+
+    * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: #e2e8f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --dark-bg: #f8fafc;
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-border: rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    /* Cosmic BG Effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 50%);
+      z-index: -1;
+      opacity: 0.5;
+    }
+
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  animation: fadeDown 0.6s ease;
+}
+
+.header h1 {
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(to right, #fff, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge {
+  background: var(--primary);
+  color: #000;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 10px;
+  display: inline-block;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+}
+
+    /* Menu Navigation */
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .menu button {
+      background: var(--glass);
+      color: white;
+      width: 100%;
+      border: 1px solid var(--glass-border);
+      padding: 20px 15px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    body.light .menu button { color: #1e3c72; border-color: #ddd; }
+
+    .menu button:hover {
+      background: var(--primary);
+      color: #000;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(238, 195, 109, 0.3);
+    }
+
+    /* Card Styling */
+.card {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.card:nth-child(1){ animation-delay: 0.2s; }
+.card:nth-child(2){ animation-delay: 0.4s; }
+
+.cardjudul {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.cardjudul:nth-child(1){ animation-delay: 0.2s; }
+.cardjudul:nth-child(2){ animation-delay: 0.4s; }
+
+
+h2 {
+  text-align: center;
+  font-size: 18.72px;
+}
+
+ h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    body.light input, body.light select { background: white; color: #333; border: 1px solid #ccc; }
+
+    .action-btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 15px;
+      border-radius: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover { background: var(--primary); color: #000; }
+
+    /* Tables Style */
+    .table-wrapper {
+      margin-top: 20px;
+      border-radius: 15px;
+      overflow-x: auto;
+      border: 1px solid var(--glass-border);
+      background: rgba(0,0,0,0.2);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th { background: rgba(255,211,105,0.15); padding: 15px; text-align: left; font-size: 13px; color: var(--primary); }
+    td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 13px; }
+
+    .result-box {
+      background: rgba(255, 235, 153, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border-left: 5px solid var(--primary);
+    }
+
+    .mode-btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto 30px;
+    }
+
+
+/* Footer */
+.footer-wrapper {
+  margin-top: auto;
+  padding: 50px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.sponsor { font-size: 14px; margin-bottom: 5px; }
+.sponsor strong { color: var(--primary); }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--dark-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+</style>
+</head>
+<body class="dark">
+
+<div class="header">
+<div class="container">
+  <h1>Star Tools</h1>
+  <div class="badge">Versi 1.6.0</div>
+</div>
+
+
+<div class="cardjudul">
+<p>Star Tools untuk SMP membantu siswa memahami konsep matematika dengan lebih terstruktur. Cocok untuk latihan dan memperkuat pemahaman materi yang lebih kompleks.</p>
+</div>
+
+
+  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
+
+
+  <div class="card">
+    <h2>Rekapitulasi Total Nilai</h2>
+    <div class="result" style="margin-bottom: 20px;">
+      <label>Tambah Siswa Baru:</label>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="inputNamaSiswa" placeholder="Nama Lengkap">
+        <button class="action-btn" style="width:150px; margin:10px 0" onclick="tambahSiswa()">Tambah</button>
+      </div>
+    </div>
+
+    <label>Pilih Siswa & Masukkan Nilai:</label>
+    <select id="dropdownMurid"><option value="">Pilih Siswa</option></select>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+      <input type="number" id="nilaiUtama" placeholder="Nilai Utama">
+      <input type="number" id="nilaiTambahan" placeholder="Nilai Tambahan">
+    </div>
+    
+    <button class="action-btn" onclick="tambahNilai()">Simpan & Urutkan</button>
+    
+    <div class="table-wrapper">
+      <table id="tableNilaiFull">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Nama Siswa</th>
+            <th>Total Skor</th>
+          </tr>
+        </thead>
+        <tbody id="tabelUrutNilai"></tbody>
+      </table>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
+      <button class="action-btn btn-secondary" onclick="resetNilai()">Reset Semua</button>
+      <button class="action-btn" style="background:#27ae60; color:white;" onclick="exportPDF()">Export PDF</button>
+    </div>
+  </div>
+
+
+    <div class="menu">
+    <div class="card">
+    <h2>Kembali Pilih Fitur</h2>
+    <button onclick="logoutSekertaris()">Kembali</button>
+   </div>
+  </div>
+
+<div class="footer-wrapper">
+  <div class="sponsor">Created By <strong>Star Prosperous</strong></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+// UI Logic
+document.getElementById('modeToggle').addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  document.body.classList.toggle('light');
+});
+
+function showCard(id){
+  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+  const target = document.getElementById(id);
+  target.style.display='block';
+  target.scrollIntoView({ behavior: 'smooth' });
+}
+
+
+
+// --- LOGIKA TOTAL NILAI ---
+let muridList = []; let dataNilai = [];  
+function tambahSiswa(){  
+  const n = document.getElementById("inputNamaSiswa").value.trim();  
+  if(!n || muridList.includes(n)) return;  
+  muridList.push(n); updateDropdown();  
+  document.getElementById("inputNamaSiswa").value = "";  
+}
+
+function updateDropdown(){  
+  const d = document.getElementById("dropdownMurid");  
+  d.innerHTML = '<option value="">-- Pilih Siswa --</option>';  
+  muridList.forEach(n => { d.innerHTML += `<option value="${n}">${n}</option>`; });  
+}
+
+function tambahNilai(){  
+  const n = document.getElementById("dropdownMurid").value;  
+  const u = parseFloat(document.getElementById("nilaiUtama").value) || 0;  
+  const t = parseFloat(document.getElementById("nilaiTambahan").value) || 0;  
+  const tot = u + t;  
+  const idx = dataNilai.findIndex(x => x.nama === n);  
+  if(idx >= 0) dataNilai[idx].total = tot; else dataNilai.push({nama:n, total:tot});  
+  renderUrutNilai();  
+}
+
+function renderUrutNilai(){  
+  dataNilai.sort((a,b) => b.total - a.total);  
+  const b = document.getElementById("tabelUrutNilai"); b.innerHTML = "";  
+  dataNilai.forEach((d,i) => {  
+    b.innerHTML += `<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.total}</td></tr>`;  
+  });  
+}
+
+function resetNilai(){ dataNilai=[]; muridList=[]; updateDropdown(); renderUrutNilai(); }
+
+function exportPDF(){  
+  let txt = "LAPORAN TOTAL NILAI SISWA\n========================\n\nRank\tNama\tTotal\n";  
+  dataNilai.forEach((d,i) => { txt += `${i+1}\t${d.nama}\t${d.total}\n`; });  
+  const blob = new Blob([txt], {type:"text/plain"});  
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Laporan_Nilai.txt"; a.click();  
+}
+
+
+function logoutSekertaris() {
+  localStorage.clear();
+  window.location.href = "pendukung.html";
+}
+</script>
+
+</body>
+</html>

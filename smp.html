@@ -45,33 +45,26 @@ body::before {
   opacity: 0.5;
 }
 
-header {
+
+.header {
   text-align: center;
-  padding: 40px 20px;
-  font-size: 34px;
+  padding: 40px 20px 20px;
+  animation: fadeDown 0.6s ease;
+}
+
+.header h1 {
+  font-size: 40px;
   font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(to bottom, #fff, var(--primary));
+  background: linear-gradient(to right, #fff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(var(--text-glow));
 }
 
-.container { max-width: 900px; margin: auto; padding: 0 20px 60px; }
-
-/* Hero Section */
-.hero {
-  text-align: center;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 40px 20px;
-  border-radius: 30px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 30px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
 }
-
-.hero h1 { margin: 0; font-size: 28px; font-weight: 700; }
 
 .badge {
   background: var(--primary);
@@ -136,24 +129,36 @@ button:active { transform: scale(0.98); }
 }
 
 /* Cards */
-
 .card {
   display: none;
   background: var(--glass);
-  backdrop-filter: blur(25px);
-  padding: 35px;
-  border-radius: 32px;
+  padding: 20px;
+  border-radius: 20px;
   border: 1px solid var(--glass-border);
-  margin-top: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
 }
 
+.card:nth-child(1){ animation-delay: 0.2s; }
+.card:nth-child(2){ animation-delay: 0.4s; }
+
+.cardjudul {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.cardjudul:nth-child(1){ animation-delay: 0.2s; }
+.cardjudul:nth-child(2){ animation-delay: 0.4s; }
+
 h2 {
-  color: var(--primary);
-  font-size: 22px;
-  margin-top: 25px;
-  margin-bottom: 15px;
   text-align: center;
+  font-size: 18.72px;
 }
 
 input, select {
@@ -230,19 +235,39 @@ input[type="checkbox"] {
 .sponsor { font-size: 14px; margin-bottom: 5px; }
 .sponsor strong { color: var(--primary); }
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 </style>
 </head>
 <body class="dark">
 
 
-<header>Star Tools</header>
+<div class="header">
 <div class="container">
-
-
-<div class="hero">
-<h1>Dashboard Murid</h1>
-<div class="badge">SECURE ACCESS V1.5</div>
+  <h1>Star Tools</h1>
+  <div class="badge">Versi 1.6.0</div>
 </div>
+
+
+<div class="cardjudul">
+<p>Star Tools untuk SMP membantu siswa memahami konsep matematika dengan lebih terstruktur. Cocok untuk latihan dan memperkuat pemahaman materi yang lebih kompleks.</p>
+</div>
+
 
 <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
@@ -258,7 +283,7 @@ input[type="checkbox"] {
 
 
 <!-- SMP -->
-<div id="kelas7" style="display:none">
+<div id="kelas7" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('bilanganBulatFeature')">Bilangan Bulat</button>
   <button onclick="showCard('aljabar-card')">Bentuk Aljabar</button>
@@ -302,7 +327,7 @@ input[type="checkbox"] {
 
 
 <!-- SMP -->
-<div id="kelas8" style="display:none">
+<div id="kelas8" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('bangunRuangLengkung')">Ruang Lengkung</button>
   <button onclick="showCard('cartesius')">Kordinat Cartsesius</button>
@@ -355,7 +380,7 @@ input[type="checkbox"] {
 
 
 <!-- SMP -->
-<div id="kelas9" style="display:none">
+<div id="kelas9" class="mode" style="display:none">
   <h2>Semester 1</h2>
   <button onclick="showCard('transformasi')">Transformasi Geometri</button>
   <button onclick="showCard('persamaanKuadrat')">Persamaan Kuadrat</button>
@@ -814,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas7){
     btnKelas7.addEventListener('click', () => {
       hideAllModes();
-      if(kelas7) kelas7.style.display = 'block';
+      if(kelas7) kelas7.style.display = 'flex';
     });
   }
 
@@ -823,7 +848,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas8){
     btnKelas8.addEventListener('click', () => {
       hideAllModes();
-      if(kelas8) kelas8.style.display = 'block';
+      if(kelas8) kelas8.style.display = 'flex';
     });
   }
 
@@ -832,7 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(btnKelas9){
     btnKelas9.addEventListener('click', () => {
       hideAllModes();
-      if(kelas9) kelas9.style.display = 'block';
+      if(kelas9) kelas9.style.display = 'flex';
     });
   }
 
@@ -864,7 +889,7 @@ function backToMode(){
 
   // Tampilkan menu pilih mode
   const pilihMode = document.getElementById('pilihMode');
-  if(pilihMode) pilihMode.style.display = 'block';
+  if(pilihMode) pilihMode.style.display = 'flex';
 }
 
 

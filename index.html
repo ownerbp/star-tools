@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools V1.5</title>
+<title>Star Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <style>
 :root {
   --primary: #ffd369;
-  --secondary: #2a5298;
-  --accent: #f3c969;
   --dark-bg: #0f172a;
   --glass: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --input-bg: rgba(15, 23, 42, 0.6);
 }
 
-* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+* { box-sizing: border-box; transition: 0.3s; }
+
 
 body {
   margin: 0;
@@ -48,26 +51,19 @@ body::before {
   opacity: 0.4;
 }
 
-/* Header Section */
-.header-section {
+/* HEADER */
+.header {
   text-align: center;
-  padding: 50px 20px 20px;
-  animation: fadeInDown 0.8s ease;
+  padding: 40px 20px 20px;
+  animation: fadeDown 0.6s ease;
 }
 
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.main-title {
-  font-size: 45px;
+.header h1 {
+  font-size: 40px;
   font-weight: 800;
-  margin: 0;
   background: linear-gradient(to right, #fff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: -1px;
 }
 
 .badge {
@@ -82,129 +78,56 @@ body::before {
   box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
 }
 
-/* Container */
+/* CONTAINER */
 .container {
   max-width: 500px;
   margin: auto;
   padding: 20px;
-  width: 100%;
-  animation: fadeInUp 0.8s ease 0.2s both;
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Hero Section (Vision & Mission) */
-.hero {
+/* CARD */
+.card {
   background: var(--glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 30px;
-  border-radius: 28px;
+  padding: 25px;
+  border-radius: 20px;
   border: 1px solid var(--glass-border);
-  margin-bottom: 25px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
 }
 
-.hero h1 { 
-  color: var(--primary); 
-  font-size: 20px;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.hero h1::before, .hero h1::after { content: "✨"; font-size: 14px; }
-
-.visi-misi {
-  font-size: 13px;
-  line-height: 1.7;
-  opacity: 0.85;
-}
-
-.visi-misi ul { padding-left: 20px; margin: 10px 0; list-style-type: '⚡ '; }
-
-/* Form Card */
-#formProfil {
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 35px;
-  border-radius: 28px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-h2 { 
-  font-size: 22px; 
-  font-weight: 700;
-  margin-bottom: 25px; 
-  text-align: center;
-  letter-spacing: 0.5px;
-}
-
-input, select {
+/* MAPEL BUTTON */
+.mapel-btn {
   width: 100%;
-  padding: 16px 20px;
-  margin: 12px 0;
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  background: var(--input-bg);
-  color: inherit;
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
-}
-
-input:focus, select:focus {
-  border-color: var(--primary);
-  background: rgba(255,255,255,0.05);
-  box-shadow: 0 0 0 4px rgba(255, 211, 105, 0.15);
-}
-
-body.light input, body.light select {
-  border: 1px solid #cbd5e1;
-}
-
-button[type="submit"] {
-  background: linear-gradient(135deg, var(--primary), #e6b85c);
-  color: #000;
+  padding: 16px;
+  margin: 10px 0;
+  border-radius: 15px;
   border: none;
-  padding: 18px;
+  background: linear-gradient(135deg, #4fc3f7, #0288d1);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mapel-btn:hover {
+  transform: scale(1.03);
+}
+
+/* LOGOUT */
+.logout-btn {
   width: 100%;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 15px;
+  border: none;
+  background: #ff5252;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 20px;
-  box-shadow: 0 10px 25px rgba(255, 211, 105, 0.2);
 }
 
-button[type="submit"]:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(255, 211, 105, 0.4);
-}
+/* FOOTER */
 
-/* Mode Toggle */
-.mode-btn {
-  background: var(--glass);
-  color: inherit;
-  border: 1px solid var(--glass-border);
-  padding: 10px 24px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  margin: 0 auto 25px;
-  display: block;
-}
-
-/* Footer */
 .footer-wrapper {
   margin-top: auto;
   padding: 50px 20px;
@@ -216,7 +139,6 @@ button[type="submit"]:hover {
 .sponsor { font-size: 14px; margin-bottom: 5px; }
 .sponsor strong { color: var(--primary); }
 
-/* Report Link */
 .report-link {
   color: var(--primary);
   text-decoration: none;
@@ -231,47 +153,117 @@ button[type="submit"]:hover {
 
 .report-link:hover { background: rgba(255, 211, 105, 0.1); }
 
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+/* hover */
+.auth-btn:hover {
+  background: #4fc3f7;
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* klik */
+.auth-btn:active {
+  transform: scale(0.95);
+}
+
 </style>
 </head>
-<body class="dark">
+<body>
 
-<div class="header-section">
-  <h1 class="main-title">Star Tools</h1>
-  <div class="badge">SECURE ACCESS V1.5</div>
+ <div class="auth-btn" id="loginBtn" onclick="goLogin()">
+    Sign In
+  </div>
+
+<div class="header">
+  <h1>Star Tools</h1>
+  <div class="badge">Versi 1.6.0</div>
 </div>
 
+
+  <!-- VISI MISI -->
 <div class="container">
+<div class="card">
   <div class="hero">
     <h1>Platform Edukasi Masa Depan</h1>
     <div class="visi-misi">
-      <p><strong>Visi:</strong> Digitalisasi pendidikan yang cerdas, inklusif, dan menginspirasi untuk generasi emas.</p>
+      <p><strong>Visi:</strong> Menjadi platform pendidikan hybrid yang merata, inovatif, dan transparan dalam menciptakan generasi yang cerdas, berpikir kritis, serta siap menghadapi dunia kerja maupun membangun usaha secara mandiri.</p>
       <p><strong>Misi:</strong></p>
       <ul>
-        <li>Akses tanpa batas ke alat bantu edukasi digital.</li>
-        <li>Integrasi monitoring cerdas antara Guru & Siswa.</li>
-        <li>Ekosistem berkelanjutan berbasis Sains & Teknologi.</li>
+    <li>Menyediakan sistem pembelajaran hybrid yang fleksibel dan dapat diakses oleh semua kalangan.</li>
+    <li>Mendorong pemerataan pendidikan melalui teknologi yang inklusif dan mudah digunakan.</li>
+    <li>Mengembangkan pola pikir kritis, kreatif, dan solutif pada setiap pengguna.</li>
+    <li>Mempersiapkan generasi yang siap kerja maupun mampu menciptakan peluang usaha sendiri.</li>
+    <li>Meningkatkan transparansi dalam ekosistem pendidikan, khususnya di lingkungan sekolah.</li>
+    <li>Menghadirkan fitur pembelajaran yang relevan dengan kebutuhan dunia nyata dan perkembangan teknologi.</li>
       </ul>
       <div style="text-align: center;">
         <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">⚠️ Report System Bug</a>
       </div>
     </div>
   </div>
+</div>
 
-  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
-  <form id="formProfil">
-    <h2>Akses Dashboard</h2>
-    <input type="text" id="nama" placeholder="Nama Lengkap Anda" required>
-    <select id="role" required>
-      <option value="" disabled selected>Pilih Peran Akun</option>
-      <option value="guru">Guru</option>
-      <option value="murid">Murid</option>
-      <option value="bendahara">Bendahara</option>
-      <option value="sekertaris">Sekertaris</option>
-    </select>
-    <input type="text" id="sekolah" placeholder="Institusi / Nama Sekolah" required>
-    <button type="submit">Autentikasi Sekarang</button>
-  </form>
+  <!-- PILIH MAPEL -->
+  <div class="card">
+    <h3>Pilih Mata Pelajaran</h3>
+
+    <button class="mapel-btn" onclick="goMapel('mtk.html')">
+      Matematika
+    </button>
+
+    <button class="mapel-btn" onclick="goMapel('pendukung.html')">
+      Pendukung
+    </button>
+
+    <button class="logout-btn" onclick="logout()">
+      Logout
+    </button>
+  </div>
+</div>
+
 
   <div class="footer-wrapper">
     <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
@@ -279,48 +271,78 @@ button[type="submit"]:hover {
   </div>
 </div>
 
+
 <script>
-// --- LOGIKA JAVASCRIPT (TIDAK DIUBAH) ---
-const form = document.getElementById('formProfil');
-let profil = JSON.parse(localStorage.getItem('profil'));
+// CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyDgr_nHqvpMsiG4lBkYckzxRErkskXj_6E",
+  authDomain: "laporanstartools-c18b2.firebaseapp.com",
+  databaseURL: "https://laporanstartools-c18b2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "laporanstartools-c18b2",
+  storageBucket: "laporanstartools-c18b2.firebasestorage.app",
+  messagingSenderId: "596585220522",
+  appId: "1:596585220522:web:d61e13c60daff6daca43d3"
+};
 
-function cekLogin() {
-  if(profil && profil.nama && profil.role && profil.sekolah) {
-    if(profil.role === "guru") window.location.href = "guru.html";
-    else if(profil.role === "bendahara") window.location.href = "bendahara.html";
-    else if(profil.role === "sekertaris") window.location.href = "sekertaris.html";
-    else if(profil.role === "murid") window.location.href = "murid.html";
+firebase.initializeApp(firebaseConfig);
+
+let isLogin = false;
+
+firebase.auth().onAuthStateChanged(user => {
+  if(user){
+    isLogin = true;
+
+    // sembunyiin tombol login
+    document.getElementById("loginBtn").style.display = "none";
+
+  } else {
+    isLogin = false;
+
+    // tampilkan tombol login
+    document.getElementById("loginBtn").style.display = "block";
   }
-}
-cekLogin();
+});
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const data = {
-    nama: document.getElementById('nama').value.trim(),
-    role: document.getElementById('role').value,
-    sekolah: document.getElementById('sekolah').value.trim()
-  };
+firebase.auth().onAuthStateChanged(user => {
+  if(user){
+    isLogin = true;
+  } else {
+    isLogin = false;
+  }
+});
 
-  if(!data.nama || !data.role || !data.sekolah){
-    alert("Mohon lengkapi semua data!");
+// pindah halaman
+function goMapel(page){
+
+  // fitur pendukung wajib login
+  if(page === "pendukung.html" && !isLogin){
+
+    // simpan tujuan
+    localStorage.setItem("redirectAfterLogin", page);
+
+    alert("Harap Login Terlebih Dahulu Untuk Bisa Mengakses Fitur Ini");
+
+    window.location.href = "login.html";
     return;
   }
 
-  localStorage.setItem('profil', JSON.stringify(data));
-  
-  if(data.role === "guru") window.location.href = "guru.html";
-  else if(data.role === "bendahara") window.location.href = "bendahara.html";
-  else if(data.role === "sekertaris") window.location.href = "sekertaris.html";
-  else window.location.href = "murid.html";
-});
+  // kalau aman
+  window.location.href = page;
+}
 
-const modeToggle = document.getElementById('modeToggle');
-modeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
-});
+// logout
+function logout(){
+  firebase.auth().signOut().then(()=>{
+    window.location.href = "login.html";
+  });
+}
+
+
+function goLogin(){
+  window.location.href = "login.html";
+}
+
+
 </script>
-
 </body>
 </html>

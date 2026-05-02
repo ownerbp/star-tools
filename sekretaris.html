@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Sekertaris</title>
+<title>Star Tools - Absensi</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <style>
     :root {
@@ -44,44 +44,37 @@
       opacity: 0.5;
     }
 
-    header {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      background: linear-gradient(to right, #fff, var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(var(--text-glow));
-    }
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  animation: fadeDown 0.6s ease;
+}
 
-    .container { max-width: 1100px; margin: auto; padding: 0 20px 50px; }
+.header h1 {
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(to right, #fff, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .hero {
-      text-align: center;
-      background: var(--glass);
-      backdrop-filter: blur(15px);
-      padding: 40px;
-      border-radius: 30px;
-      border: 1px solid var(--glass-border);
-      margin-bottom: 30px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    }
+.badge {
+  background: var(--primary);
+  color: #000;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 10px;
+  display: inline-block;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+}
 
-    .hero h1 { margin: 0; font-size: 28px; font-weight: 600; }
-    
-    .badge {
-      background: var(--primary);
-      color: #000;
-      padding: 4px 15px;
-      border-radius: 50px;
-      font-size: 12px;
-      font-weight: 800;
-      display: inline-block;
-      margin-top: 10px;
-    }
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+}
 
     /* Menu Navigation */
     .menu {
@@ -115,22 +108,40 @@
     }
 
     /* Card Styling */
-    .card {
-      display: none;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      padding: 35px;
-      border-radius: 25px;
-      border: 1px solid var(--glass-border);
-      animation: slideUp 0.5s ease;
-    }
+.card {
+  display: none;
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.card:nth-child(1){ animation-delay: 0.2s; }
+.card:nth-child(2){ animation-delay: 0.4s; }
 
-    h2, h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+.cardjudul {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.cardjudul:nth-child(1){ animation-delay: 0.2s; }
+.cardjudul:nth-child(2){ animation-delay: 0.4s; }
+
+
+h2 {
+  text-align: center;
+  font-size: 18.72px;
+}
+
+ h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
 
     input, select {
       width: 100%;
@@ -219,50 +230,76 @@
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: var(--dark-bg); }
     ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 </style>
 </head>
 <body class="dark">
 
-<header>Star Tools</header>
-
+<div class="header">
 <div class="container">
-  <div class="hero">
-    <h1>Dashboard Sekertaris</h1>
-    <div class="badge">SECURE ACCESS V1.5</div>
-  </div>
+  <h1>Star Tools</h1>
+  <div class="badge">Versi 1.6.0</div>
+</div>
+
+
+<div class="cardjudul">
+<p>Star Tools untuk SMP membantu siswa memahami konsep matematika dengan lebih terstruktur. Cocok untuk latihan dan memperkuat pemahaman materi yang lebih kompleks.</p>
+</div>
+
 
   <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
 
+
   <div class="menu">
+    <h2>Kelola Absensi Digital</h2>
     <button onclick="showCard('setupBox')">Kelola Absensi</button>
-    <button onclick="logoutSekertaris()" style="color: #ff7675; border-color: #ff7675;">Logout</button>
+    <h2>Kembali Pilih Fitur</h2>
+    <button onclick="logoutSekertaris()">Kembali</button>
   </div>
 
   <div class="card" id="setupBox">
-    <h2>Setup & Database Absensi</h2>
+    <h2>Buat Akun Kelas</h2>
     
     <div id="setupForm">
       <input type="text" id="namaKelas" placeholder="Nama Kelas (Contoh: XI-IPA-1)">
-      <input type="password" id="pwKelas" placeholder="Password Database Kelas">
-      <button class="action-btn" onclick="simpanPassword()">Inisialisasi Kelas</button>
+      <input type="password" id="pwKelas" placeholder="Password Kelas">
+      <button class="action-btn" onclick="simpanPassword()">Buat Kelas</button>
     </div>
 
     <div id="loginBox" style="margin-top:20px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
-      <h3>Login Database</h3>
+      <h2>Login Akun Kelas</h2>
       <input type="password" id="loginPw" placeholder="Masukkan Password Kelas">
-      <button class="action-btn" onclick="loginKelas()">Akses Data</button>
+      <button class="action-btn" onclick="loginKelas()">Login Kelas</button>
+    </div>
     </div>
 
-    <div id="absenBox" style="display:none;">
+    <div class="card" id="absenBox" style="display:none;">
       <div class="badge" style="margin-bottom:20px; background: #2ecc71;">KONEKSI AKTIF</div>
       
-      <h3> Tambah Data Murid</h3>
+      <h2> Tambah Nama Murid</h2>
       <div style="display:flex; gap:10px;">
         <input type="text" id="namaMuridBaru" placeholder="Nama Lengkap Siswa">
         <button class="action-btn" style="width:150px; margin:10px 0" onclick="tambahMurid()">Daftarkan</button>
       </div>
 
-      <h3>Rekap Absensi</h3>
+      <h2>Pilih Bulan</h2>
       <select id="bulanSelect" onchange="loadTabel()">
         <option value="Januari">Januari</option>
         <option value="Februari">Februari</option>
@@ -287,13 +324,13 @@
         <div id="tidakMasuk" style="margin-top:5px; color:#ff7675;">Semua hadir hari ini!</div>
       </div>
 
-      <h3>Statistik Bulanan</h3>
+      <h2>Rekap Bulanan</h2>
       <div class="table-wrapper">
-        <div id="rekapBulanan">Data tidak tersedia.</div>
+        <div id="rekapBulanan">Data Tidak Tersedia.</div>
       </div>
 
       <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; margin-top: 30px; border: 1px solid var(--glass-border);">
-        <h3>Input Kehadiran Manual</h3>
+        <h2>Input Kehadiran Manual</h2>
         <select id="namaSiswaAbsenForm"></select>
         <select id="statusAbsenForm">
           <option value="Hadir">Hadir</option>
@@ -424,7 +461,7 @@ function loadTabel(){
           const td=document.getElementById(`${nama}-${a.key}`);
           if(td) {
             const st = a.val().status;
-            td.innerText = st === "Hadir" ? "V" : st.charAt(0);
+            td.innerText = st === "Hadir" ? "H" : st.charAt(0);
             td.style.color = st === "Hadir" ? "var(--primary)" : "#ff7675";
           }
         });
@@ -507,7 +544,7 @@ function resetBulanBaru(){
 
 function logoutSekertaris() {
   localStorage.clear();
-  window.location.href = "index.html";
+  window.location.href = "pendukung.html";
 }
 </script>
 
