@@ -353,6 +353,7 @@ h2 {
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
@@ -381,7 +382,35 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
+
+
+function isUserLogin(){
+  const user = firebase.auth().currentUser;
+  return !!user && localStorage.getItem("isGuest") !== "true";
+}
+
+firebase.auth().onAuthStateChanged(user => {
+
+  const isGuest = localStorage.getItem("isGuest") === "true";
+
+  // kalau guest → blok
+  if(isGuest){
+    alert("Fitur ini hanya untuk akun login!");
+    localStorage.setItem("redirectAfterLogin", "sekretaris.html");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // kalau BELUM ada user → tunggu (jangan redirect dulu)
+  if(!user){
+    return; // ⛔ penting! jangan paksa redirect
+  }
+  console.log("User login:", user.uid);
+
+});
+
 let kelasAktif="";
+
 
 // Persistence
 window.addEventListener("load",()=>{

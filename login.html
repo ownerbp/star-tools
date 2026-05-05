@@ -198,10 +198,20 @@ function login() {
   const password = document.getElementById("password").value;
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = "index.html";
-    })
-    .catch(err => showCustomAlert(err.message));
+firebase.auth().signInWithEmailAndPassword(email, password)
+.then(() => {
+  localStorage.removeItem("isGuest"); // penting!
+
+  const redirect = localStorage.getItem("redirectAfterLogin");
+
+  if(redirect){
+    localStorage.removeItem("redirectAfterLogin");
+    window.location.href = redirect;
+  } else {
+    window.location.href = "index.html";
+  }
+})
+.catch(err => showCustomAlert(err.message));
 }
 
 
@@ -216,6 +226,7 @@ function closeCustomAlert() {
 }
 
 function skipLogin(){
+  localStorage.setItem("isGuest", "true");
   window.location.href = "index.html";
 }
 
