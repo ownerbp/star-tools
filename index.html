@@ -11,7 +11,6 @@
 <meta property="og:image" content="https://www.stools.web.id/logo.png">
 <meta name="twitter:image" content="https://www.stools.web.id/logo.png">
 
-<!-- Google Logo -->
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -22,22 +21,53 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <style>
+/* SKEMA WARNA PREMIUM (DEFAULT DARK - TRUE BLACK/CHARCOAL) */
 :root {
   --primary: #ffd369;
-  --dark-bg: #0f172a;
-  --glass: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary-hover: #ffc233;
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.4);
+  --icon-bg: rgba(255, 211, 105, 0.1);
+  --icon-color: #ffd369;
+  --verified-blue: #3b82f6;
+  --task-bg: rgba(16, 185, 129, 0.1);
+  --task-color: #10b981;
 }
 
-* { box-sizing: border-box; transition: 0.3s; }
+/* SKEMA WARNA MODE TERANG */
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
+  --icon-bg: rgba(37, 99, 235, 0.08);
+  --icon-color: #2563eb;
+  --verified-blue: #1d9bf0;
+  --task-bg: rgba(16, 185, 129, 0.08);
+  --task-color: #059669;
+}
 
+* { 
+  box-sizing: border-box; 
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; 
+}
 
 body {
   margin: 0;
@@ -46,284 +76,407 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--dark-bg);
-  color: #e2e8f0;
+  color: var(--text-main);
   overflow-x: hidden;
 }
 
-body.light {
-  --dark-bg: #f1f5f9;
-  --glass: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --input-bg: #ffffff;
-  color: #1e293b;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: 0 4px 20px var(--shadow);
+  z-index: 10;
 }
 
-/* Cosmic Background */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at 20% 30%, #1e3c72 0%, transparent 40%),
-              radial-gradient(circle at 80% 70%, #2a5298 0%, transparent 40%);
-  z-index: -1;
-  opacity: 0.4;
+@media (max-width: 600px) {
+  .navbar { padding: 16px 20px; }
 }
 
-/* HEADER */
+.nav-brand {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+}
+
+.nav-brand span {
+  color: var(--primary);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* BANNER REALTIME */
+.banner-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 24px auto 0;
+  padding: 0 20px;
+  animation: fadeDown 0.6s ease;
+}
+
+.promo-banner {
+  width: 100%;
+  background: linear-gradient(135deg, #1e1b4b, #311042);
+  border: 1px solid rgba(255, 211, 105, 0.15);
+  border-radius: 20px;
+  padding: 20px;
+  display: none; /* Dikontrol via Firebase */
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 8px 25px var(--shadow);
+}
+
+body.light .promo-banner {
+  background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+  border: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.banner-img-placeholder {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 211, 105, 0.1);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.banner-text h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.banner-text p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
 .header {
   text-align: center;
-  padding: 40px 20px 20px;
+  padding: 30px 20px 25px;
   animation: fadeDown 0.6s ease;
 }
 
 .header h1 {
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+body:not(.light) .header h1 {
+  background: linear-gradient(to right, #ffffff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+body.light .header h1 {
+  color: #0f172a;
+}
+
 .badge {
   background: var(--primary);
-  color: #000;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  font-size: 10px;
+  color: #0f172a;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 11px;
   display: inline-block;
-  margin-top: 10px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
+  margin-top: 12px;
+  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.2);
 }
 
-/* CONTAINER */
 .container {
-  max-width: 500px;
-  margin: auto;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto auto;
   padding: 20px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
 }
 
-/* CARD */
+@media (max-width: 850px) {
+  .container { grid-template-columns: 1fr; }
+}
+
 .card {
-  background: var(--glass);
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
   opacity: 0;
   animation: fadeUp 0.6s ease forwards;
 }
 
-/* MAPEL BUTTON */
+.card h3 {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  border-left: 4px solid var(--primary);
+  padding-left: 10px;
+}
+
+/* LIVE UPDATE / BROADCAST COMPONENT */
+.update-broadcast {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--card-border);
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 24px;
+}
+
+body.light .update-broadcast { background: #f8fafc; }
+
+.broadcast-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.broadcast-name { font-weight: 700; font-size: 14px; }
+
+.verified-badge {
+  color: var(--verified-blue);
+  display: inline-flex;
+  align-items: center;
+}
+
+.broadcast-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.broadcast-content {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* INFO TUGAS COMPONENT */
+.task-broadcast {
+  background: var(--task-bg);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 14px;
+}
+
+.task-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.task-badge-title {
+  background: var(--task-color);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.task-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.task-content {
+  font-size: 13px;
+  color: var(--text-main);
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.hero h2 { font-size: 24px; font-weight: 700; margin-top: 0; }
+.visi-misi p { color: var(--text-muted); line-height: 1.6; font-size: 14px; }
+.visi-misi ul { padding-left: 20px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+.visi-misi li { margin-bottom: 8px; }
+
 .mapel-btn {
-  width: 100%;
-  padding: 16px;
-  margin: 10px 0;
-  border-radius: 15px;
-  border: none;
-  background: linear-gradient(135deg, #4fc3f7, #0288d1);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+  width: 100%; padding: 16px; margin-bottom: 14px; border-radius: 18px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); display: flex; align-items: center; text-align: left; gap: 16px; cursor: pointer;
 }
 
-.mapel-btn:hover {
-  transform: scale(1.03);
-}
+.mapel-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--shadow); border-color: var(--icon-color); }
 
-/* LOGOUT */
+.mapel-icon-wrapper {
+  width: 48px; height: 48px; border-radius: 14px; background: var(--icon-bg);
+  color: var(--icon-color); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mapel-icon-wrapper svg { width: 24px; height: 24px; }
+.mapel-info { display: flex; flex-direction: column; }
+.mapel-title { font-size: 15px; font-weight: 600; margin: 0; }
+.mapel-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
 .logout-btn {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border-radius: 15px;
-  border: none;
-  background: #ff5252;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+  width: 100%; padding: 14px; margin-top: 10px; border-radius: 16px;
+  border: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); color: #ef4444; font-weight: 600; cursor: pointer;
 }
+.logout-btn:hover { background: #ef4444; color: white; }
 
-/* FOOTER */
-
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
+.theme-switch {
+  background: transparent; border: 1px solid var(--card-border); color: var(--text-main);
+  padding: 10px; border-radius: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px;
 }
+.theme-switch svg { width: 20px; height: 20px; }
 
-.sponsor { font-size: 14px; margin-bottom: 5px; }
+.auth-btn, .nita-btn { padding: 10px 20px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; }
+.auth-btn { background: var(--text-main); color: var(--dark-bg); }
+.nita-btn { background: linear-gradient(135deg, #a855f7, #7c3aed); color: white; }
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
 .sponsor strong { color: var(--primary); }
 
-.report-link {
-  color: var(--primary);
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 600;
-  display: inline-block;
-  margin-top: 15px;
-  padding: 5px 12px;
-  border: 1px dashed var(--primary);
-  border-radius: 8px;
-}
-
-.report-link:hover { background: rgba(255, 211, 105, 0.1); }
-
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.auth-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-/* hover */
-.auth-btn:hover {
-  background: #4fc3f7;
-  color: #000;
-  transform: scale(1.05);
-}
-
-/* klik */
-.auth-btn:active {
-  transform: scale(0.95);
-}
-
-.nita-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-/* hover */
-.nita-btn:hover {
-  background: #4fc3f7;
-  color: #000;
-  transform: scale(1.05);
-}
-
-/* klik */
-.nita-btn:active {
-  transform: scale(0.95);
-}
-
-.hidden {
-  display: none;
-}
-
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+.hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<div class="auth-btn" id="authBtn" onclick="goLogin()">
-  Sign In
-</div>
+<nav class="navbar">
+  <div class="nav-brand">Star<span>Tools</span></div>
+  <div class="nav-actions">
+    <button class="theme-switch" onclick="toggleTheme()" id="themeBtn">
+      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+      </svg>
+      <svg id="icon-sun" class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m0 13.5V21M4.22 4.22l1.59 1.59m12.38 12.38l1.59 1.59M3 12h2.25m13.5 0H21M4.22 19.78l1.59-1.59M17.62 6.38l1.59-1.59M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </button>
+    <button class="auth-btn" id="authBtn" onclick="goLogin()">Sign In</button>
+    <button class="nita-btn hidden" id="nitaBtn" onclick="goNita()">Nita AI</button>
+  </div>
+</nav>
 
-<div class="nita-btn hidden" id="nitaBtn" onclick="goNita()">
-  Nita AI
-</div>
-
-<div class="header">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
-
-
-  <!-- VISI MISI -->
-<div class="container">
-<div class="card">
-  <div class="hero">
-    <h1>Platform Edukasi Masa Depan</h1>
-    <div class="visi-misi">
-      <p><strong>Visi:</strong> Menjadi platform pendidikan hybrid yang merata, inovatif, dan transparan dalam menciptakan generasi yang cerdas, berpikir kritis, serta siap menghadapi dunia kerja maupun membangun usaha secara mandiri.</p>
-      <p><strong>Misi:</strong></p>
-      <ul>
-    <li>Menyediakan sistem pembelajaran hybrid yang fleksibel dan dapat diakses oleh semua kalangan.</li>
-    <li>Mendorong pemerataan pendidikan melalui teknologi yang inklusif dan mudah digunakan.</li>
-    <li>Mengembangkan pola pikir kritis, kreatif, dan solutif pada setiap pengguna.</li>
-    <li>Mempersiapkan generasi yang siap kerja maupun mampu menciptakan peluang usaha sendiri.</li>
-    <li>Meningkatkan transparansi dalam ekosistem pendidikan, khususnya di lingkungan sekolah.</li>
-    <li>Menghadirkan fitur pembelajaran yang relevan dengan kebutuhan dunia nyata dan perkembangan teknologi.</li>
-      </ul>
-      <div style="text-align: center;">
-        <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">⚠️ Report System Bug</a>
-      </div>
+<div class="banner-container">
+  <div class="promo-banner" id="promoBanner">
+    <div class="banner-img-placeholder">
+      <svg style="width: 28px; height: 28px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+      </svg>
+    </div>
+    <div class="banner-text">
+      <h4 id="bannerTitle">Memuat info banner...</h4>
+      <p id="bannerDesc">Harap tunggu...</p>
     </div>
   </div>
 </div>
 
+<div class="header">
+  <h1>Platform Edukasi Modern</h1>
+  <div class="badge">PRO VERSION 1.8</div>
+</div>
 
-  <!-- PILIH MAPEL -->
+<div class="container">
   <div class="card">
-    <h3>Pilih Mata Pelajaran</h3>
+    <div class="hero">
+      <h2>Pilar Pendidikan Masa Depan</h2>
+      <div class="visi-misi">
+        <p><strong>Visi:</strong> Menjadi platform pendidikan hybrid yang merata, inovatif, dan transparan dalam menciptakan generasi yang cerdas, berpikir kritis, serta siap menghadapi dunia kerja maupun membangun usaha secara mandiri.</p>
+        <p><strong>Misi:</strong></p>
+        <ul>
+          <li>Menyediakan sistem pembelajaran hybrid yang fleksibel dan dapat diakses oleh semua kalangan.</li>
+          <li>Mendorong pemerataan pendidikan melalui teknologi yang inklusif dan mudah digunakan.</li>
+          <li>Mengembangkan pola pikir kritis, kreatif, dan solutif pada setiap pengguna.</li>
+          <li>Mempersiapkan generasi yang siap kerja maupun mampu menciptakan peluang usaha sendiri.</li>
+          <li>Meningkatkan transparansi dalam ekosistem pendidikan, khususnya di lingkungan sekolah.</li>
+          <li>Menghadirkan fitur pembelajaran yang relevan dengan kebutuhan dunia nyata dan perkembangan teknologi.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- BROADCAST UPDATE -->
+    <div class="update-broadcast">
+      <div class="broadcast-header">
+        <span class="broadcast-name">Star Tools</span>
+        <span class="verified-badge" title="Verified">
+          <svg style="width: 16px; height: 16px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+          </svg>
+        </span>
+        <span class="broadcast-time" id="broadcastTime">Memuat...</span>
+      </div>
+      <p class="broadcast-content" id="broadcastContent">Menghubungkan ke database...</p>
+    </div>
+   </div>
 
+  <div class="card">
+    <h3>Akses Pembelajaran</h3>
     <button class="mapel-btn" onclick="goMapel('mtk.html')">
-      Matematika
+      <div class="mapel-icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 002-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <div class="mapel-info">
+        <span class="mapel-title">Matematika</span>
+        <span class="mapel-desc">Rumus, latihan soal, & pembahasan dasar.</span>
+      </div>
     </button>
 
     <button class="mapel-btn" onclick="goMapel('pendukung.html')">
-      Pendukung
+      <div class="mapel-icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      </div>
+      <div class="mapel-info">
+        <span class="mapel-title">Pendukung</span>
+        <span class="mapel-desc">Modul tambahan dan dokumen penunjang.</span>
+      </div>
     </button>
 
-    <button class="logout-btn" onclick="logout()">
-      Logout
-    </button>
+    <button class="logout-btn" onclick="logout()">Keluar Akun</button>
   </div>
 </div>
 
-
-  <div class="footer-wrapper">
-    <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
-    <p>© 2026 Star Tools School.</p>
+<div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
   </div>
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
 </div>
-
 
 <script>
-// CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyDgr_nHqvpMsiG4lBkYckzxRErkskXj_6E",
   authDomain: "laporanstartools-c18b2.firebaseapp.com",
@@ -335,15 +488,13 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
+const db = firebase.database();
 let isLogin = false;
 
 firebase.auth().onAuthStateChanged(user => {
   isLogin = !!user;
-
   const authBtn = document.getElementById("authBtn");
   const nitaBtn = document.getElementById("nitaBtn");
-
   if(isLogin){
     authBtn.classList.add("hidden");
     nitaBtn.classList.remove("hidden");
@@ -353,39 +504,90 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
-// pindah halaman
+// REALTIME LISTENER PESAN UTAMA
+db.ref('system_update').on('value', (snapshot) => {
+  const data = snapshot.val();
+  const contentEl = document.getElementById("broadcastContent");
+  const timeEl = document.getElementById("broadcastTime");
+  if (data) {
+    contentEl.textContent = data.text || "Tidak ada detail info terbaru.";
+    timeEl.textContent = data.timestamp || "Baru saja";
+  } else {
+    contentEl.textContent = "Belum ada info terbaru dari Star Tools.";
+    timeEl.textContent = "-";
+  }
+});
+
+// REALTIME LISTENER INFO TUGAS
+db.ref('system_task').on('value', (snapshot) => {
+  const data = snapshot.val();
+  const contentEl = document.getElementById("taskContent");
+  const timeEl = document.getElementById("taskTime");
+  if (data) {
+    contentEl.textContent = data.text || "Belum ada tugas baru.";
+    timeEl.textContent = data.timestamp || "";
+  } else {
+    contentEl.textContent = "Hore! Belum ada tugas baru yang dipublish.";
+    timeEl.textContent = "-";
+  }
+});
+
+// REALTIME LISTENER BANNER ATAS
+db.ref('system_banner').on('value', (snapshot) => {
+  const data = snapshot.val();
+  const titleEl = document.getElementById("bannerTitle");
+  const descEl = document.getElementById("bannerDesc");
+  const bannerEl = document.getElementById("promoBanner");
+  if (data && data.active !== false) {
+    bannerEl.style.display = "flex";
+    titleEl.textContent = data.title || "Star Tools Info";
+    descEl.textContent = data.desc || "";
+  } else {
+    bannerEl.style.display = "none";
+  }
+});
+
+function toggleTheme() {
+  const body = document.body;
+  const iconMoon = document.getElementById("icon-moon");
+  const iconSun = document.getElementById("icon-sun");
+  body.classList.toggle("light");
+  if(body.classList.contains("light")){
+    iconMoon.classList.add("hidden");
+    iconSun.classList.remove("hidden");
+    localStorage.setItem("theme", "light");
+  } else {
+    iconSun.classList.add("hidden");
+    iconMoon.classList.remove("hidden");
+    localStorage.setItem("theme", "dark");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if(savedTheme === "light") {
+    document.body.classList.add("light");
+    document.getElementById("icon-moon").classList.add("hidden");
+    document.getElementById("icon-sun").classList.remove("hidden");
+  }
+});
+
 function goMapel(page){
-
   const protectedPage = ["pendukung.html"];
-
   if(!isLogin && protectedPage.includes(page)){
     localStorage.setItem("redirectAfterLogin", page);
     alert("Harap login terlebih dahulu untuk akses fitur tersebut!");
     window.location.href = "login.html";
     return;
   }
-
   window.location.href = page;
 }
 
-
-// logout
 function logout(){
-  firebase.auth().signOut().then(()=>{
-    window.location.href = "login.html";
-  });
+  firebase.auth().signOut().then(()=>{ window.location.href = "login.html"; });
 }
-
-
-function goLogin(){
-  window.location.href = "login.html";
-}
-
-
-function goNita(){
-  window.location.href = "nita.html";
-}
-
+function goLogin(){ window.location.href = "login.html"; }
+function goNita(){ window.location.href = "nita.html"; }
 </script>
 </body>
 </html>

@@ -4,1245 +4,967 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Star Tools - SD</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-
 :root {
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
   --primary: #ffd369;
-  --secondary: #2a5298;
-  --accent: #f3c969;
-  --dark-bg: #0f172a;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --text-glow: 0 0 12px rgba(255, 211, 105, 0.4);
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
+}
+
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: var(--dark-bg);
-  color: #e2e8f0;
   min-height: 100vh;
-  line-height: 1.6;
-}
-
-body.light {
-  --dark-bg: #f1f5f9;
-  --glass: rgba(0, 0, 0, 0.05);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  color: #1e293b;
-}
-
-/* Background Effect */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 70%);
-  z-index: -1;
-  opacity: 0.5;
-}
-
-
-@keyframes fadeDown {
-  from {opacity:0; transform:translateY(-30px);}
-  to {opacity:1; transform:translateY(0);}
-}
-
-/* HEADER */
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
-}
-
-.header h1 {
-  font-size: 40px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.badge {
-  background: var(--primary);
-  color: #000;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  font-size: 10px;
-  display: inline-block;
-  margin-top: 10px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
-}
-
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* Menu & Buttons */
-.menu, #pilihMode, #sd, #smp, #sma {
+  background-color: var(--dark-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 30px;
+}
+
+.header { text-align: center; padding: 40px 20px 20px; }
+.header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
+.badge { background: var(--primary); color: #0b0f19; padding: 4px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; display: inline-block; margin-top: 8px; }
+
+.container { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+.card {
+  background: var(--card-bg);
+  padding: 26px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
   animation: slideUp 0.5s ease;
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.card h2, .card h3 { margin-top: 0; font-size: 18px; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; text-align: left; }
+.card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+.card ul { margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+.card ul li { margin-bottom: 8px; }
 
-button {
-  background: var(--glass);
-  color: white;
-  border: 1px solid var(--glass-border);
-  padding: 16px 20px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  width: 100%;
-}
+.sub-title { font-size: 15px; font-weight: 600; color: var(--primary); margin: 15px 0 10px 0; }
 
-body.light button { color: #1e293b; background: #fff; }
-
-button:hover {
-  background: var(--primary);
-  color: #000;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  border-color: transparent;
-}
-
-button:active { transform: scale(0.98); }
-
-.mode-btn {
-  width: auto;
-  min-width: 180px;
-  padding: 10px 25px;
-  margin: 0 auto 30px;
-  display: block;
-  border-radius: 50px;
-  background: var(--primary);
-  color: #000;
-  font-size: 12px;
-}
-
-/* Cards */
-.card {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
-
-.cardjudul {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.cardjudul:nth-child(1){ animation-delay: 0.2s; }
-.cardjudul:nth-child(2){ animation-delay: 0.4s; }
-
-
-h2 {
-  text-align: center;
-  font-size: 18.72px;
-}
-
-input, select {
-  width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  background: rgba(0,0,0,0.2);
-  color: #fff;
-  font-family: inherit;
-  outline: none;
-}
-
-body.light input, body.light select {
-  background: #fff;
-  color: #333;
-  border: 1px solid #cbd5e1;
-}
-
-input:focus { border-color: var(--primary); }
-
-.result {
-  margin-top: 20px;
-  padding: 20px;
-  background: rgba(255, 211, 105, 0.1);
-  border-radius: 18px;
-  border-left: 4px solid var(--primary);
-  font-weight: 600;
-}
-
-.example-box {
-  background: rgba(255,255,255,0.05);
-  padding: 15px;
-  border-radius: 15px;
-  font-size: 13px;
-  margin-bottom: 15px;
-  border-left: 3px solid #64748b;
-}
-
-/* Checkbox Styling */
-.label-checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--dark-bg); }
-::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-   
-/* Footer */
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sponsor { font-size: 14px; margin-bottom: 5px; }
-.sponsor strong { color: var(--primary); }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mode {
+/* Menu Navigation */
+.mode-menu {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 24px;
+  animation: slideUp 0.5s ease;
 }
 
+input, select {
+  width: 100%; padding: 14px 16px; margin-bottom: 14px; border-radius: 14px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;
+}
+input:focus, select:focus { border-color: var(--primary); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+.btn {
+  padding: 15px; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;
+  width: 100%; font-family: 'Poppins', sans-serif;
+}
+.btn-primary { background: var(--primary); color: #0b0f19; }
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-secondary { background: var(--btn-mapel); color: var(--text-main); border: 1px solid var(--btn-mapel-border); }
+.btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.btn-success { background: #10b981; color: white; }
+.btn-success:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.btn-danger:hover { transform: translateY(-2px); background: #ef4444; color: white; }
+
+.mode-btn { width: auto; min-width: 180px; padding: 10px 25px; margin: 0 auto 24px; display: block; border-radius: 50px; background: var(--primary); color: #0b0f19; font-size: 12px; font-weight: 700; border: none; cursor: pointer; }
+
+.result {
+  margin-top: 15px; padding: 16px; background: rgba(255, 211, 105, 0.06);
+  border-radius: 14px; border-left: 4px solid var(--primary); font-weight: 600; font-size: 14px;
+  font-family: 'JetBrains Mono', monospace; color: var(--text-main); white-space: pre-line;
+}
+.example-box { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 14px; font-size: 13px; margin-bottom: 15px; border: 1px solid var(--card-border); }
+
+.label-checkbox { display: flex; align-items: center; justify-content: flex-start; gap: 10px; margin: 10px 0 15px 0; font-size: 13.5px; color: var(--text-muted); cursor: pointer; }
+input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; margin: 0; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
 <body class="dark">
 
-
 <div class="header">
+  <div class="container">
+    <h1>Star Tools</h1>
+    <div class="badge">Versi 1.7</div>
+  </div>
+</div>
+
 <div class="container">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
+  <!-- Deskripsi Utama -->
+  <div class="card" id="mainDeskripsi">
+    <p>Star Tools untuk SD membantu siswa memahami dasar matematika dengan cara yang sederhana dan mudah digunakan. Fitur disusun agar siswa bisa belajar secara bertahap sesuai kelasnya.</p>
+  </div>
+
+  <!-- SELEKSI UTAMA: PILIH KELAS -->
+  <div id="pilihMode" class="mode-menu">
+    <div class="card">
+      <h2>Pilih Kelas</h2>
+      <div class="grid-2">
+        <button class="btn btn-secondary" id="btnKelas1">Kelas 1</button>
+        <button class="btn btn-secondary" id="btnKelas2">Kelas 2</button>
+        <button class="btn btn-secondary" id="btnKelas3">Kelas 3</button>
+        <button class="btn btn-secondary" id="btnKelas4">Kelas 4</button>
+        <button class="btn btn-secondary" id="btnKelas5">Kelas 5</button>
+        <button class="btn btn-secondary" id="btnKelas6">Kelas 6</button>
+      </div>
+      <div style="height: 1px; background: var(--card-border); margin: 15px 0;"></div>
+      <h2 style="font-size: 16px; margin-bottom: 12px;">Kembali Pilih Jenjang</h2>
+      <button class="btn btn-danger" style="margin-bottom: 0;" onclick="goPage('mtk.html')">Kembali</button>
+    </div>
+  </div>
+
+  <!-- ==================== KELAS 1 ==================== -->
+  <div id="kelas1" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('sd1-2')">Kalkulator Bangun Ruang</button>
+      <button class="btn btn-secondary" onclick="showCard('bandingangka')">Kalkulator Perbandingan Angka</button>
+      
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('pecahanSederhanaSatu')">Kalkulator Mengenal Pecahan</button>
+      
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
+
+  <!-- Geometri Kelas 1-2 -->
+  <div class="card" id="sd1-2" style="display:none">
+    <h2>Geometri SD Kelas 1-2</h2>
+    <p style="margin-bottom: 15px;">Klik bangun datar untuk tahu nama dan jumlah sisinya.</p>
+    <div class="grid-2">
+      <button class="btn btn-secondary" onclick="showShapeInfo('persegi')">Persegi</button>
+      <button class="btn btn-secondary" onclick="showShapeInfo('persegiPanjang')">Persegi Panjang</button>
+      <button class="btn btn-secondary" onclick="showShapeInfo('segitiga')">Segitiga</button>
+      <button class="btn btn-secondary" onclick="showShapeInfo('lingkaran')">Lingkaran</button>
+    </div>
+    <div id="shapeInfo" class="result" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas1')">Kembali</button>
+  </div>
+
+  <!-- Bandingkan Angka -->
+  <div class="card" id="bandingangka" style="display:none">
+    <h2>Bandingin Angka</h2>
+    <p style="margin-bottom: 15px;">Bandingkan Angka Mana Yang Lebih Besar.</p>
+    <div class="grid-2">
+      <input type="number" id="angka1" placeholder="Angka pertama">
+      <input type="number" id="angka2" placeholder="Angka kedua">
+    </div>
+    <button class="btn btn-primary" onclick="bandingin()">Jawaban</button>
+    <div class="result" id="hasilBanding" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top:15px; margin-bottom:0;" onclick="backToMenuKelas('kelas1')">Kembali</button>
+  </div>
+
+  <!-- Mengenal Pecahan -->
+  <div class="card" id="pecahanSederhanaSatu" style="display:none">
+    <h2>Mengenal Pecahan</h2>
+    <p style="margin-bottom: 15px;">Pilih tipe pecahan visual dasar di bawah ini :</p>
+    <div class="grid-3">
+      <button class="btn btn-secondary" onclick="pilihPecahanVisual(1, 2)">1/2</button>
+      <button class="btn btn-secondary" onclick="pilihPecahanVisual(1, 3)">1/3</button>
+      <button class="btn btn-secondary" onclick="pilihPecahanVisual(1, 4)">1/4</button>
+    </div>
+    <div class="result" id="hasilPecahanSederhana" style="display:none; text-align: center; font-size: 16px;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas1')">Kembali</button>
+  </div>
 
 
-<div class="cardjudul">
-<p>Star Tools untuk SD membantu siswa memahami dasar matematika dengan cara yang sederhana dan mudah digunakan. Fitur disusun agar siswa bisa belajar secara bertahap sesuai kelasnya.</p>
-</div>
+  <!-- ==================== KELAS 2 ==================== -->
+  <div id="kelas2" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('bandingsimbol')">Kalkulator Perbandingan Angka (simbol)</button>
+      <button class="btn btn-secondary" onclick="showCard('penyebutan')">Kalkulator Penyebutan Angka</button>
+      
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('penjumlahan2')">Kalkulator Penjumlahan & Pengurangan</button>
+      
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
+
+  <!-- Bandingkan Simbol -->
+  <div class="card" id="bandingsimbol" style="display:none">
+    <h2>Bandingin Angka (Simbol)</h2>
+    <p style="margin-bottom: 15px;">Bandingkan Angka Menggunakan Simbol.</p>
+    <div class="grid-2">
+      <input type="number" id="angkasimbol1" placeholder="Angka pertama">
+      <input type="number" id="angkasimbol2" placeholder="Angka kedua">
+    </div>
+    <button class="btn btn-primary" onclick="bandinginSimbol()">Jawaban</button>
+    <div class="result" id="hasilsimbol" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas2')">Kembali</button>
+  </div>
+
+  <!-- Penyebutan Angka -->
+  <div class="card" id="penyebutan" style="display:none">
+    <h2>Angka ke Penyebutan</h2>
+    <input type="number" id="angkaInput" placeholder="Masukkan angka...">
+    <button class="btn btn-primary" onclick="convertAngka()">Jawaban</button>
+    <div class="result" id="hasilTerbilang" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas2')">Kembali</button>
+  </div>
+
+  <!-- Penjumlahan & Pengurangan K2 -->
+  <div class="card" id="penjumlahan2" style="display:none">
+    <h2>Penjumlahan & Pengurangan</h2>
+    <div class="grid-2">
+      <input type="number" id="angka1_k2" placeholder="Angka pertama">
+      <input type="number" id="angka2_k2" placeholder="Angka kedua">
+    </div>
+    <button class="btn btn-primary" onclick="hitungTambahKurang2()">Jawaban</button>
+    <div class="result" id="hasilTambahKurang2" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas2')">Kembali</button>
+  </div>
 
 
-<button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
+  <!-- ==================== KELAS 3 ==================== -->
+  <div id="kelas3" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('pengenalanpecahan')">Kalkulator Pengenalan Pecahan</button>
+      <button class="btn btn-secondary" onclick="showCard('nilaiangka')">Kalkulator Nilai Tempat</button>
+      
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('pecahanOperasi')">Kalkulator Operasi Pecahan</button>
+      
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
+
+  <!-- Pengenalan Pecahan -->
+  <div class="card" id="pengenalanpecahan" style="display:none">
+    <h2>Pengenalan Pecahan</h2>
+    <div class="example-box">
+      <p style="margin-bottom: 5px;">• Pecahan adalah bagian dari keseluruhan.</p>
+      <p>• Contoh: 1/2 artinya 1 dari 2 bagian.</p>
+    </div>
+    <div class="grid-2">
+      <input type="number" id="atas" placeholder="Pembilang (atas)">
+      <input type="number" id="bawah" placeholder="Penyebut (bawah)">
+    </div>
+    <button class="btn btn-primary" onclick="hitungPecahan()">Jawaban</button>
+    <div class="result" id="hasilPecahan" style="display:none; margin-bottom: 10px;"></div>
+    <div class="result" id="visualPecahan" style="display:none; text-align: center; font-size: 18px;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas3')">Kembali</button>
+  </div>
+
+  <!-- Nilai Tempat -->
+  <div class="card" id="nilaiangka" style="display:none">
+    <h2>Nilai Tempat</h2>
+    <p style="margin-bottom: 12px;">Masukkan angka untuk melihat kedudukan nilai tempatnya.</p>
+    <input type="number" id="inputAngka" placeholder="Contoh: 2345">
+    <button class="btn btn-primary" onclick="cekNilai()">Jawaban</button>
+    <div class="result" id="hasilNilai" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas3')">Kembali</button>
+  </div>
+
+  <!-- Operasi Pecahan K3 -->
+  <div class="card" id="pecahanOperasi" style="display:none">
+    <h2>Operasi Pecahan Dasar</h2>
+    <div class="grid-2">
+      <input type="number" id="num1_p3" placeholder="Pembilang 1">
+      <input type="number" id="num2_p3" placeholder="Penyebut 1">
+      <input type="number" id="num3_p3" placeholder="Pembilang 2">
+      <input type="number" id="num4_p3" placeholder="Penyebut 2">
+    </div>
+    <select id="operation_p3">
+      <option value="add">Pertambahan (+)</option>
+      <option value="subtract">Pengurangan (-)</option>
+    </select>
+    <button class="btn btn-primary" onclick="hitungPecahan3()">Jawaban</button>
+    <div class="result" id="hasilPecahan3" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas3')">Kembali</button>
+  </div>
 
 
-<div id="pilihMode">
-<h2>Pilih Kelas</h2>
-  <button id="btnKelas1">Kelas 1</button>
-  <button id="btnKelas2">Kelas 2</button>
-  <button id="btnKelas3">Kelas 3</button>
-  <button id="btnKelas4">Kelas 4</button>
-  <button id="btnKelas5">Kelas 5</button>
-  <button id="btnKelas6">Kelas 6</button>
-  <h2>Kembali Pilih Jenjang</h2>
-  <button onclick="goPage('mtk.html')">Kembali</button>
-</div>
+  <!-- ==================== KELAS 4 ==================== -->
+  <div id="kelas4" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('bilanganbesar')">Kalkulator Bilangan Cacah</button>
+      <button class="btn btn-secondary" onclick="showCard('bulatbilangan')">Kalkulator Pembulatan Bilangan</button>
+      
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('operasiBesar')">Kalkulator Operasi Bilangan Besar</button>
+      
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
+
+  <!-- Bilangan Cacah Besar -->
+  <div class="card" id="bilanganbesar" style="display:none">
+    <h2>Bilangan Cacah Besar</h2>
+    <p style="margin-bottom: 12px;">Masukkan angka besar (hingga nilai satuan triliun).</p>
+    <input type="number" id="inputBesar" placeholder="Contoh: 123456789">
+    <button class="btn btn-primary" onclick="convertBesar()">Jawaban</button>
+    <div class="result" id="hasilAngka" style="display:none; margin-bottom: 10px;"></div>
+    <div class="result" id="hasilBaca" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas4')">Kembali</button>
+  </div>
+
+  <!-- Pembulatan Bilangan -->
+  <div class="card" id="bulatbilangan" style="display:none">
+    <h2>Pembulatan Bilangan</h2>
+    <input type="number" id="angka" placeholder="Masukkan angka desimal / bulat">
+    <select id="tipePembulatan">
+      <option value="puluhan">Ke Puluhan Terdekat</option>
+      <option value="ratusan">Ke Ratusan Terdekat</option>
+    </select>
+    <button class="btn btn-primary" onclick="hitungPembulatan()">Jawaban</button>
+    <div class="result" id="hasilPembulatan" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas4')">Kembali</button>
+  </div>
+
+  <!-- Operasi Bilangan Besar K4 -->
+  <div class="card" id="operasiBesar" style="display:none">
+    <h2>Operasi Bilangan Besar</h2>
+    <div class="grid-2">
+      <input type="number" id="angka1_k4" placeholder="Angka pertama">
+      <input type="number" id="angka2_k4" placeholder="Angka kedua">
+    </div>
+    <select id="operator_k4">
+      <option value="add">Pertambahan (+)</option>
+      <option value="subtract">Pengurangan (-)</option>
+    </select>
+    <button class="btn btn-primary" onclick="hitungBesar()">Jawaban</button>
+    <div class="result" id="hasilBesar" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas4')">Kembali</button>
+  </div>
 
 
-<!-- SD -->
-<div id="kelas1" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('sd1-2')">Kalkulator Bangun Ruang</button>
-  <button onclick="showCard('bandingangka')">Kalkulator Perbandingan Angka</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('pecahan')">Kalkulator Mengenal Pecahan</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
+  <!-- ==================== KELAS 5 ==================== -->
+  <div id="kelas5" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('kpk')">Kalkulator Kelipatan Persekutuan Terkecil (KPK)</button>
+      <button class="btn btn-secondary" onclick="showCard('fpb')">Kalkulator Faktor Persekutuan Terbesar (FPB)</button>
+     
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('perkalianBesar')">Kalkulator Perkalian & Pembagian Besar</button>
+      
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
 
-<!-- Geometri -->
-<div class="card" id="sd1-2" style="display:none">
-<h2>Geometri SD Kelas 1-2</h2>
-  <p>Klik bangun datar untuk tahu nama dan jumlah sisinya.</p>
-  <button onclick="showShapeInfo('persegi')">Persegi</button>
-  <button onclick="showShapeInfo('persegiPanjang')">Persegi Panjang</button>
-  <button onclick="showShapeInfo('segitiga')">Segitiga</button>
-  <button onclick="showShapeInfo('lingkaran')">Lingkaran</button>
-  <div id="shapeInfo" class="result" style="margin-top:15px; font-size:16px; color:#ffd369;"></div>
-</div>
-
-<!-- Bandingkan Angka -->
-<div class="card" id="bandingangka" style="display:none">
-  <h2>Bandingin Angka</h2>
-  <p>Bandingkan Angka Mana Yang Lebih Besar</p>
-  <input type="number" id="angka1" placeholder="Angka pertama">
-  <input type="number" id="angka2" placeholder="Angka kedua">
-  <button onclick="bandingin()">Jawaban</button>
-  <div class="result" id="hasil"></div>
-</div>
-
-<!-- Pecahan -->
-<div class="card" id="pecahan" style="display:none">
-<h2>Mengenal Pecahan</h2>
-<p>Klik gambar untuk belajar 1/2, 1/3, 1/4</p>
-<div id="pecahanVisual"></div>
-<div class="result" id="hasilPecahanSederhana"></div>
-</div>
-
-
-<!-- SD -->
-<div id="kelas2" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('bandingsimbol')">Kalkulator Perbandingan Angka (simbol)</button>
-  <button onclick="showCard('penyebutan')">Kalkulator Penyebutan Angka</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('penjumlahan2')">Kalkulator Penjumlahan & Pengurangan</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
-
-<!-- Bandingkan Simbol -->
-<div class="card" id="bandingsimbol" style="display:none">
-  <h2>Bandingin Angka</h2>
-  <p>Bandingkan Angka Menggunakan Simbol</p>
-  <input type="number" id="angkasimbol1" placeholder="Angka pertama">
-  <input type="number" id="angkasimbol2" placeholder="Angka kedua">
-  <button onclick="bandinginSimbol()">Jawaban</button>
-  <div class="result" id="hasilsimbol"></div>
-</div>
-
-<!-- Penyebutan Angka -->
-<div class="card" id="penyebutan" style="display:none">
-  <h2>Angka ke Penyebutan</h2>
-  <input type="number" id="angkaInput" class="input" placeholder="Masukkan angka...">
-  <button onclick="convertAngka()">Jawaban</button>
-  <div class="result" id="hasilTerbilang"></div>
-</div>
-
-<!-- Penjumlahan & Pengurangan -->
-<div class="card" id="penjumlahan2" style="display:none">
-<h2>Penjumlahan & Pengurangan</h2>
-<input type="number" id="angka1_k2" placeholder="Angka pertama">
-<input type="number" id="angka2_k2" placeholder="Angka kedua">
-<button onclick="hitungTambahKurang2()">Jawaban</button>
-<div class="result" id="hasilTambahKurang2"></div>
-</div>
-
-
-<!-- SD -->
-<div id="kelas3" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('pengenalanpecahan')">Kalkulator Pengenalan Pecahan</button>
-  <button onclick="showCard('nilaiangka')">Kalkulator Nilai Tempat</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('pecahanOperasi')">Kalkulator Operasi Pecahan</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
-
-<!-- Pengenalan Pecahan -->
-<div class="card" id="pengenalanpecahan" style="display:none">
-  <h2>Pengenalan Pecahan</h2>
-  <p>Pecahan adalah bagian dari keseluruhan.</p>
-  <p>Contoh: 1/2 artinya 1 dari 2 bagian.</p>
-  <hr style="border:1px solid #333; margin:10px 0;">
-  <h4>Coba Sendiri</h4>
-  <input type="number" id="atas" class="input" placeholder="Pembilang (atas)">
-  <input type="number" id="bawah" class="input" placeholder="Penyebut (bawah)">
-  <button onclick="hitungPecahan()">Jawaban</button>
-  <div class="result" id="hasilPecahan"></div>
-  <div class="result" id="visualPecahan"></div>
-</div>
-
-<!-- Nilai Tempat -->
-<div class="card" id="nilaiangka" style="display:none">
-  <h2>Nilai Tempat</h2>
-  <p>Masukkan angka untuk melihat nilai tempatnya</p>
-  <input type="number" id="inputAngka" class="input" placeholder="Contoh: 2345">
-  <button onclick="cekNilai()">Jawaban</button>
-  <div class="result" id="hasilNilai"></div>
-</div>
-
-<!-- Operasi Pecahan -->
-<div class="card" id="pecahanOperasi" style="display:none">
-<h2>Operasi Pecahan</h2>
-<input type="number" id="num1_p3" placeholder="Pembilang 1">
-<input type="number" id="num2_p3" placeholder="Penyebut 1">
-<input type="number" id="num3_p3" placeholder="Pembilang 2">
-<input type="number" id="num4_p3" placeholder="Penyebut 2">
-<select id="operation_p3">
-  <option value="add">+</option>
-  <option value="subtract">-</option>
-</select>
-<button onclick="hitungPecahan3()">Jawaban</button>
-<div class="result" id="hasilPecahan3"></div>
-</div>
-
-
-<!-- SD -->
-<div id="kelas4" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('bilanganbesar')">Kalkulator Bilangan Cacah</button>
-  <button onclick="showCard('bulatbilangan')">Kalkulator Pembulatan Bilangan</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('operasiBesar')">Kalkulator Operasi Bilangan Besar</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
-
-<!-- Bilangan Cacah Besar -->
-<div class="card" id="bilanganbesar" style="display:none">
-  <h2>Bilangan Cacah Besar</h2>
-  <p>Masukkan angka besar (hingga triliun)</p>
-  <input type="number" id="inputBesar" class="input" placeholder="Contoh: 123456789">
-  <button onclick="convertBesar()">Jawaban</button>
-  <div class="result" id="hasilAngka"></div>
-  <div class="result" id="hasilBaca"></div>
-</div>
-
-<!-- Pembulatan Bilangan -->
-<div class="card" id="bulatbilangan" style="display:none">
-<h2>Pembulatan Bilangan</h2>
-<input type="number" id="angka" placeholder="Masukkan angka">
-<select id="tipePembulatan">
-  <option value="puluhan">Puluhan</option>
-  <option value="ratusan">Ratusan</option>
-</select>
-<button onclick="hitungPembulatan()">Jawaban</button>
-<div class="result" id="hasilPembulatan"></div>
-</div>
-
-<!-- Operasi Bilangan Besar -->
-<div class="card" id="operasiBesar" style="display:none">
-<h2>Operasi Bilangan Besar</h2>
-<input type="number" id="angka1_k4" placeholder="Angka pertama">
-<input type="number" id="angka2_k4" placeholder="Angka kedua">
-<select id="operator_k4">
-  <option value="add">+</option>
-  <option value="subtract">-</option>
-</select>
-<button onclick="hitungBesar()">Jawaban</button>
-<div class="result" id="hasilBesar"></div>
-</div>
-
-
-<!-- SD -->
-<div id="kelas5" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('kpk')">Kalkulator Kelipatan Persekutuan Terkecil</button>
-  <button onclick="showCard('fpb')">Kalkulator Faktor Persekutuan Terbesar</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('perkalianBesar')">Kalkulator Perkalian & Pembagian Besar</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
-
-<!-- Kpk -->
-<div class="card" id="kpk" style="display:none">
+  <!-- KPK -->
+  <div class="card" id="kpk" style="display:none">
     <h2>Kalkulator KPK</h2>
-    <input type="number" id="num1" placeholder="Masukkan angka pertama" />
-    <input type="number" id="num2" placeholder="Masukkan angka kedua" />
-    <button onclick="hitungKPK()">Jawaban</button>
-<button onclick="copyKPK()">Copy Hasil</button>
-<button onclick="resetKPK()">Reset</button>
-<div class="result" id="hasilKPK"></div>
-</div>
+    <div class="grid-2">
+      <input type="number" id="num1" placeholder="Angka pertama" />
+      <input type="number" id="num2" placeholder="Angka kedua" />
+    </div>
+    <button class="btn btn-primary" onclick="hitungKPK()">Jawaban</button>
+    <div class="result" id="hasilKPK" style="display:none;"></div>
+    <div class="grid-2" style="margin-top:15px;">
+      <button class="btn btn-secondary" style="margin-bottom:0;" onclick="copyResult('hasilKPK')">Copy Hasil</button>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="resetKPK()">Reset</button>
+    </div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas5')">Kembali</button>
+  </div>
 
-<!-- Fpb -->
-<div class="card" id="fpb" style="display:none">
-<h2>Kalkulator FPB</h2>
-<input type="number" id="angka1" placeholder="Masukkan angka pertama">
-<input type="number" id="angka2" placeholder="Masukkan angka kedua">
-<button onclick="hitungFPB()">Jawaban</button>
-<button onclick="copyFPB()">Copy Hasil</button>
-<button onclick="resetFPB()">Reset</button>
-<div class="result" id="langkah"></div>
-<div class="result" id="hasil"></div>
-</div>
+  <!-- FPB -->
+  <div class="card" id="fpb" style="display:none">
+    <h2>Kalkulator FPB</h2>
+    <div class="grid-2">
+      <input type="number" id="fpb_angka1" placeholder="Angka pertama">
+      <input type="number" id="fpb_angka2" placeholder="Angka kedua">
+    </div>
+    <button class="btn btn-primary" onclick="hitungFPB()">Jawaban</button>
+    <div class="result" id="langkah" style="display:none; margin-bottom:10px;"></div>
+    <div class="result" id="hasilFPB" style="display:none;"></div>
+    <div class="grid-2" style="margin-top:15px;">
+      <button class="btn btn-secondary" style="margin-bottom:0;" onclick="copyResult('hasilFPB')">Copy Hasil</button>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="resetFPB()">Reset</button>
+    </div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas5')">Kembali</button>
+  </div>
 
-<!-- Perkalian & Pembagian -->
-<div class="card" id="perkalianBesar" style="display:none">
-<h2>Perkalian & Pembagian</h2>
-<input type="number" id="angka1_k5" placeholder="Angka pertama">
-<input type="number" id="angka2_k5" placeholder="Angka kedua">
-<select id="operator_k5">
-  <option value="multiply">×</option>
-  <option value="divide">÷</option>
-</select>
-<button onclick="hitungPerkalianBesar()">Jawaban</button>
-<div class="result" id="hasilPerkalianBesar"></div>
-</div>
-
-
-<!-- SD -->
-<div id="kelas6" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('pecahanFeature')">Kalkulator Pecahan Sederhana</button>
-  <button onclick="showCard('volume')">Kalkulator Hitung Volume</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('pecahanLanjutan')">Kalkulator Operasi Pecahan Lanjutan</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
-
-<!-- Pecahan Sederhana -->
-<div class="card" id="pecahanFeature" style="display:none">
-  <h2>Pecahan Sederhana</h2>
-  <label>Pecahan 1:</label>
-  <input type="number" id="num1_p1" placeholder="Pembilang"> /
-  <input type="number" id="num2_p1" placeholder="Penyebut"><br><br>
-  <label>Pecahan 2:</label>
-  <input type="number" id="num1_p2" placeholder="Pembilang"> /
-  <input type="number" id="num2_p2" placeholder="Penyebut"><br><br>
-  <label>Operasi:</label>
-  <select id="operation_p">
-    <option value="add">+</option>
-    <option value="subtract">-</option>
-    <option value="multiply">×</option>
-    <option value="divide">÷</option>
-  </select><br><br>
-  <button onclick="calculateFraction()">Jawaban</button>
-  <button onclick="copycalculate_Fraction()">Copy Hasil</button>
-  <button onclick="resetcalculate_Fraction()">Reset</button>
-  <div class="result" id="result_fraction"></div>
-</div>
-
-<!-- Volume -->
-<div class="card" id="volume" style="display:none">
-<h2>Hitung Volume</h2>
-<div class="example-box">
-<p>Klik opsi bangun, lalu masukan angka yang kamu inginkan.</p>
-<select id="bangun">
-  <option value="kubus">Kubus</option>
-  <option value="balok">Balok</option>
-</select>
-<input type="number" id="sisi" placeholder="Sisi (kubus) / Panjang (balok)">
-<input type="number" id="lebar" placeholder="Lebar balok">
-<input type="number" id="tinggi" placeholder="Tinggi balok">
-<div class="label-checkbox">Tampilkan Cara
-  <input type="checkbox" id="modeVolume">
-</div>
-<button onclick="calcVolume()">Jawaban</button>
-<button onclick="copyVolume()">Copy Hasil</button>
-<button onclick="resetVolume()">Reset</button>
-<div class="result" id="hasilVolume"></div>
-<div class="result" id="caraVolume" style="font-size:14px;color:white"></div>
-</div>
-
-<!-- Operasi Pecahan Lanjutan -->
-<div class="card" id="pecahanLanjutan" style="display:none">
-<h2>Operasi Pecahan Lanjutan</h2>
-<input type="number" id="num1_p6" placeholder="Pembilang 1">
-<input type="number" id="num2_p6" placeholder="Penyebut 1">
-<input type="number" id="num3_p6" placeholder="Pembilang 2">
-<input type="number" id="num4_p6" placeholder="Penyebut 2">
-<select id="operator_p6">
-  <option value="add">+</option>
-  <option value="subtract">-</option>
-  <option value="multiply">×</option>
-  <option value="divide">÷</option>
-</select>
-<button onclick="hitungPecahan6()">Jawaban</button>
-<div class="result" id="hasilPecahan6"></div>
-</div>
-</div>
-</div>
+  <!-- Perkalian & Pembagian Besar K5 -->
+  <div class="card" id="perkalianBesar" style="display:none">
+    <h2>Perkalian & Pembagian Besar</h2>
+    <div class="grid-2">
+      <input type="number" id="angka1_k5" placeholder="Angka pertama">
+      <input type="number" id="angka2_k5" placeholder="Angka kedua">
+    </div>
+    <select id="operator_k5">
+      <option value="multiply">Perkalian (×</option>
+      <option value="divide">Pembagian (÷)</option>
+    </select>
+    <button class="btn btn-primary" onclick="hitungPerkalianBesar()">Jawaban</button>
+    <div class="result" id="hasilPerkalianBesar" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas5')">Kembali</button>
+  </div>
 
 
+  <!-- ==================== KELAS 6 ==================== -->
+  <div id="kelas6" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('pecahanFeature')">Kalkulator Pecahan Sederhana</button>
+      <button class="btn btn-secondary" onclick="showCard('volume')">Kalkulator Hitung Volume</button>
+      
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('pecahanLanjutan')">Kalkulator Operasi Pecahan Lanjutan</button>
+      
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
+
+  <!-- Pecahan Sederhana K6 -->
+  <div class="card" id="pecahanFeature" style="display:none">
+    <h2>Pecahan Sederhana</h2>
+    <div class="grid-2" style="align-items: center; text-align: center; margin-bottom: 10px;">
+      <div>
+        <input type="number" id="num1_p1" placeholder="Pembilang 1" style="margin-bottom:4px;">
+        <div style="border-top:2px solid var(--text-muted); width:80%; margin:4px auto;"></div>
+        <input type="number" id="num2_p1" placeholder="Penyebut 1" style="margin-bottom:0;">
+      </div>
+      <div>
+        <input type="number" id="num1_p2" placeholder="Pembilang 2" style="margin-bottom:4px;">
+        <div style="border-top:2px solid var(--text-muted); width:80%; margin:4px auto;"></div>
+        <input type="number" id="num2_p2" placeholder="Penyebut 2" style="margin-bottom:0;">
+      </div>
+    </div>
+    <select id="operation_p">
+      <option value="add">Pertambahan (+)</option>
+      <option value="subtract">Pengurangan (-)</option>
+      <option value="multiply">Perkalian (×</option>
+      <option value="divide">Pembagian (÷)</option>
+    </select>
+    <button class="btn btn-primary" onclick="calculateFraction()">Jawaban</button>
+    <div class="result" id="result_fraction" style="display:none;"></div>
+    <div class="grid-2" style="margin-top:15px;">
+      <button class="btn btn-secondary" style="margin-bottom:0;" onclick="copyResult('result_fraction')">Copy Hasil</button>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="resetcalculate_Fraction()">Reset</button>
+    </div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas6')">Kembali</button>
+  </div>
+
+  <!-- Volume Bangun Ruang -->
+  <div class="card" id="volume" style="display:none">
+    <h2>Hitung Volume</h2>
+    <div class="example-box">
+      <p>Pilih opsi bangun, lalu masukkan variabel nilai angka yang diinginkan.</p>
+    </div>
+    <select id="bangun" onchange="kondisiFormVolume()">
+      <option value="kubus">Kubus</option>
+      <option value="balok">Balok</option>
+    </select>
+    <input type="number" id="sisi" placeholder="Panjang Sisi (s) / Panjang Balok (p)">
+    <input type="number" id="lebar" placeholder="Lebar Balok (l)">
+    <input type="number" id="tinggi" placeholder="Tinggi Balok (t)">
+    
+    <label class="label-checkbox">
+      <input type="checkbox" id="modeVolume"> Tampilkan Langkah/Cara Penyelesaian
+    </label>
+    
+    <button class="btn btn-primary" onclick="calcVolume()">Jawaban</button>
+    <div class="result" id="hasilVolume" style="display:none; margin-bottom:10px;"></div>
+    <div class="result" id="caraVolume" style="display:none; font-size:13px;"></div>
+    
+    <div class="grid-2" style="margin-top:15px;">
+      <button class="btn btn-secondary" style="margin-bottom:0;" onclick="copyResult('hasilVolume')">Copy Hasil</button>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="resetVolume()">Reset</button>
+    </div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas6')">Kembali</button>
+  </div>
+
+  <!-- Operasi Pecahan Lanjutan K6 -->
+  <div class="card" id="pecahanLanjutan" style="display:none">
+    <h2>Operasi Pecahan Lanjutan (Desimal)</h2>
+    <div class="grid-2">
+      <input type="number" id="num1_p6" placeholder="Pembilang 1">
+      <input type="number" id="num2_p6" placeholder="Penyebut 1">
+      <input type="number" id="num3_p6" placeholder="Pembilang 2">
+      <input type="number" id="num4_p6" placeholder="Penyebut 2">
+    </div>
+    <select id="operator_p6">
+      <option value="add">Pertambahan (+)</option>
+      <option value="subtract">Pengurangan (-)</option>
+      <option value="multiply">Perkalian (×</option>
+      <option value="divide">Pembagian (÷)</option>
+    </select>
+    <button class="btn btn-primary" onclick="hitungPecahan6()">Jawaban</button>
+    <div class="result" id="hasilPecahan6" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas6')">Kembali</button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
 <div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
   <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
 </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.12.0/math.min.js"></script>
-
-
 <script>
-// Mode Gelap/Terang
-document.getElementById('modeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
+
+// Sinkronisasi tema dengan index.html
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if(savedTheme === "light") {
+    document.body.classList.add("light");
+  }
 });
 
-
-//GEOMETRI
-function showShapeInfo(shape) {
-    let info = '';
-    switch(shape) {
-        case 'persegi':
-            info = "Nama: Persegi\nJumlah sisi: 4";
-            break;
-        case 'persegiPanjang':
-            info = "Nama: Persegi Panjang\nJumlah sisi: 4";
-            break;
-        case 'segitiga':
-            info = "Nama: Segitiga\nJumlah sisi: 3";
-            break;
-        case 'lingkaran':
-            info = "Nama: Lingkaran\nJumlah sisi: Tidak ada (lengkungan)";
-            break;
-        default:
-            info = "Bangun tidak diketahui";
-    }
-    document.getElementById('shapeInfo').innerText = info;
+// NAVIGATION CORE LOGIC[span_42](start_span)[span_42](end_span)
+function hideAllMainViews() {
+  document.getElementById('pilihMode').style.display = 'none';
+  document.getElementById('kelas1').style.display = 'none';
+  document.getElementById('kelas2').style.display = 'none';
+  document.getElementById('kelas3').style.display = 'none';
+  document.getElementById('kelas4').style.display = 'none';
+  document.getElementById('kelas5').style.display = 'none';
+  document.getElementById('kelas6').style.display = 'none';
+  document.getElementById('mainDeskripsi').style.display = 'none';
 }
 
+function closeAllCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    if(card.id !== 'mainDeskripsi' && card.parentNode.id !== 'pilihMode' && card.parentNode.className !== 'mode-menu') {
+      card.style.display = 'none';
+    }
+  });
+}
 
-// BANDINGKAN ANGKA
+// Event Bindings Kelas[span_43](start_span)[span_43](end_span)
+document.getElementById('btnKelas1').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas1').style.display = 'flex'; });
+document.getElementById('btnKelas2').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas2').style.display = 'flex'; });
+document.getElementById('btnKelas3').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas3').style.display = 'flex'; });
+document.getElementById('btnKelas4').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas4').style.display = 'flex'; });
+document.getElementById('btnKelas5').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas5').style.display = 'flex'; });
+document.getElementById('btnKelas6').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas6').style.display = 'flex'; });
+
+function showCard(cardId) {
+  hideAllMainViews();
+  closeAllCards();
+  const target = document.getElementById(cardId);
+  target.style.display = 'block';
+  target.scrollIntoView({ behavior: 'smooth' });
+}
+
+function backToMenuKelas(kelasId) {
+  closeAllCards();
+  hideAllMainViews();
+  document.getElementById(kelasId).style.display = 'flex';
+}
+
+function backToMode(){
+  closeAllCards();
+  hideAllMainViews();
+  document.getElementById('mainDeskripsi').style.display = 'block';
+  document.getElementById('pilihMode').style.display = 'flex';
+}
+
+function goPage(page) { window.location.href = page; }
+
+// ==================== ENGINE MATEMATIKA ====================
+
+// GEOMETRI K1-2[span_44](start_span)[span_44](end_span)
+function showShapeInfo(shape) {
+  let info = '';
+  switch(shape) {
+    case 'persegi': info = "Nama Bangun: Persegi\nJumlah Sisi Fisik: 4 Sisi Sama Panjang"; break;
+    case 'persegiPanjang': info = "Nama Bangun: Persegi Panjang\nJumlah Sisi Fisik: 4 Sisi (2 Pasang Sejajar)"; break;
+    case 'segitiga': info = "Nama Bangun: Segitiga\nJumlah Sisi Fisik: 3 Sisi Keliling"; break;
+    case 'lingkaran': info = "Nama Bangun: Lingkaran\nJumlah Sisi Fisik: 1 Sisi Melengkung Sempurna"; break;
+    default: info = "Bangun tidak diketahui[span_45](start_span)[span_45](end_span)";
+  }
+  const res = document.getElementById('shapeInfo');
+  res.innerText = info;
+  res.style.display = 'block';
+}
+
+// BANDINGKAN ANGKA K1[span_46](start_span)[span_46](end_span)
 function bandingin() {
   const a = parseInt(document.getElementById("angka1").value);
   const b = parseInt(document.getElementById("angka2").value);
-  const hasilsimbol = document.getElementById("hasil");
-  if (isNaN(a) || isNaN(b)) {
-    hasil.innerText = "Masukkan dua angka dulu ya";
-    return;
-  }
-  if (a > b) {
-    hasil.innerText = a + " > " + b + "";
-  } else if (a < b) {
-    hasil.innerText = b + " > " + a + "";
-  } else {
-    hasil.innerText = a + " = " + b + "";
-  }
+  const res = document.getElementById("hasilBanding");
+  if (isNaN(a) || isNaN(b)) { res.innerText = "Masukkan dua angka dulu ya[span_47](start_span)[span_47](end_span)"; res.style.display='block'; return; }
+  
+  if (a > b) { res.innerText = `${a} lebih besar dari ${b}`; } 
+  else if (a < b) { res.innerText = `${b} lebih besar dari ${a}`; } 
+  else { res.innerText = `${a} sama besarnya dengan ${b}`; }
+  res.style.display = 'block';
 }
 
-
-// PECAHAN 
-function hitungPecahanSederhana() {
-  let pembilang = parseInt(document.getElementById('pembilang').value);
-  let penyebut = parseInt(document.getElementById('penyebut').value);
-  if (!pembilang || !penyebut) {
-    document.getElementById('hasilPecahanSederhana').innerText = "Isi semua input!";
-    return;
+// PECAHAN VISUAL K1[span_48](start_span)[span_48](end_span)
+function pilihPecahanVisual(pembilang, penyebut) {
+  const res = document.getElementById('hasilPecahanSederhana');
+  let visual = "";
+  for (let i = 0; i < penyebut; i++) {
+    visual += (i < pembilang) ? "🟩" : "⬜";
   }
-  let hasil = pembilang / penyebut;
-  document.getElementById('hasilPecahanSederhana').innerText = `Hasil: ${hasil}`;
+  res.innerHTML = `Simbol Pecahan: <b>${pembilang}/${penyebut}</b><br><br>Visual Blok:<br>${visual}<br><br>Artinya ${pembilang} bagian dari total ${penyebut} bagian keseluruhan.`;
+  res.style.display = 'block';
 }
 
-
-// BANDINGKAN DENGAN SIMBOL
+// BANDINGKAN DENGAN SIMBOL K2[span_49](start_span)[span_49](end_span)
 function bandinginSimbol() {
   const a = parseInt(document.getElementById("angkasimbol1").value);
   const b = parseInt(document.getElementById("angkasimbol2").value);
-  const hasil = document.getElementById("hasilsimbol");
+  const res = document.getElementById("hasilsimbol");
+  if (isNaN(a) || isNaN(b)) { res.innerText = "Masukkan dua angka dulu ya[span_50](start_span)[span_50](end_span)"; res.style.display='block'; return; }
 
-  if (isNaN(a) || isNaN(b)) {
-    hasil.innerText = "Masukkan dua angka dulu ya";
-    return;
-  }
-
-  if (a > b) {
-    hasil.innerText = a + " > " + b;
-  } else if (a < b) {
-    hasil.innerText = a + " < " + b;
-  } else {
-    hasil.innerText = a + " = " + b;
-  }
+  if (a > b) { res.innerText = `${a} > ${b}`; } 
+  else if (a < b) { res.innerText = `${a} < ${b}`; } 
+  else { res.innerText = `${a} = ${b}`; }
+  res.style.display = 'block';
 }
 
-
-// PENYEBUTAN ANGKA
+// PENYEBUTAN ANGKA K2[span_51](start_span)[span_51](end_span)
 function terbilang(n) {
   const angka = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
   n = parseInt(n);
-  if (n < 12) {
-    return angka[n];
-  } else if (n < 20) {
-    return terbilang(n - 10) + " belas";
-  } else if (n < 100) {
-    return terbilang(Math.floor(n / 10)) + " puluh " + terbilang(n % 10);
-  } else if (n < 200) {
-    return "seratus " + terbilang(n - 100);
-  } else if (n < 1000) {
-    return terbilang(Math.floor(n / 100)) + " ratus " + terbilang(n % 100);
-  } else if (n < 2000) {
-    return "seribu " + terbilang(n - 1000);
-  } else if (n < 1000000) {
-    return terbilang(Math.floor(n / 1000)) + " ribu " + terbilang(n % 1000);
-  } else if (n < 1000000000) {
-    return terbilang(Math.floor(n / 1000000)) + " juta " + terbilang(n % 1000000);
-  } else {
-    return "Angka terlalu besar";
-  }
+  if (n < 0) return "Minus " + terbilang(Math.abs(n));
+  if (n < 12) return angka[n];
+  else if (n < 20) return terbilang(n - 10) + " belas";
+  else if (n < 100) return terbilang(Math.floor(n / 10)) + " puluh " + terbilang(n % 10);
+  else if (n < 200) return "seratus " + terbilang(n - 100);
+  else if (n < 1000) return terbilang(Math.floor(n / 100)) + " ratus " + terbilang(n % 100);
+  else if (n < 2000) return "seribu " + terbilang(n - 1000);
+  else if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " ribu " + terbilang(n % 1000);
+  else if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " juta " + terbilang(n % 1000000);
+  return "Angka terlalu besar[span_52](start_span)[span_52](end_span)";
 }
 function convertAngka() {
   const input = document.getElementById("angkaInput").value;
-  if (input === "") {
-    document.getElementById("hasilTerbilang").innerText = "Masukkan angka dulu bre!";
-    return;
-  }
-  const hasil = terbilang(input);
-  document.getElementById("hasilTerbilang").innerText = hasil;
+  const res = document.getElementById("hasilTerbilang");
+  if (input === "") { res.innerText = "Masukkan angka dulu bre[span_53](start_span)[span_53](end_span)!"; res.style.display='block'; return; }
+  res.innerText = "Dibaca: " + terbilang(input);
+  res.style.display = 'block';
 }
-
-
-// PENJUMLAHAN & PENGURANGAN
+// PENJUMLAHAN & PENGURANGAN K2[span_54](start_span)[span_54](end_span)
 function hitungTambahKurang2() {
   let a = parseInt(document.getElementById('angka1_k2').value);
   let b = parseInt(document.getElementById('angka2_k2').value);
-  if (isNaN(a) || isNaN(b)) {
-    document.getElementById('hasilTambahKurang2').innerText = "Isi semua angka!";
-    return;
-  }
-  let hasil = a + b;
-  let hasilKurang = a - b;
-  document.getElementById('hasilTambahKurang2').innerText = `Tambah: ${hasil}, Kurang: ${hasilKurang}`;
+  const res = document.getElementById('hasilTambahKurang2');
+  if (isNaN(a) || isNaN(b)) { res.innerText = "Isi semua angka[span_55](start_span)[span_55](end_span)!"; res.style.display='block'; return; }
+  res.innerText = `Hasil Pertambahan (+) = ${a + b}\nHasil Pengurangan (-) = ${a - b}`;
+  res.style.display = 'block';
 }
 
-
-// PENGENALAN PECAHAN
+// PENGENALAN PECAHAN K3[span_56](start_span)[span_56](end_span)
 function hitungPecahan() {
   const atas = parseInt(document.getElementById("atas").value);
   const bawah = parseInt(document.getElementById("bawah").value);
-  if (!atas || !bawah) {
-    document.getElementById("hasilPecahan").innerText = "Isi dulu bre!";
-    return;
-  }
-  if (atas > bawah) {
-    document.getElementById("hasilPecahan").innerText = "Pembilang tidak boleh lebih besar dari penyebut!";
-    return;
-  }
-  // Penjelasan
-  document.getElementById("hasilPecahan").innerText =
-    atas + "/" + bawah + " artinya " + atas + " dari " + bawah + " bagian";
-  // Visual (emoji)
+  const resTxt = document.getElementById("hasilPecahan");
+  const resVis = document.getElementById("visualPecahan");
+  
+  if (!atas || !bawah) { resTxt.innerText = "Isi kedua kolom pembilang & penyebut[span_57](start_span)[span_57](end_span)!"; resTxt.style.display='block'; return; }
+  if (bawah === 0) { resTxt.innerText = "Penyebut tidak boleh bernilai nol (0)!"; resTxt.style.display='block'; return; }
+  if (atas > bawah) { resTxt.innerText = "Untuk pengenalan dasar, pembilang tidak boleh lebih besar dari penyebut[span_58](start_span)[span_58](end_span)!"; resTxt.style.display='block'; return; }
+  
+  resTxt.innerText = `${atas}/${bawah} artinya mengambil ${atas} dari total ${bawah} bagian[span_59](start_span)[span_59](end_span)`;
+  resTxt.style.display = 'block';
+  
   let visual = "";
   for (let i = 0; i < bawah; i++) {
-    if (i < atas) {
-      visual += "🟩"; // bagian terisi
-    } else {
-      visual += "⬜"; // bagian kosong
-    }
+    visual += (i < atas) ? "🟩" : "⬜";
   }
-  document.getElementById("visualPecahan").innerText = visual;
+  resVis.innerText = visual;
+  resVis.style.display = 'block';
 }
 
-
-// NILAI TEMPAT
+// NILAI TEMPAT K3[span_60](start_span)[span_60](end_span)
 function cekNilai() {
   const angka = document.getElementById("inputAngka").value;
-
-  if (angka === "") {
-    document.getElementById("hasilNilai").innerText = "Masukkan angka dulu bre!";
-    return;
-  }
-  const str = angka.toString();
+  const res = document.getElementById("hasilNilai");
+  if (angka === "") { res.innerText = "Masukkan angka dulu bre[span_61](start_span)[span_61](end_span)!"; res.style.display='block'; return; }
+  
+  const str = Math.abs(parseInt(angka)).toString();
   let hasil = "";
-  // panjang angka
   const len = str.length;
+  
   for (let i = 0; i < len; i++) {
     const digit = parseInt(str[i]);
     const posisi = len - i;
     if (digit === 0) continue;
-    if (posisi === 4) {
-      hasil += digit + " ribuan (" + digit * 1000 + ")\n";
-    } else if (posisi === 3) {
-      hasil += digit + " ratusan (" + digit * 100 + ")\n";
-    } else if (posisi === 2) {
-      hasil += digit + " puluhan (" + digit * 10 + ")\n";
-    } else if (posisi === 1) {
-      hasil += digit + " satuan (" + digit + ")\n";
-    }
+    if (posisi === 4) hasil += `${digit} Ribuan (${digit * 1000})\n`;
+    else if (posisi === 3) hasil += `${digit} Ratusan (${digit * 100})\n`;
+    else if (posisi === 2) compiled = hasil += `${digit} Puluhan (${digit * 10})\n`;
+    else if (posisi === 1) hasil += `${digit} Satuan (${digit})\n`;
   }
-  document.getElementById("hasilNilai").innerText = hasil;
+  res.innerText = hasil ? hasil : "Hanya bernilai nol";
+  res.style.display = 'block';
 }
 
-
-// OPERASI PECAHAN
+// OPERASI PECAHAN K3[span_62](start_span)[span_62](end_span)
 function hitungPecahan3() {
   let num1 = parseInt(document.getElementById('num1_p3').value);
   let num2 = parseInt(document.getElementById('num2_p3').value);
   let num3 = parseInt(document.getElementById('num3_p3').value);
   let num4 = parseInt(document.getElementById('num4_p3').value);
   let op = document.getElementById('operation_p3').value;
-  if ([num1,num2,num3,num4].includes(NaN)) {
-    document.getElementById('hasilPecahan3').innerText = "Isi semua angka!";
-    return;
-  }
-  let hasil;
-  if (op=="add") hasil = (num1/num2)+(num3/num4);
-  else if (op=="subtract") hasil = (num1/num2)-(num3/num4);
-  document.getElementById('hasilPecahan3').innerText = `Hasil: ${hasil}`;
+  const res = document.getElementById('hasilPecahan3');
+  
+  if ([num1,num2,num3,num4].includes(NaN)) { res.innerText = "Isi semua kolom angka[span_63](start_span)[span_63](end_span)!"; res.style.display='block'; return; }
+  if (num2 === 0 || num4 === 0) { res.innerText = "Penyebut tidak boleh 0!"; res.style.display='block'; return; }
+  
+  let hasil = (op === "add") ? (num1/num2) + (num3/num4) : (num1/num2) - (num3/num4);
+  res.innerText = `Hasil Desimal = ${hasil.toFixed(3)}`;
+  res.style.display = 'block';
 }
 
-
-// PECAHAN CACAH BESAR
+// BILANGAN CACAH BESAR K4[span_64](start_span)[span_64](end_span)
 function terbilangBesar(n) {
   const angka = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
   n = parseInt(n);
-  if (n < 12) {
-    return angka[n];
-  } else if (n < 20) {
-    return terbilangBesar(n - 10) + " belas";
-  } else if (n < 100) {
-    return terbilangBesar(Math.floor(n / 10)) + " puluh " + terbilangBesar(n % 10);
-  } else if (n < 200) {
-    return "seratus " + terbilangBesar(n - 100);
-  } else if (n < 1000) {
-    return terbilangBesar(Math.floor(n / 100)) + " ratus " + terbilangBesar(n % 100);
-  } else if (n < 2000) {
-    return "seribu " + terbilangBesar(n - 1000);
-  } else if (n < 1000000) {
-    return terbilangBesar(Math.floor(n / 1000)) + " ribu " + terbilangBesar(n % 1000);
-  } else if (n < 1000000000) {
-    return terbilangBesar(Math.floor(n / 1000000)) + " juta " + terbilangBesar(n % 1000000);
-  } else if (n < 1000000000000) {
-    return terbilangBesar(Math.floor(n / 1000000000)) + " miliar " + terbilangBesar(n % 1000000000);
-  } else if (n < 1000000000000000) {
-    return terbilangBesar(Math.floor(n / 1000000000000)) + " triliun " + terbilangBesar(n % 1000000000000);
-  } else {
-    return "Angka terlalu besar";
-  }
-}
-function formatAngka(n) {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  if (n < 12) return angka[n];
+  else if (n < 20) return terbilangBesar(n - 10) + " belas[span_65](start_span)[span_65](end_span)";
+  else if (n < 100) return terbilangBesar(Math.floor(n / 10)) + " puluh " + terbilangBesar(n % 10)[span_66](start_span)[span_66](end_span);
+  else if (n < 200) return "seratus " + terbilangBesar(n - 100)[span_67](start_span)[span_67](end_span);
+  else if (n < 1000) return terbilangBesar(Math.floor(n / 100)) + " ratus " + terbilangBesar(n % 100)[span_68](start_span)[span_68](end_span);
+  else if (n < 2000) return "seribu " + terbilangBesar(n - 1000)[span_69](start_span)[span_69](end_span);
+  else if (n < 1000000) return terbilangBesar(Math.floor(n / 1000)) + " ribu " + terbilangBesar(n % 1000)[span_70](start_span)[span_70](end_span);
+  else if (n < 1000000000) return terbilangBesar(Math.floor(n / 1000000)) + " juta " + terbilangBesar(n % 1000000)[span_71](start_span)[span_71](end_span);
+  else if (n < 1000000000000) return terbilangBesar(Math.floor(n / 1000000000)) + " miliar " + terbilangBesar(n % 1000000000)[span_72](start_span)[span_72](end_span);
+  else if (n < 1000000000000000) return terbilangBesar(Math.floor(n / 1000000000000)) + " triliun " + terbilangBesar(n % 1000000000000)[span_73](start_span)[span_73](end_span);
+  return "Angka terlalu besar[span_74](start_span)[span_74](end_span)";
 }
 function convertBesar() {
   const input = document.getElementById("inputBesar").value;
-  if (input === "") {
-    document.getElementById("hasilAngka").innerText = "Masukkan angka dulu bre!";
-    return;
-  }
-  const angka = parseInt(input);
-  document.getElementById("hasilAngka").innerText =
-    "Format: " + formatAngka(angka);
-  document.getElementById("hasilBaca").innerText =
-    "Dibaca: " + terbilangBesar(angka);
+  const resAngka = document.getElementById("hasilAngka");
+  const resBaca = document.getElementById("hasilBaca");
+  if (input === "") { resAngka.innerText = "Masukkan angka dulu bre[span_75](start_span)[span_75](end_span)!"; resAngka.style.display='block'; return; }
+  
+  let formatted = Number(input).toLocaleString('id-ID');
+  resAngka.innerText = "Format Pemisah: " + formatted;
+  resBaca.innerText = "Dibaca: " + terbilangBesar(input);
+  resAngka.style.display = 'block';
+  resBaca.style.display = 'block';
 }
 
-
-// PEMBULATAN BILANGAN
+// PEMBULATAN K4[span_76](start_span)[span_76](end_span)
 function hitungPembulatan() {
-  const angka = parseInt(document.getElementById("angka").value);
+  const angka = parseFloat(document.getElementById("angka").value);
   const tipe = document.getElementById("tipePembulatan").value;
+  const res = document.getElementById("hasilPembulatan");
   if (isNaN(angka)) return;
-  let hasil;
-  if (tipe === "puluhan") {
-    hasil = Math.round(angka / 10) * 10;
-  } else if (tipe === "ratusan") {
-    hasil = Math.round(angka / 100) * 100;
-  }
-  document.getElementById("hasilPembulatan").innerText =
-    `Hasil pembulatan: ${hasil}`;
+  
+  let hasil = (tipe === "puluhan") ? Math.round(angka / 10) * 10 : Math.round(angka / 100) * 100;
+  res.innerText = `Hasil pembulatan: ${hasil}[span_77](start_span)[span_77](end_span)`;
+  res.style.display = 'block';
 }
 
-
-// OPERASI BILANGAN BESAR
+// OPERASI CACAH BESAR K4[span_78](start_span)[span_78](end_span)
 function hitungBesar(){
   let a = parseInt(document.getElementById('angka1_k4').value);
   let b = parseInt(document.getElementById('angka2_k4').value);
   let op = document.getElementById('operator_k4').value;
-  if(isNaN(a)||isNaN(b)){ document.getElementById('hasilBesar').innerText="Isi semua angka!"; return;}
-  let hasil = op=="add"? a+b : a-b;
-  document.getElementById('hasilBesar').innerText = `Hasil: ${hasil}`;
+  const res = document.getElementById('hasilBesar');
+  if(isNaN(a)||isNaN(b)){ res.innerText="Isi semua angka[span_79](start_span)[span_79](end_span)!"; res.style.display='block'; return;}
+  res.innerText = `Hasil perhitungan = ${op == "add" ? a + b : a - b}`;
+  res.style.display = 'block';
 }
 
-
-//KPK
+// KPK K5[span_80](start_span)[span_80](end_span)
 function hitungKPK() {
   const a = parseInt(document.getElementById("num1").value);
   const b = parseInt(document.getElementById("num2").value);
+  const res = document.getElementById("hasilKPK");
+  if (!a || !b) { res.innerText = "Isi kedua angka dulu, bre[span_81](start_span)[span_81](end_span)!"; res.style.display='block'; return; }
 
-  if (!a || !b) {
-    document.getElementById("hasilKPK").innerText = "Isi kedua angka dulu, bre!";
-    return;
-  }
-
-  // Fungsi cari FPB
-  function fpb(x, y) {
-    while(y) {
-      const temp = y;
-      y = x % y;
-      x = temp;
-    }
-    return x;
-  }
-
-  const kpk = (a * b) / fpb(a, b);
-  document.getElementById("hasilKPK").innerText = `KPK dari ${a} dan ${b} = ${kpk}`;
+  function findFPB(x, y) { while(y) { const temp = y; y = x % y; x = temp; } return x; }
+  const kpk = (a * b) / findFPB(a, b);
+  res.innerText = `KPK dari ${a} dan ${b} = ${kpk}[span_82](start_span)[span_82](end_span)`;
+  res.style.display = 'block';
 }
-function resetKPK(){document.getElementById('hasilKPK').innerText='';document.getElementById('num1').value=''; document.getElementById('num2').value='';}
+function resetKPK(){ document.getElementById('hasilKPK').innerText=''; document.getElementById('hasilKPK').style.display='none'; document.getElementById('num1').value=''; document.getElementById('num2').value='';}
 
-function copyKPK() {
-  let el = document.getElementById("hasilKPK");
-  let text = el.innerText || el.textContent;
-
-  if(!text || text.trim() === ""){
-    alert("Belum ada hasil untuk dicopy");
-    return;
-  }
-
-  let temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  temp.setSelectionRange(0,99999);
-
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-
-  alert("Hasil berhasil dicopy");
-}
-
-
-//FPB
+// FPB K5[span_83](start_span)[span_83](end_span)
 function hitungFPB() {
-    let a = parseInt(document.getElementById("angka1").value);
-    let b = parseInt(document.getElementById("angka2").value);
-    
-    let langkahText = "";
-    let x = a;
-    let y = b;
-
-    while (y != 0) {
-        langkahText += x + " ÷ " + y + " sisa " + (x % y) + "<br>";
-        let temp = y;
-        y = x % y;
-        x = temp;
-    }
-
-    document.getElementById("langkah").innerHTML = "<b>Langkah:</b><br>" + langkahText;
-    document.getElementById("hasil").innerHTML = "<b>FPB = " + x + "</b>";
-}
-function resetFPB(){
-document.getElementById('angka1').value='';document.getElementById('angka2').value='';document.getElementById('langkah').innerText='';document.getElementById('hasil').innerText='';}
-
-function copyFPB() {
-  let el = document.getElementById("hasil");
-  let text = el.innerText || el.textContent;
-
-  if(!text || text.trim() === ""){
-    alert("Belum ada hasil untuk dicopy");
-    return;
+  let a = parseInt(document.getElementById("fpb_angka1").value);
+  let b = parseInt(document.getElementById("fpb_angka2").value);
+  const resLangkah = document.getElementById("langkah");
+  const resHasil = document.getElementById("hasilFPB");
+  if(isNaN(a) || isNaN(b)) { alert("Isi nilai angka!"); return;}
+  
+  let langkahText = "";
+  let x = a, y = b;
+  while (y != 0) {
+    langkahText += `${x} ÷ ${y} sisa ${x % y}\n`;
+    let temp = y; y = x % y; x = temp;
   }
-
-  let temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  temp.setSelectionRange(0,99999);
-
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-
-  alert("Hasil berhasil dicopy");
+  resLangkah.innerHTML = "<b>Langkah Pembagian Euclid:</b>\n" + langkahText;
+  resHasil.innerHTML = "<b>Hasil Akhir FPB = " + x + "</b>";
+  resLangkah.style.display = 'block';
+  resHasil.style.display = 'block';
 }
+function resetFPB(){ document.getElementById('fpb_angka1').value=''; document.getElementById('fpb_angka2').value=''; document.getElementById('langkah').innerText=''; document.getElementById('hasilFPB').innerText=''; document.getElementById('langkah').style.display='none'; document.getElementById('hasilFPB').style.display='none';}
 
-
-// PERKALIAN & PEMBAGIAN BESAR
+// PERKALIAN & PEMBAGIAN K5[span_84](start_span)[span_84](end_span)
 function hitungPerkalianBesar(){
   let a = parseInt(document.getElementById('angka1_k5').value);
   let b = parseInt(document.getElementById('angka2_k5').value);
   let op = document.getElementById('operator_k5').value;
-  if(isNaN(a)||isNaN(b)){ document.getElementById('hasilPerkalianBesar').innerText="Isi semua angka!"; return;}
-  let hasil = op=="multiply"? a*b : a/b;
-  document.getElementById('hasilPerkalianBesar').innerText = `Hasil: ${hasil}`;
+  const res = document.getElementById('hasilPerkalianBesar');
+  if(isNaN(a)||isNaN(b)){ res.innerText="Isi semua angka[span_85](start_span)[span_85](end_span)!"; res.style.display='block'; return;}
+  res.innerText = `Hasil Akhir = ${op == "multiply" ? a * b : (a / b).toFixed(2)}`;
+  res.style.display = 'block';
 }
 
-
-//PECAHAN SEDERHANA
+// PECAHAN SEDERHANA K6[span_86](start_span)[span_86](end_span)
 function calculateFraction() {
   let num1 = parseInt(document.getElementById('num1_p1').value);
   let den1 = parseInt(document.getElementById('num2_p1').value);
   let num2 = parseInt(document.getElementById('num1_p2').value);
   let den2 = parseInt(document.getElementById('num2_p2').value);
   let op = document.getElementById('operation_p').value;
+  const res = document.getElementById('result_fraction');
   let resNum, resDen;
 
-  if (den1 === 0 || den2 === 0 || isNaN(num1) || isNaN(num2)) {
-    document.getElementById('result_fraction').textContent = "Input tidak valid!";
-    return;
+  if (den1 === 0 || den2 === 0 || isNaN(num1) || isNaN(num2) || isNaN(den1) || isNaN(den2)) {
+    res.textContent = "Input pecahan tidak valid[span_87](start_span)[span_87](end_span)!"; res.style.display='block'; return;
   }
 
-  switch(op) {
-    case 'add':
-      resNum = num1*den2 + num2*den1;
-      resDen = den1*den2;
-      break;
-    case 'subtract':
-      resNum = num1*den2 - num2*den1;
-      resDen = den1*den2;
-      break;
-    case 'multiply':
-      resNum = num1*num2;
-      resDen = den1*den2;
-      break;
-    case 'divide':
-      resNum = num1*den2;
-      resDen = den1*num2;
-      break;
-  }
+  if(op=='add') { resNum = num1*den2 + num2*den1; resDen = den1*den2; }
+  else if(op=='subtract') { resNum = num1*den2 - num2*den1; resDen = den1*den2; }
+  else if(op=='multiply') { resNum = num1*num2; resDen = den1*den2; }
+  else if(op=='divide') { resNum = num1*den2; resDen = den1*num2; }
 
-  // Fungsi sederhana untuk menyederhanakan pecahan
-  function gcd(a,b){ return b===0 ? a : gcd(b, a%b);}
+  function gcd(x,y){ return y===0 ? x : gcd(y, x%y);}
   let g = gcd(Math.abs(resNum), Math.abs(resDen));
-  resNum /= g;
-  resDen /= g;
+  resNum /= g; resDen /= g;
 
-  document.getElementById('result_fraction').textContent = resNum + "/" + resDen;
+  res.textContent = `Hasil Penyederhanaan Pecahan = ${resNum}/${resDen}`;
+  res.style.display = 'block';
 }
-function resetcalculate_Fraction(){
-document.getElementById('result_fraction').innerText='';document.getElementById('num1_p1').value='';document.getElementById('num2_p1').value='';document.getElementById('num1_p2').value='';document.getElementById('num2_p2').value='';document.getElementById('operation_p').value = 'add';}
+function resetcalculate_Fraction(){ document.getElementById('result_fraction').innerText=''; document.getElementById('result_fraction').style.display='none'; document.getElementById('num1_p1').value=''; document.getElementById('num2_p1').value=''; document.getElementById('num1_p2').value=''; document.getElementById('num2_p2').value=''; }
 
-function copycalculate_Fraction() {
-  let el = document.getElementById("result_fraction");
-  let text = el.innerText || el.textContent;
-
-  if(!text || text.trim() === ""){
-    alert("Belum ada hasil untuk dicopy");
-    return;
+// FORM VOLUME HIDE/SHOW CONTROL K6[span_88](start_span)[span_88](end_span)
+function kondisiFormVolume() {
+  const b = document.getElementById('bangun').value;
+  if(b === "kubus") {
+    document.getElementById('lebar').style.display = 'none';
+    document.getElementById('tinggi').style.display = 'none';
+  } else {
+    document.getElementById('lebar').style.display = 'block';
+    document.getElementById('tinggi').style.display = 'block';
   }
-
-  let temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  temp.setSelectionRange(0,99999);
-
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-
-  alert("Hasil berhasil dicopy");
 }
 
-
-//HITUNG VOLUME
+// VOLUME BANGUN RUANG K6[span_89](start_span)[span_89](end_span)
 function calcVolume(){
-let b = document.getElementById('bangun').value;
-let s = Number(document.getElementById('sisi').value);
-let l = Number(document.getElementById('lebar').value);
-let t = Number(document.getElementById('tinggi').value);
-let hasil, cara='';
-if(b=="kubus"){
-hasil = s**3;
-cara = `Rumus Kubus:<br>
-Volume kubus adalah isi dari bangun ruang berbentuk kubus.<br>
-<br>
-Langkah-langkah:<br>
-1. Tentukan panjang sisi kubus (s)<br>
-2. Gunakan rumus: V = s³<br>
-3. Masukkan nilai sisi ke rumus<br>
-4. Hitung hasil volume kubus<br>
-<br>
-= ${s} × ${s} × ${s}<br>= ${hasil}`;
-}else{
-hasil = s*l*t;
-cara = `Rumus Balok:<br>
-Volume balok adalah isi dari bangun ruang berbentuk balok.<br>
-<br>
-Langkah-langkah:<br>
-1. Tentukan panjang (p), lebar (l), dan tinggi (t)<br>
-2. Gunakan rumus: V = p × l × t<br>
-3. Masukkan semua nilai ke rumus<br>
-4. Hitung hasil volume balok<br>
-<br>
-= ${s} × ${l} × ${t}<br>= ${hasil}`;
-}
-document.getElementById('hasilVolume').innerText="Hasil = "+hasil;
-document.getElementById('caraVolume').innerHTML = document.getElementById('modeVolume').checked?cara:'';
-}
-function resetVolume(){document.getElementById('sisi').value='';document.getElementById('lebar').value='';document.getElementById('tinggi').value='';document.getElementById('hasilVolume').innerText='';document.getElementById('caraVolume').innerText='';}
-
-function copyVolume() {
-  let el = document.getElementById("hasilVolume");
-  let text = el.innerText || el.textContent;
-
-  if(!text || text.trim() === ""){
-    alert("Belum ada hasil untuk dicopy");
-    return;
+  let b = document.getElementById('bangun').value;
+  let s = Number(document.getElementById('sisi').value);
+  let l = Number(document.getElementById('lebar').value);
+  let t = Number(document.getElementById('tinggi').value);
+  const resVol = document.getElementById('hasilVolume');
+  const resCara = document.getElementById('caraVolume');
+  let hasil, cara='';
+  
+  if(b=="kubus"){
+    hasil = s**3;
+    cara = `Langkah Penyelesaian Kubus:\n1. Rumus: V = s x s x s[span_90](start_span)[span_90](end_span)\n2. Hitung: ${s} x ${s} x ${s}\n3. Volume = ${hasil}`;
+  } else {
+    hasil = s*l*t;
+    cara = `Langkah Penyelesaian Balok:\n1. Rumus: V = p x l x t[span_91](start_span)[span_91](end_span)\n2. Hitung: ${s} x ${l} x ${t}\n3. Volume = ${hasil}`;
   }
-
-  let temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  temp.setSelectionRange(0,99999);
-
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-
-  alert("Hasil berhasil dicopy");
+  resVol.innerText = "Hasil Volume = " + hasil;
+  resVol.style.display = 'block';
+  
+  if(document.getElementById('modeVolume').checked) {
+    resCara.innerText = cara;
+    resCara.style.display = 'block';
+  } else {
+    resCara.style.display = 'none';
+  }
 }
+function resetVolume(){ document.getElementById('sisi').value=''; document.getElementById('lebar').value=''; document.getElementById('tinggi').value=''; document.getElementById('hasilVolume').innerText=''; document.getElementById('caraVolume').innerText=''; document.getElementById('hasilVolume').style.display='none'; document.getElementById('caraVolume').style.display='none';}
 
-
-// OPERASI PECAHAN LANJUTAN
+// OPERASI PECAHAN DESIMAL LANJUTAN K6[span_92](start_span)[span_92](end_span)
 function hitungPecahan6(){
   let a = parseInt(document.getElementById('num1_p6').value);
   let b = parseInt(document.getElementById('num2_p6').value);
   let c = parseInt(document.getElementById('num3_p6').value);
   let d = parseInt(document.getElementById('num4_p6').value);
   let op = document.getElementById('operator_p6').value;
-  if([a,b,c,d].includes(NaN)){ document.getElementById('hasilPecahan6').innerText="Isi semua angka!"; return;}
+  const res = document.getElementById('hasilPecahan6');
+  
+  if([a,b,c,d].includes(NaN) || b===0 || d===0){ res.innerText="Data pecahan tidak valid[span_93](start_span)[span_93](end_span)!"; res.style.display='block'; return;}
   let hasil;
   if(op=="add") hasil = a/b + c/d;
   else if(op=="subtract") hasil = a/b - c/d;
   else if(op=="multiply") hasil = a/b * c/d;
   else if(op=="divide") hasil = a/b / (c/d);
-  document.getElementById('hasilPecahan6').innerText = `Hasil: ${hasil}`;
+  
+  res.innerText = `Hasil Nilai Desimal Lanjutan = ${hasil.toFixed(4)}`;
+  res.style.display = 'block';
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  const kelas1 = document.getElementById('kelas1');
-  const kelas2 = document.getElementById('kelas2');
-  const kelas3 = document.getElementById('kelas3');
-  const kelas4 = document.getElementById('kelas4');
-  const kelas5 = document.getElementById('kelas5');
-  const kelas6 = document.getElementById('kelas6');
-  const pilihMode = document.getElementById('pilihMode');
-
-  // Fungsi buat reset semua mode
-  function hideAllModes() {
-    if(kelas1) kelas1.style.display = 'none';
-    if(kelas2) kelas2.style.display = 'none';
-    if(kelas3) kelas3.style.display = 'none';
-    if(kelas4) kelas4.style.display = 'none';
-    if(kelas5) kelas5.style.display = 'none';
-    if(kelas6) kelas6.style.display = 'none';
-    if(pilihMode) pilihMode.style.display = 'none';
-  }
-
-  // Kelas 1
-  const btnKelas1 = document.getElementById('btnKelas1');
-  if(btnKelas1){
-    btnKelas1.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas1) kelas1.style.display = 'flex';
-    });
-  }
-
-  // Kelas 2
-  const btnKelas2 = document.getElementById('btnKelas2');
-  if(btnKelas2){
-    btnKelas2.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas2) kelas2.style.display = 'flex';
-    });
-  }
-
-  // Kelas 3
-  const btnKelas3 = document.getElementById('btnKelas3');
-  if(btnKelas3){
-    btnKelas3.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas3) kelas3.style.display = 'flex';
-    });
-  }
-
-  // Kelas 4
-  const btnKelas4 = document.getElementById('btnKelas4');
-  if(btnKelas4){
-    btnKelas4.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas4) kelas4.style.display = 'flex';
-    });
-  }
-
-  // Kelas 5
-  const btnKelas5 = document.getElementById('btnKelas5');
-  if(btnKelas5){
-    btnKelas5.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas5) kelas5.style.display = 'flex';
-    });
-  }
-
-  // Kelas 6
-  const btnKelas6 = document.getElementById('btnKelas6');
-  if(btnKelas6){
-    btnKelas6.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas6) kelas6.style.display = 'flex';
-    });
-  }
-
-});
-
-// ===== SHOW CARD =====
-function showCard(cardId) {
-  document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-  document.getElementById(cardId).style.display = 'block';
+// GLOBAL UTILITY: COPY TO CLIPBOARD[span_94](start_span)[span_94](end_span)
+function copyResult(elementId) {
+  let text = document.getElementById(elementId).innerText;
+  if(!text) return alert("Belum ada jawaban untuk disalin!");
+  
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Hasil sukses disalin ke memori clipboard!");
+  }).catch(() => {
+    alert("Gagal menyalin teks.");
+  });
 }
-
-
-// ===== KEMBALI KE MODE =====
-function backToMode(){
-
-  // Hide semua card
-  document.querySelectorAll('.card')
-    .forEach(c => c.style.display = 'none');
-
-  // Hide semua halaman utama juga
-  const kelas1 = document.getElementById('kelas1');
-  const kelas2 = document.getElementById('kelas2');
-  const kelas3 = document.getElementById('kelas3');
-  const kelas4 = document.getElementById('kelas4');
-  const kelas5 = document.getElementById('kelas5');
-  const kelas6 = document.getElementById('kelas6');
-
-
-  if(kelas1) kelas1.style.display = 'none';
-  if(kelas2) kelas2.style.display = 'none';
-  if(kelas3) kelas3.style.display = 'none';
-  if(kelas4) kelas4.style.display = 'none';
-  if(kelas5) kelas5.style.display = 'none';
-  if(kelas6) kelas6.style.display = 'none';
-
-  // Tampilkan menu pilih mode
-  const pilihMode = document.getElementById('pilihMode');
-  if(pilihMode) pilihMode.style.display = 'flex';
-}
-
-
-// BAHASA
-function goPage(page) {
-  window.location.href = page;
-}
-
-
 </script>
 </body>
 </html>

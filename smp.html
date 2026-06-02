@@ -3,308 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Murid</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Star Tools - SMP</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-
+/* TEMA PREMIUM STAR TOOLS SINKRON KESELURUHAN */
 :root {
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
   --primary: #ffd369;
-  --secondary: #2a5298;
-  --accent: #f3c969;
-  --dark-bg: #0f172a;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --text-glow: 0 0 12px rgba(255, 211, 105, 0.4);
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
+}
+
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: var(--dark-bg);
-  color: #e2e8f0;
   min-height: 100vh;
-  line-height: 1.6;
-}
-
-body.light {
-  --dark-bg: #f1f5f9;
-  --glass: rgba(0, 0, 0, 0.05);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  color: #1e293b;
-}
-
-/* Background Effect */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 70%);
-  z-index: -1;
-  opacity: 0.5;
-}
-
-
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
-}
-
-.header h1 {
-  font-size: 40px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-.badge {
-  background: var(--primary);
-  color: #000;
-  padding: 5px 16px;
-  border-radius: 50px;
-  font-size: 11px;
-  font-weight: 800;
-  display: inline-block;
-  margin-top: 15px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
-}
-
-/* Menu & Buttons */
-.menu, #pilihMode, #sd, #smp, #sma {
+  background-color: var(--dark-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 30px;
+}
+
+.header { text-align: center; padding: 40px 20px 20px; }
+.header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
+.badge { background: var(--primary); color: #0b0f19; padding: 4px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; display: inline-block; margin-top: 8px; }
+
+.container { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+.card {
+  background: var(--card-bg);
+  padding: 26px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
   animation: slideUp 0.5s ease;
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.card h2, .card h3 { margin-top: 0; font-size: 18px; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; text-align: left; }
+.card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
 
-button {
-  background: var(--glass);
-  color: white;
-  border: 1px solid var(--glass-border);
-  padding: 16px 20px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  width: 100%;
-}
+.sub-title { font-size: 15px; font-weight: 600; color: var(--primary); margin: 15px 0 10px 0; }
 
-body.light button { color: #1e293b; background: #fff; }
-
-button:hover {
-  background: var(--primary);
-  color: #000;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  border-color: transparent;
-}
-
-button:active { transform: scale(0.98); }
-
-.mode-btn {
-  width: auto;
-  min-width: 180px;
-  padding: 10px 25px;
-  margin: 0 auto 30px;
-  display: block;
-  border-radius: 50px;
-  background: var(--primary);
-  color: #000;
-  font-size: 12px;
-}
-
-/* Cards */
-.card {
-  display: none;
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
-
-.cardjudul {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.cardjudul:nth-child(1){ animation-delay: 0.2s; }
-.cardjudul:nth-child(2){ animation-delay: 0.4s; }
-
-h2 {
-  text-align: center;
-  font-size: 18.72px;
-}
-
-input, select {
-  width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  background: rgba(0,0,0,0.2);
-  color: #fff;
-  font-family: inherit;
-  outline: none;
-}
-
-body.light input, body.light select {
-  background: #fff;
-  color: #333;
-  border: 1px solid #cbd5e1;
-}
-
-input:focus { border-color: var(--primary); }
-
-.result {
-  margin-top: 20px;
-  padding: 20px;
-  background: rgba(255, 211, 105, 0.1);
-  border-radius: 18px;
-  border-left: 4px solid var(--primary);
-  font-weight: 600;
-}
-
-.example-box {
-  background: rgba(255,255,255,0.05);
-  padding: 15px;
-  border-radius: 15px;
-  font-size: 13px;
-  margin-bottom: 15px;
-  border-left: 3px solid #64748b;
-}
-
-/* Checkbox Styling */
-.label-checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--dark-bg); }
-::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-   
-/* Footer */
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sponsor { font-size: 14px; margin-bottom: 5px; }
-.sponsor strong { color: var(--primary); }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mode {
+/* Menu Navigation */
+.mode-menu {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 24px;
+  animation: slideUp 0.5s ease;
 }
 
+input, select {
+  width: 100%; padding: 14px 16px; margin-bottom: 14px; border-radius: 14px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;
+}
+input:focus, select:focus { border-color: var(--primary); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Buttons Style */
+.btn {
+  padding: 15px; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;
+  width: 100%; font-family: 'Poppins', sans-serif;
+}
+.btn-primary { background: var(--primary); color: #0b0f19; }
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-secondary { background: var(--btn-mapel); color: var(--text-main); border: 1px solid var(--btn-mapel-border); }
+.btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.btn-danger:hover { transform: translateY(-2px); background: #ef4444; color: white; }
+
+.mode-btn { width: auto; min-width: 180px; padding: 10px 25px; margin: 0 auto 24px; display: block; border-radius: 50px; background: var(--primary); color: #0b0f19; font-size: 12px; font-weight: 700; border: none; cursor: pointer; }
+
+/* Results */
+.result {
+  margin-top: 15px; padding: 16px; background: rgba(255, 211, 105, 0.06);
+  border-radius: 14px; border-left: 4px solid var(--primary); font-weight: 600; font-size: 14px;
+  font-family: 'JetBrains Mono', monospace; color: var(--text-main); white-space: pre-line;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
 <body class="dark">
 
-
 <div class="header">
+  <div class="container">
+    <h1>Star Tools</h1>
+    <div class="badge">Versi 1.7</div>
+  </div>
+</div>
+
 <div class="container">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
+  <div class="card" id="mainDeskripsi">
+    <p>Star Tools untuk tingkat SMP menyajikan kalkulator matematika yang dirancang untuk membantu memahami rumus-rumus aljabar, sistem persamaan, hingga phytagoras secara praktis.</p>
+  </div>
+
+  <div id="pilihMode" class="mode-menu">
+    <div class="card">
+      <h2>Pilih Kelas</h2>
+      <div class="grid-2">
+        <button class="btn btn-secondary" id="btnKelas7">Kelas 7</button>
+        <button class="btn btn-secondary" id="btnKelas8">Kelas 8</button>
+        <button class="btn btn-secondary" id="btnKelas9">Kelas 9</button>
+      </div>
+      <div style="height: 1px; background: var(--card-border); margin: 15px 0;"></div>
+      <h2 style="font-size: 16px; margin-bottom: 12px;">Kembali Pilih Jenjang</h2>
+      <button class="btn btn-danger" style="margin-bottom: 0;" onclick="goPage('mtk.html')">Kembali</button>
+    </div>
+  </div>
 
 
-<div class="cardjudul">
-<p>Star Tools untuk SMP membantu siswa memahami konsep matematika dengan lebih terstruktur. Cocok untuk latihan dan memperkuat pemahaman materi yang lebih kompleks.</p>
-</div>
-
-
-<button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
-
-
-<div id="pilihMode">
-<h2>Pilih Kelas</h2>
-  <button id="btnKelas7">Kelas 7</button>
-  <button id="btnKelas8">Kelas 8</button>
-  <button id="btnKelas9">Kelas 9</button>
-  <h2>Kembali Pilih Jenjang</h2>
-  <button onclick="goPage('murid.html')">Kembali</button>
-</div>
-
-
-<!-- SMP -->
-<div id="kelas7" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('bilanganBulatFeature')">Kalkulator Bilangan Bulat</button>
-  <button onclick="showCard('aljabar-card')">Kalkulator Bentuk Aljabar</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('persentase7')">Kalkulator Persentase</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
+  <div id="kelas7" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('bilanganBulatFeature')">Kalkulator Bilangan Bulat</button>
+      <button class="btn btn-secondary" onclick="showCard('aljabar')">Kalkulator Aljabar Sederhana</button>
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('persentase7')">Kalkulator Persentase</button>
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
 
 <!-- Aljabar -->
-<div class="card" id="aljabar-card">
-  <h2>Bentuk Aljabar</h2>
-  <input type="text" id="aljabar-input" placeholder="Masukkan bentuk aljabar, misal 2x + 3x - 5">
-  <button onclick="sederhanakanAljabar()">Jawaban</button>
-  <button onclick="copyAljabar()">Salin Hasil</button>
-  <button onclick="resetAljabar()">Reset</button>
-  <div id="aljabar-result" class="result"></div>
+  <div class="card" id="aljabar" style="display:none">
+    <h2>Aljabar Sederhana</h2>
+    <p style="margin-bottom: 15px;">Bentuk: ax + b = c. Cari nilai x.</p>
+    <div class="grid-2">
+      <input type="number" id="aljabarA" placeholder="Nilai a">
+      <input type="number" id="aljabarB" placeholder="Nilai b">
+    </div>
+    <input type="number" id="aljabarC" placeholder="Nilai c">
+    <button class="btn btn-primary" onclick="hitungAljabar()">Jawaban</button>
+    <div class="result" id="hasilAljabar" style="display:none;"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas7')">Kembali</button>
 </div>
 
 <!-- Bilangan Bulat -->
-<div class="card" id="bilanganBulatFeature">
+<div class="card" id="bilanganBulatFeature" style="display:none">
   <h2>Bilangan Bulat</h2>
   <label>Bilangan 1:</label>
   <input type="number" id="num1_bulat"><br><br>
@@ -317,35 +189,38 @@ input[type="checkbox"] {
     <option value="multiply">×</option>
     <option value="divide">÷</option>
   </select><br><br>
-  <button onclick="calculateBulat()">Hitung</button>
-  <button onclick="copycalculateBulat()">Copy Hasil</button>
-  <button onclick="resetcalculateBulat()">Reset</button>
-  <div class="result" id="result_bulat"></div>
+  <button class="btn btn-primary" onclick="calculateBulat()">Hitung</button>
+  <button class="btn btn-primary" onclick="copycalculateBulat()">Copy Hasil</button>
+  <button class="btn btn-primary" onclick="resetcalculateBulat()">Reset</button>
+  <div class="result" id="result_bulat" style="display:none;"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas7')">Kembali</button>
 </div>
 
 <!-- Persentase -->
-<div class="card" id="persentase7">
+<div class="card" id="persentase7" style="display:none">
 <h2>Persentase</h2>
 <input type="number" id="nilai7" placeholder="Nilai">
 <input type="number" id="persen7" placeholder="Persen (%)">
-<button onclick="hitungPersen7()">Hitung</button>
-<div class="result" id="hasilPersen7"></div>
+<button class="btn btn-primary" onclick="hitungPersen7()">Hitung</button>
+<div class="result" id="hasilPersen7" style="display:none;"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas7')">Kembali</button>
 </div>
 
 
-<!-- SMP -->
-<div id="kelas8" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('bangunRuangLengkung')">Kalkulator Ruang Lengkung</button>
-  <button onclick="showCard('cartesius')">Kalkulator Kordinat Cartsesius</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('teorema8')">Kalkulator Teorema Pythagoras</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
+  <div id="kelas8" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('cartesius')">Kalkulator Kordinat Cartesius</button>
+      <button class="btn btn-secondary" onclick="showCard('bangunRuangLengkung')">Kalkulator Bangun Lengkung</button>
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('phytagoras')">Kalkulator Rumus Phytagoras</button>
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
 
 <!-- Koordinat Cartesius -->
-<div class="card" id="cartesius">
+<div class="card" id="cartesius" style="display:none">
   <h2>Koordinat Cartesius</h2>
   <div class="example-box">
     <b>Contoh Soal:</b><br>
@@ -357,16 +232,17 @@ input[type="checkbox"] {
     Tampilkan Cara
     <input type="checkbox" id="modeCart">
   </div>
-  <canvas id="graphCart" width="300" height="300" style="background:white;border-radius:10px;margin-top:10px;"></canvas>
-  <div class="result" id="hasilCart"></div>
-  <div class="result" id="caraCart" style="font-size:14px;color:white"></div>
-  <button onclick="hitungCartesius()">Tampilkan Titik</button>
-  <button onclick="copyCart()">Salin Hasil</button>
-  <button onclick="resetCart()">Reset</button>
+  <canvas id="graphCart" width="265" height="300" style="background:green;border-radius:10px;margin-top:10px;"></canvas>
+  <div class="result" id="hasilCart" style="display:none;"></div>
+  <div class="result" id="caraCart" style="font-size:14px;color:white;display:none;"></div>
+  <button class="btn btn-primary" onclick="hitungCartesius()">Tampilkan Titik</button>
+  <button class="btn btn-primary" onclick="copyCart()">Salin Hasil</button>
+  <button class="btn btn-primary" onclick="resetCart()">Reset</button>
+  <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas8')">Kembali</button>
 </div>
 
 <!-- Bangun Ruang Lengkung -->
-<div class="card" id="bangunRuangLengkung">
+<div class="card" id="bangunRuangLengkung" style="display:none">
   <h2>Bangun Ruang Sisi Lengkung</h2>
   <label>Pilih Bangun:</label>
   <select id="jenisBangun">
@@ -378,35 +254,40 @@ input[type="checkbox"] {
   <input type="number" id="jariLengkung" placeholder="Masukkan jari-jari">
   <label>Tinggi (t) - kosongkan jika bola:</label>
   <input type="number" id="tinggiLengkung" placeholder="Masukkan tinggi">
-  <button onclick="hitungLengkung()">Hitung</button>
-  <button onclick="copyLengkung()">Salin Hasil</button>
-  <button onclick="resetLengkung()">Reset</button>
-  <div class="result" id="hasilLengkung"></div>
+  <button class="btn btn-primary" onclick="hitungLengkung()">Hitung</button>
+  <button class="btn btn-primary" onclick="copyLengkung()">Salin Hasil</button>
+  <button class="btn btn-primary" onclick="resetLengkung()">Reset</button>
+  <div class="result" id="hasilLengkung" style="display:none;"></div>
+  <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas8')">Kembali</button>
 </div>
 
 <!-- Pythagoras -->
-<div class="card" id="teorema8">
-<h2>Pythagoras</h2>
-<input type="number" id="a8" placeholder="Sisi a">
-<input type="number" id="b8" placeholder="Sisi b">
-<button onclick="hitungPythagoras()">Hitung</button>
-<div class="result" id="hasilPytha"></div>
-</div>
+  <div class="card" id="phytagoras" style="display:none">
+    <h2>Kalkulator Phytagoras</h2>
+    <p style="margin-bottom: 15px;">Kosongkan salah satu kolom yang ingin dicari nilainya.</p>
+    <input type="number" id="phyA" placeholder="Sisi Alas (a)">
+    <input type="number" id="phyB" placeholder="Sisi Tegak (b)">
+    <input type="number" id="phyC" placeholder="Sisi Miring (c)">
+    <button class="btn btn-primary" onclick="hitungPhytagoras()">Jawaban</button>
+    <div class="result" id="hasilPhytagoras" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas8')">Kembali</button>
+  </div>
 
 
-<!-- SMP -->
-<div id="kelas9" class="mode" style="display:none">
-  <h2>Semester 1</h2>
-  <button onclick="showCard('transformasi')">Kalkulator Transformasi Geometri</button>
-  <button onclick="showCard('persamaanKuadrat')">Kalkulator Persamaan Kuadrat</button>
-  <h2>Semester 2</h2>
-  <button onclick="showCard('statistika9')">Kalkulator Statistika</button>
-  <h2>Kembali Pilih Kelas</h2>
-  <button onclick="backToMode()">Kembali</button>
-</div>
+  <div id="kelas9" class="mode-menu" style="display:none">
+    <div class="card">
+      <h3 class="sub-title">Semester 1</h3>
+      <button class="btn btn-secondary" onclick="showCard('transformasi')">Kalkulator Geometri</button>
+      <button class="btn btn-secondary" onclick="showCard('kuadrat')">Kalkulator Persamaan Kuadrat</button>
+      <h3 class="sub-title">Semester 2</h3>
+      <button class="btn btn-secondary" onclick="showCard('statistika9')">Kalkulator Nilai Rata-Rata</button>
+      <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
+      <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
+    </div>
+  </div>
 
 <!-- Tranformasi Geometri -->
-<div class="card" id="transformasi">
+<div class="card" id="transformasi" style="display:none">
   <h2>Transformasi Geometri</h2>
   <label for="koordinatX">Koordinat X:</label>
   <input type="number" id="koordinatX" placeholder="Masukkan X titik">
@@ -421,88 +302,122 @@ input[type="checkbox"] {
   </select>
   <label for="parameter">Parameter (misal: dx, dy / sudut / skala):</label>
   <input type="text" id="parameter" placeholder="Isi sesuai transformasi">
-  <button onclick="hitungTransformasi()">Hitung</button>
-  <button onclick="copyTransformasi()">Salin Hasil</button>
-  <button onclick="resetTransformasi()">Reset</button>
-  <div class="result" id="hasilTransformasi"></div>
+  <button class="btn btn-primary" onclick="hitungTransformasi()">Hitung</button>
+  <button class="btn btn-primary" onclick="copyTransformasi()">Salin Hasil</button>
+  <button class="btn btn-primary" onclick="resetTransformasi()">Reset</button>
+  <div class="result" id="hasilTransformasi" style="display:none;"></div>
+  <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas9')">Kembali</button>
 </div>
 
 <!-- Persamaan Kuadrat -->
-<div class="card" id="persamaanKuadrat">
-  <h2>Persamaan Kuadrat</h2>
-  <label>a:</label>
-  <input type="number" id="a_quad" placeholder="Masukkan a"><br><br>
-  <label>b:</label>
-  <input type="number" id="b_quad" placeholder="Masukkan b"><br><br>
-  <label>c:</label>
-  <input type="number" id="c_quad" placeholder="Masukkan c"><br><br>
-  <button onclick="hitungKuadrat()">Hitung</button>
-  <button onclick="copyKuadrat()">Salin Hasil</button>
-  <button onclick="resetKuadrat()">Reset</button>
-  <div class="result" id="hasilKuadrat"></div>
-</div>
+  <div class="card" id="kuadrat" style="display:none">
+    <h2>Persamaan Kuadrat</h2>
+    <p style="margin-bottom: 15px;">Bentuk: ax² + bx + c = 0</p>
+    <div class="grid-2">
+      <input type="number" id="quadA" placeholder="Nilai a">
+      <input type="number" id="quadB" placeholder="Nilai b">
+    </div>
+    <input type="number" id="quadC" placeholder="Nilai c">
+    <button class="btn btn-primary" onclick="hitungKuadrat()">Jawaban</button>
+    <div class="result" id="hasilKuadrat" style="display:none;"></div>
+    <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas9')">Kembali</button>
+  </div>
 
 <!-- Statistika -->
-<div class="card" id="statistika9">
+<div class="card" id="statistika9" style="display:none">
 <h2>Rata-rata</h2>
 <input type="text" id="data9" placeholder="Contoh: 1,2,3,4">
-<button onclick="hitungRata()">Hitung</button>
-<div class="result" id="hasilRata"></div>
+<button class="btn btn-primary" onclick="hitungRata()">Hitung</button>
+<div class="result" id="hasilRata" style="display:none;"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas9')">Kembali</button>
 </div>
 
+</div>
 
+<!-- FOOTER -->
 <div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
   <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
 </div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.12.0/math.min.js"></script>
-
 
 <script>
-// Mode Gelap/Terang
-document.getElementById('modeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
+// Sinkronisasi Tema Otomatis
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") {
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+  }
 });
 
-
-//AlJABAR
-function sederhanakanAljabar() {
-  let input = document.getElementById('aljabar-input').value;
-
-  try {
-    // pake math.js untuk simplifikasi
-    let result = math.simplify(input).toString();
-    document.getElementById('aljabar-result').innerText = `Hasil: ${result}`;
-  } catch(err) {
-    document.getElementById('aljabar-result').innerText = "Format salah, coba lagi!";
-  }
+// NAVIGATION CORE LOGIC
+function hideAllMainViews() {
+  document.getElementById('pilihMode').style.display = 'none';
+  document.getElementById('kelas7').style.display = 'none';
+  document.getElementById('kelas8').style.display = 'none';
+  document.getElementById('kelas9').style.display = 'none';
+  document.getElementById('mainDeskripsi').style.display = 'none';
 }
 
-function resetAljabar(){
-  document.getElementById("aljabar-input").value="";
-  document.getElementById("aljabar-result").innerText="";}
+function closeAllCards() {
+  document.querySelectorAll('.container > .card').forEach(card => {
+    if(card.id !== 'mainDeskripsi') {
+      card.style.display = 'none';
+    }
+  });
+}
 
-function copyAljabar() {
-  let el = document.getElementById("aljabar-result");
-  let text = el.innerText || el.textContent;
+// Event Bindings Kelas
+document.getElementById('btnKelas7').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas7').style.display = 'flex'; });
+document.getElementById('btnKelas8').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas8').style.display = 'flex'; });
+document.getElementById('btnKelas9').addEventListener('click', () => { hideAllMainViews(); document.getElementById('kelas9').style.display = 'flex'; });
 
-  if(!text || text.trim() === ""){
-    alert("Belum ada hasil untuk dicopy");
-    return;
-  }
+function showCard(cardId) {
+  hideAllMainViews();
+  closeAllCards();
+  const target = document.getElementById(cardId);
+  target.style.display = 'block';
+  target.scrollIntoView({ behavior: 'smooth' });
+}
 
-  let temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  temp.setSelectionRange(0,99999);
+function backToMenuKelas(kelasId) {
+  closeAllCards();
+  hideAllMainViews();
+  document.getElementById(kelasId).style.display = 'flex';
+}
 
-  document.execCommand("copy");
-  document.body.removeChild(temp);
+function backToMode(){
+  closeAllCards();
+  hideAllMainViews();
+  document.getElementById('mainDeskripsi').style.display = 'block';
+  document.getElementById('pilihMode').style.display = 'flex';
+}
 
-  alert("Hasil berhasil dicopy");
+function goPage(page) { window.location.href = page; }
+
+// ==================== ENGINE MATEMATIKA ====================
+
+// KELAS 7: ALJABAR
+function hitungAljabar() {
+  const a = parseFloat(document.getElementById('aljabarA').value);
+  const b = parseFloat(document.getElementById('aljabarB').value);
+  const c = parseFloat(document.getElementById('aljabarC').value);
+  const res = document.getElementById('hasilAljabar');
+
+  if (isNaN(a) || isNaN(b) || isNaN(c)) { res.innerText = "Isi semua kolom angka terlebih dahulu!"; res.style.display = 'block'; return; }
+  if (a === 0) { res.innerText = "Nilai 'a' tidak boleh 0 karena nilai x menjadi tidak terdefinisi."; res.style.display = 'block'; return; }
+
+  const x = (c - b) / a;
+  res.innerText = `Langkah Penyelesaian:\n1. ${a}x = ${c} - (${b})\n2. ${a}x = ${c - b}\n3. x = ${c - b} / ${a}\n\nHasil: x = ${x}`;
+  res.style.display = 'block';
 }
 
 //BILANGAN BULAT
@@ -568,7 +483,7 @@ document.getElementById('hasilPersen7').innerText = hasil;
 
 
 
-//KORDINAT CARTESIUS
+// KELAS 8: KORDINAT CARTESIUS
 function hitungCartesius(){
   let x = Number(document.getElementById("xCart").value);
   let y = Number(document.getElementById("yCart").value);
@@ -735,17 +650,38 @@ function copyLengkung(){
   alert("Hasil berhasil dicopy");
 }
 
-// Pythagoras
-function hitungPythagoras(){
-let a = Number(document.getElementById('a8').value);
-let b = Number(document.getElementById('b8').value);
-if(!a || !b) return;
-let c = Math.sqrt(a*a + b*b);
-document.getElementById('hasilPytha').innerText = c;
+// PHYTAGORAS
+function hitungPhytagoras() {
+  const a = parseFloat(document.getElementById('phyA').value);
+  const b = parseFloat(document.getElementById('phyB').value);
+  const c = parseFloat(document.getElementById('phyC').value);
+  const res = document.getElementById('hasilPhytagoras');
+
+  if (!a && !b && !c) { res.innerText = "Isi dua kolom untuk mencari kolom yang kosong!"; res.style.display = 'block'; return; }
+
+  if (!c) {
+    if (isNaN(a) || isNaN(b)) { res.innerText = "Masukkan nilai a dan b!"; res.style.display = 'block'; return; }
+    const hasil = Math.sqrt((a * a) + (b * b));
+    res.innerText = `Mencari Sisi Miring (c):\nc = √(a² + b²)\nc = √(${a}² + ${b}²)\nc = √(${a*a} + ${b*b})\nc = √(${(a*a)+(b*b)})\n\nHasil: c = ${hasil.toFixed(2)}`;
+  } else if (!b) {
+    if (isNaN(a) || isNaN(c)) { res.innerText = "Masukkan nilai a dan c!"; res.style.display = 'block'; return; }
+    if (c <= a) { res.innerText = "Sisi miring (c) harus lebih besar dari sisi alas (a)!"; res.style.display = 'block'; return; }
+    const hasil = Math.sqrt((c * c) - (a * a));
+    res.innerText = `Mencari Sisi Tegak (b):\nb = √(c² - a²)\nb = √(${c}² - ${a}²)\nb = √(${c*c} - ${a*a})\nb = √(${(c*c)-(a*a)})\n\nHasil: b = ${hasil.toFixed(2)}`;
+  } else if (!a) {
+    if (isNaN(b) || isNaN(c)) { res.innerText = "Masukkan nilai b dan c!"; res.style.display = 'block'; return; }
+    if (c <= b) { res.innerText = "Sisi miring (c) harus lebih besar dari sisi tegak (b)!"; res.style.display = 'block'; return; }
+    const hasil = Math.sqrt((c * c) - (b * b));
+    res.innerText = `Mencari Sisi Alas (a):\na = √(c² - b²)\na = √(${c}² - ${b}²)\na = √(${c*c} - ${b*b})\na = √(${(c*c)-(b*b)})\n\nHasil: a = ${hasil.toFixed(2)}`;
+  } else {
+    res.innerText = "Kosongkan salah satu kolom yang ingin kamu cari nilainya!";
+  }
+  res.style.display = 'block';
 }
 
 
-//TRANSFORMASI GEOMETRI
+
+// KELAS 9: TRANSFORMASI GEOMETRI
 function hitungTransformasi() {
   let x = parseFloat(document.getElementById('koordinatX').value);
   let y = parseFloat(document.getElementById('koordinatY').value);
@@ -809,56 +745,31 @@ function resetTransformasi() {
   document.getElementById('hasilTransformasi').innerText = '';
 }
 
-
-//PERSAMAAN KUADRAT
+// PERSAMAAN KUADRAT
 function hitungKuadrat() {
-  let a = parseFloat(document.getElementById('a_quad').value);
-  let b = parseFloat(document.getElementById('b_quad').value);
-  let c = parseFloat(document.getElementById('c_quad').value);
-  let hasilText = "";
+  const a = parseFloat(document.getElementById('quadA').value);
+  const b = parseFloat(document.getElementById('quadB').value);
+  const c = parseFloat(document.getElementById('quadC').value);
+  const res = document.getElementById('hasilKuadrat');
 
-  if (isNaN(a) || isNaN(b) || isNaN(c)) {
-    hasilText = "Isi semua nilai dulu bre!";
-  } else if(a === 0) {
-    hasilText = "Ini bukan persamaan kuadrat (a=0)";
+  if (isNaN(a) || isNaN(b) || isNaN(c)) { res.innerText = "Isi semua kolom koefisien!"; res.style.display = 'block'; return; }
+  if (a === 0) { res.innerText = "Nilai 'a' tidak boleh 0 agar menjadi persamaan kuadrat."; res.style.display = 'block'; return; }
+
+  const d = (b * b) - (4 * a * c);
+  let teks = `Diskriminan (D) = b² - 4ac\nD = ${b}² - 4(${a})(${c}) = ${d}\n\n`;
+
+  if (d < 0) {
+    teks += "Karena D < 0, persamaan ini tidak memiliki akar real (akar imajiner).";
+  } else if (d === 0) {
+    const x = -b / (2 * a);
+    teks += `Karena D = 0, persamaan memiliki satu akar kembar:\nx = -b / 2a\nx = -(${b}) / 2(${a})\nHasil: x = ${x}`;
   } else {
-    let D = b*b - 4*a*c;
-    if(D < 0){
-      hasilText = `Diskriminan = ${D}, tidak ada akar real`;
-    } else if(D === 0){
-      let x = -b / (2*a);
-      hasilText = `Akar tunggal: x = ${x}`;
-    } else {
-      let x1 = (-b + Math.sqrt(D)) / (2*a);
-      let x2 = (-b - Math.sqrt(D)) / (2*a);
-      hasilText = `Akar: x1 = ${x1}, x2 = ${x2}`;
-    }
+    const x1 = (-b + Math.sqrt(d)) / (2 * a);
+    const x2 = (-b - Math.sqrt(d)) / (2 * a);
+    teks += `Karena D > 0, persamaan memiliki dua akar real berbeda:\nx1 = (-b + √D) / 2a = x1 = ${x1.toFixed(2)}\nx2 = (-b - √D) / 2a = x2 = ${x2.toFixed(2)}`;
   }
-
-  document.getElementById('hasilKuadrat').innerText = hasilText;
-}
-
-function resetKuadrat(){
-  document.getElementById("a_quad").value="";
-  document.getElementById("b_quad").value="";
-  document.getElementById("c_quad").value="";
-  document.getElementById("hasilKuadrat").innerText="";
-}
-
-function copyKuadrat(){
-  let el = document.getElementById("hasilKuadrat");
-  let text = el.innerText || el.textContent;
-  if(!text || text.trim() === ""){
-    alert("Belum ada hasil untuk dicopy");
-    return;
-  }
-  let temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-  alert("Hasil berhasil dicopy");
+  res.innerText = teks;
+  res.style.display = 'block';
 }
 
 // Hitung Rata Rata
@@ -874,85 +785,6 @@ let rata = total / data.length;
 document.getElementById('hasilRata').innerText = rata;
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  const kelas7 = document.getElementById('kelas7');
-  const kelas8 = document.getElementById('kelas8');
-  const kelas9 = document.getElementById('kelas9');
-  const pilihMode = document.getElementById('pilihMode');
-
-  // Fungsi buat reset semua mode
-  function hideAllModes() {
-    if(kelas7) kelas7.style.display = 'none';
-    if(kelas8) kelas8.style.display = 'none';
-    if(kelas9) kelas9.style.display = 'none';
-    if(pilihMode) pilihMode.style.display = 'none';
-  }
-
-  // Kelas 7
-  const btnKelas7 = document.getElementById('btnKelas7');
-  if(btnKelas7){
-    btnKelas7.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas7) kelas7.style.display = 'flex';
-    });
-  }
-
-  // Kelas 8
-  const btnKelas8 = document.getElementById('btnKelas8');
-  if(btnKelas8){
-    btnKelas8.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas8) kelas8.style.display = 'flex';
-    });
-  }
-
-  // Kelas 9
-  const btnKelas9 = document.getElementById('btnKelas9');
-  if(btnKelas9){
-    btnKelas9.addEventListener('click', () => {
-      hideAllModes();
-      if(kelas9) kelas9.style.display = 'flex';
-    });
-  }
-
-});
-
-// ===== SHOW CARD =====
-function showCard(cardId) {
-  document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
-  document.getElementById(cardId).style.display = 'block';
-}
-
-
-// ===== KEMBALI KE MODE =====
-function backToMode(){
-
-  // Hide semua card
-  document.querySelectorAll('.card')
-    .forEach(c => c.style.display = 'none');
-
-  // Hide semua halaman utama juga
-  const kelas7 = document.getElementById('kelas7');
-  const kelas8 = document.getElementById('kelas8');
-  const kelas9 = document.getElementById('kelas9');
-
-
-  if(kelas7) kelas7.style.display = 'none';
-  if(kelas8) kelas8.style.display = 'none';
-  if(kelas9) kelas9.style.display = 'none';
-
-  // Tampilkan menu pilih mode
-  const pilihMode = document.getElementById('pilihMode');
-  if(pilihMode) pilihMode.style.display = 'flex';
-}
-
-
-// BAHASA
-function goPage(page) {
-  window.location.href = page;
-}
 
 </script>
 </body>

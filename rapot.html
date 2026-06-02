@@ -3,350 +3,316 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Nilai Rata-Rata</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Nilai Rata-Rata - Star Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-    :root {
-      --primary: #ffd369;
-      --secondary: #2a5298;
-      --accent: #f3c969;
-      --dark-bg: #0f172a;
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --text-glow: 0 0 10px rgba(255, 211, 105, 0.5);
-    }
-
-    * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--dark-bg);
-      color: #e2e8f0;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body.light {
-      --dark-bg: #f8fafc;
-      --glass: rgba(0, 0, 0, 0.05);
-      --glass-border: rgba(0, 0, 0, 0.1);
-      color: #1e293b;
-    }
-
-    /* Cosmic BG Effect */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 50%);
-      z-index: -1;
-      opacity: 0.5;
-    }
-
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
+/* TEMA MODERN IDENTIK DENGAN RANGKING.HTML */
+:root {
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
+  --primary: #ffd369;
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-.header h1 {
-  font-size: 40px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
 }
 
-.badge {
-  background: var(--primary);
-  color: #000;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  font-size: 10px;
-  display: inline-block;
-  margin-top: 10px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
-}
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-    /* Menu Navigation */
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-
-    .menu button {
-      background: var(--glass);
-      color: white;
-      width: 100%;
-      border: 1px solid var(--glass-border);
-      padding: 20px 15px;
-      border-radius: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    body.light .menu button { color: #1e3c72; border-color: #ddd; }
-
-    .menu button:hover {
-      background: var(--primary);
-      color: #000;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(238, 195, 109, 0.3);
-    }
-
-    /* Card Styling */
-.card {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
-
-.cardjudul {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.cardjudul:nth-child(1){ animation-delay: 0.2s; }
-.cardjudul:nth-child(2){ animation-delay: 0.4s; }
-
-
-h2 {
-  text-align: center;
-  font-size: 18.72px;
-}
-
- h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-
-    input, select {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-      background: rgba(255,255,255,0.05);
-      color: white;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    body.light input, body.light select { background: white; color: #333; border: 1px solid #ccc; }
-
-    .action-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 15px;
-      border-radius: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .btn-secondary:hover { background: var(--primary); color: #000; }
-
-    /* Tables Style */
-    .table-wrapper {
-      margin-top: 20px;
-      border-radius: 15px;
-      overflow-x: auto;
-      border: 1px solid var(--glass-border);
-      background: rgba(0,0,0,0.2);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 800px;
-    }
-
-    th { background: rgba(255,211,105,0.15); padding: 15px; text-align: left; font-size: 13px; color: var(--primary); }
-    td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 13px; }
-
-    .result-box {
-      background: rgba(255, 235, 153, 0.05);
-      padding: 20px;
-      border-radius: 15px;
-      margin: 20px 0;
-      border-left: 5px solid var(--primary);
-    }
-
-    .mode-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 50px;
-      font-weight: 700;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto 30px;
-    }
-
-
-/* Footer */
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sponsor { font-size: 14px; margin-bottom: 5px; }
-.sponsor strong { color: var(--primary); }
-
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--dark-bg); }
-    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mode {
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background-color: var(--dark-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
+.header { text-align: center; padding: 40px 20px 20px; }
+.header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
+.badge { background: var(--primary); color: #0b0f19; padding: 4px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; display: inline-block; margin-top: 8px; }
+
+.container { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+.card {
+  background: var(--card-bg);
+  padding: 26px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
+}
+
+.card h3 { margin-top: 0; font-size: 18px; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; }
+.card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+.card ul { margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+.card ul li { margin-bottom: 8px; }
+
+input {
+  width: 100%; padding: 14px 16px; margin-bottom: 14px; border-radius: 14px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;
+}
+input:focus { border-color: var(--primary); }
+
+/* GRID CONTAINER MAPEL YANG DINAMIS */
+.grid-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+@media(max-width: 450px) {
+  .grid-inputs { grid-template-columns: 1fr; }
+}
+
+.btn {
+  width: 100%; padding: 15px; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;
+}
+.btn-primary { background: var(--primary); color: #0b0f19; }
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-secondary { background: var(--btn-mapel); color: var(--text-main); border: 1px solid var(--btn-mapel-border); }
+.btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.btn-danger:hover { transform: translateY(-2px); background: #ef4444; color: white; }
+
+/* HASIL BOX */
+.result-box {
+  background: var(--btn-mapel);
+  border: 1px solid var(--btn-mapel-border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 15px;
+  font-size: 14px;
+}
+.result-box span.nilai-besar {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  margin-top: 5px;
+}
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
 <body class="dark">
 
 <div class="header">
+  <div class="container">
+    <h1>Star Tools</h1>
+    <div class="badge">Versi 1.7</div>
+  </div>
+</div>
+
 <div class="container">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
-
-
-<div class="cardjudul">
-<h1>Tujuan Pembuatan</h1>
-<p>Fitur ini dibuat untuk mempermudah pengguna dalam menghitung nilai rata-rata siswa dengan memasukkan beberapa nilai mata pelajaran atau nilai lainnya secara lebih cepat dan praktis.</p>
-</div>
-
-<div class="cardjudul">
-<h1>Tata Cara Penggunaan</h1>
-<ul>
-<li><p>Masukkan jumlah mata pelajaran yang ingin dihitung sebagai nilai rata-rata.</p></li>
-<li><p>Isi nama siswa, nama mata pelajaran (opsional), serta nilai pada setiap mata pelajaran.</p></li>
-<li><p>Klik tombol hitung untuk melihat hasil nilai rata-rata.</p></li>
-<li><p>Hasil dapat disalin, direset, atau dikirim ke fitur ranking untuk diurutkan dari nilai tertinggi.</p></li>
-</ul>
-</div>
-
-
-  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
-
+  <!-- DETAIL INFO -->
+  <div class="card">
+    <h3>Tujuan Pembuatan</h3>
+    <p>Fitur ini dibuat untuk mempermudah pengguna dalam menghitung nilai rata-rata siswa dengan memasukkan beberapa nilai mata pelajaran atau nilai lainnya secara lebih cepat dan praktis.</p>
+  </div>
 
   <div class="card">
-    <h2>Input Nilai Rapot</h2>
+    <h3>Tata Cara Penggunaan</h3>
+    <ul>
+      <li>Masukkan jumlah mata pelajaran yang ingin dihitung sebagai nilai rata-rata.</li>
+      <li>Isi nama siswa, nama mata pelajaran (opsional), serta nilai pada setiap mata pelajaran.</li>
+      <li>Klik tombol hitung untuk melihat hasil nilai rata-rata.</li>
+      <li>Hasil dapat disalin, direset, atau dikirim ke fitur ranking untuk diurutkan dari nilai tertinggi.</li>
+    </ul>
+  </div>
+
+  <!-- INPUT AREA -->
+  <div class="card">
+    <h3>Pengaturan Jumlah Mapel</h3>
+    <label style="font-size: 13px; color: var(--text-muted); margin-bottom: 5px; display: block;">Masukkan Total Mata Pelajaran:</label>
+    <!-- Default value diatur 11 sesuai request sekolahmu -->
+    <input type="number" id="jumlahMapel" min="1" max="30" value="11" oninput="generateInputMapel()">
+    
+    <div style="height: 1px; background: var(--card-border); margin: 20px 0;"></div>
+
+    <h3>Input Nilai Rapot</h3>
     <input type="text" id="namaSiswa" placeholder="Nama Siswa">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-      <input type="number" id="mtk" placeholder="Input 1">
-      <input type="number" id="indo" placeholder="Input 2">
-      <input type="number" id="inggris" placeholder="Input 3">
-      <input type="number" id="ipa" placeholder="Input 4">
-      <input type="number" id="kejuruan" placeholder="Input 5">
-      <input type="number" id="coding" placeholder="Input 6">
-      <input type="number" id="sejarah" placeholder="Input 7">
-      <input type="number" id="pkn" placeholder="Input 8">
-      <input type="number" id="tik" placeholder="Input 9">
-      <input type="number" id="sunda" placeholder="Input 10">
-      <input type="number" id="sdb" placeholder="Input 11">
-      <input type="number" id="pjok" placeholder="Input 12">
-    </div>
-    <button class="action-btn" onclick="hitungRapot()">Hitung & Tampilkan</button>
-    <button class="action-btn btn-secondary" onclick="resetGuru()">Reset Form</button>
-    <div class="result" id="hasilRapot"></div>
+    
+    <!-- Wadah Input Nilai Dinamis Generasi JavaScript -->
+    <div id="containerMapel" class="grid-inputs"></div>
+    
+    <button class="btn btn-primary" onclick="hitungRapot()">Hitung & Tampilkan</button>
+    <button class="btn btn-danger" onclick="resetGuru()">Reset Form</button>
+    
+    <!-- Hasil Perhitungan -->
+    <div id="hasilRapot"></div>
   </div>
 
-    <div class="menu">
-    <div class="card">
-    <h2>Kembali Pilih Fitur</h2>
-    <button onclick="logoutSekertaris()">Kembali</button>
-   </div>
-  </div>
-
-<div class="footer-wrapper">
-  <div class="sponsor">Created By <strong>Star Prosperous</strong></div>
+  <!-- NAVIGATION -->
+<div class="card">
+  <button class="btn btn-secondary" onclick="logoutSekertaris()">Kembali Ke Beranda</button>
+</div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<!-- FOOTER -->
+<div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
+</div>
 
 <script>
-// UI Logic
-document.getElementById('modeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
+// Sinkronisasi Tema bawaan apps
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") {
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+  }
+  
+  // Load data jumlah mapel & nama dari LocalStorage jika ada biar gak ilang pas refresh
+  const savedJumlah = localStorage.getItem("rata_jumlah_mapel");
+  if (savedJumlah) {
+    document.getElementById("jumlahMapel").value = savedJumlah;
+  }
+  
+  // Buat kotak input pas pertama kali buka halaman
+  generateInputMapel();
+  
+  // Restore nama dan hasil kalkulasi terakhir
+  const savedNama = localStorage.getItem("rata_nama_siswa");
+  if(savedNama) document.getElementById("namaSiswa").value = savedNama;
+  
+  const savedHasil = localStorage.getItem("rata_hasil_html");
+  if(savedHasil) document.getElementById("hasilRapot").innerHTML = savedHasil;
+  
+  // Restore nilai-nilai yang sempat terisi di kotak input
+  const savedNilaiArr = localStorage.getItem("rata_nilai_inputs");
+  if(savedNilaiArr) {
+    const nilaiObj = JSON.parse(savedNilaiArr);
+    for(let id in nilaiObj) {
+      let el = document.getElementById(id);
+      if(el) el.value = nilaiObj[id];
+    }
+  }
 });
 
-function showCard(id){
-  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
-  const target = document.getElementById(id);
-  target.style.display='block';
-  target.scrollIntoView({ behavior: 'smooth' });
+// FUNGSI UTAMA: Bikin inputan dinamis otomatis seberapa banyak jumlah mapelnya
+function generateInputMapel() {
+  const container = document.getElementById("containerMapel");
+  let jumlah = parseInt(document.getElementById("jumlahMapel").value);
+  
+  if (isNaN(jumlah) || jumlah < 1) jumlah = 1;
+  if (jumlah > 30) jumlah = 30; // Limit maksimal biar gajebol layoutnya
+  
+  // Simpan settingan jumlah mapel ke localstorage
+  localStorage.setItem("rata_jumlah_mapel", jumlah);
+  
+  container.innerHTML = "";
+  for (let i = 1; i <= jumlah; i++) {
+    container.innerHTML += `
+      <input type="number" step="any" class="input-nilai-mapel" id="mapel_${i}" placeholder="Nilai Mapel ${i}" oninput="simpanDraftNilai()">
+    `;
+  }
 }
 
-
-// --- LOGIKA RAPOT ---
-function hitungRapot(){  
-  const nama = document.getElementById("namaSiswa").value;  
-  const ids = ["mtk","indo","inggris","ipa","kejuruan","coding","sejarah","pkn","tik","sunda","sdb","pjok"];
-  const nilaiArr = ids.map(id => parseFloat(document.getElementById(id).value) || 0);  
-  const rata = nilaiArr.reduce((a,b) => a+b, 0) / nilaiArr.length;  
-  document.getElementById("hasilRapot").innerHTML = `<strong>Hasil Perhitungan:</strong><br>Nama Siswa: ${nama}<br>Nilai Rata-rata: <span style="font-size:24px; color:var(--primary)">${rata.toFixed(2)}</span>`;  
+// Simpan otomatis isi input nilai saat diketik (biar aman dari refresh)
+function simpanDraftNilai() {
+  const inputs = document.querySelectorAll(".input-nilai-mapel");
+  let nilaiObj = {};
+  inputs.forEach(inp => {
+    nilaiObj[inp.id] = inp.value;
+  });
+  localStorage.setItem("rata_nilai_inputs", JSON.stringify(nilaiObj));
+  localStorage.setItem("rata_nama_siswa", document.getElementById("namaSiswa").value.trim());
 }
 
-function resetGuru(){  
-  const ids = ["namaSiswa","mtk","indo","inggris","ipa","kejuruan","coding","sejarah","pkn","tik","sunda","sdb","pjok"];
-  ids.forEach(id => document.getElementById(id).value = '');  
+// Ikat event input nama biar kesimpan juga draftnya
+document.getElementById("namaSiswa").addEventListener("input", simpanDraftNilai);
+
+// LOGIKA HITUNG RATA-RATA[span_8](start_span)[span_8](end_span)
+function hitungRapot() {  
+  const nama = document.getElementById("namaSiswa").value.trim();  
+  const inputs = document.querySelectorAll(".input-nilai-mapel");
+  
+  if(!nama) return alert("Masukkan nama siswa terlebih dahulu!");
+  if(inputs.length === 0) return alert("Kotak input nilai belum tersedia!");
+
+  let totalNilai = 0;
+  let countValid = 0;
+  
+  inputs.forEach(inp => {
+    let val = parseFloat(inp.value) || 0;
+    totalNilai += val;
+    countValid++;
+  });
+  
+  const rata = totalNilai / countValid;  
+  
+  const hasilHTML = `
+    <div class="result-box">
+      <strong>Hasil Perhitungan:</strong><br>
+      <span style="color:var(--text-muted);">Nama Siswa:</span> ${nama}<br>
+      <span style="color:var(--text-muted);">Total Mapel:</span> ${countValid}<br>
+      <span style="color:var(--text-muted);">Nilai Rata-rata:</span>
+      <span class="nilai-besar">${rata.toFixed(2)}</span>
+    </div>
+  `;
+  
+  document.getElementById("hasilRapot").innerHTML = hasilHTML;
+  
+  // Simpan hasil cetakan ke localStorage
+  localStorage.setItem("rata_hasil_html", hasilHTML);
+}
+
+// RESET FORM DATA
+function resetGuru() {  
+  if(!confirm("Kosongkan semua inputan data nilai saat ini?")) return;
+  
+  document.getElementById("namaSiswa").value = '';  
+  const inputs = document.querySelectorAll(".input-nilai-mapel");
+  inputs.forEach(inp => inp.value = '');
+  
   document.getElementById("hasilRapot").innerHTML = '';  
+  
+  // Bersihkan sisa backup localstorage khusus halaman hitung rata-rata
+  localStorage.removeItem("rata_nama_siswa");
+  localStorage.removeItem("rata_nilai_inputs");
+  localStorage.removeItem("rata_hasil_html");
 }
-
 
 function logoutSekertaris() {
-  localStorage.clear();
+  // Kembali tanpa merusak data penting di localstorage
   window.location.href = "pendukung.html";
 }
 </script>

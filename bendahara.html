@@ -3,497 +3,412 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Keuangan</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Keuangan Digital - Star Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <style>
-    :root {
-      --primary: #ffd369;
-      --secondary: #2a5298;
-      --accent: #f3c969;
-      --dark-bg: #0f172a;
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --text-glow: 0 0 10px rgba(255, 211, 105, 0.4);
-    }
-
-    * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--dark-bg);
-      color: #e2e8f0;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body.light {
-      --dark-bg: #f1f5f9;
-      --glass: rgba(0, 0, 0, 0.05);
-      --glass-border: rgba(0, 0, 0, 0.1);
-      color: #1e293b;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 50%);
-      z-index: -1;
-      opacity: 0.4;
-    }
-
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
+/* TEMA MODERN HARMONIS DENGAN SEKRETARIS & INDEX */
+:root {
+  --primary: #ffd369;
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-.header h1 {
-  font-size: 40px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
 }
 
-.badge {
-  background: var(--primary);
-  color: #000;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  font-size: 10px;
-  display: inline-block;
-  margin-top: 10px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
-}
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-    /* Menu Grid */
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .menu button {
-      background: var(--glass);
-      color: white;
-      border: 1px solid var(--glass-border);
-      padding: 18px;
-      border-radius: 20px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    body.light .menu button { color: #1e3c72; border-color: #cbd5e1; }
-
-    .menu button:hover {
-      background: var(--primary);
-      color: #000;
-      transform: translateY(-3px);
-    }
-
-    /* Cards */
-.card {
-  display: none;
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
-
-.cardjudul {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.cardjudul:nth-child(1){ animation-delay: 0.2s; }
-.cardjudul:nth-child(2){ animation-delay: 0.4s; }
-
-
-h2 {
-  text-align: center;
-  font-size: 18.72px;
-}
-
- h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-
-    input, select {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 14px;
-      border: 1px solid var(--glass-border);
-      background: rgba(255,255,255,0.05);
-      color: inherit;
-      font-family: inherit;
-    }
-
-    body.light input, body.light select { background: white; border: 1px solid #ddd; }
-
-    .action-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 15px;
-      border-radius: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .action-btn:hover { background: #e6b85c; transform: scale(1.01); }
-
-    /* Tables */
-    .table-wrapper {
-      margin: 20px 0;
-      border-radius: 18px;
-      overflow-x: auto;
-      border: 1px solid var(--glass-border);
-      background: rgba(0,0,0,0.2);
-    }
-
-    table { width: 100%; border-collapse: collapse; min-width: 700px; }
-    th { background: rgba(255,211,105,0.15); padding: 15px; text-align: left; font-size: 13px; color: var(--primary); }
-    td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 13px; }
-    
-    td[contenteditable="true"] {
-      background: rgba(255,255,255,0.03);
-      font-family: 'JetBrains Mono', monospace;
-      outline: 1px solid transparent;
-    }
-    
-    td[contenteditable="true"]:focus {
-      background: rgba(255,211,105,0.1);
-      outline: 1px solid var(--primary);
-    }
-
-    .btn-delete {
-      background: #ff7675;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 11px;
-    }
-
-
-/* Footer */
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sponsor { font-size: 14px; margin-bottom: 5px; }
-.sponsor strong { color: var(--primary); }
-
-    .mode-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 50px;
-      font-weight: 700;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto 30px;
-    }
-
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--dark-bg); }
-    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mode {
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background-color: var(--dark-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
+.header { text-align: center; padding: 40px 20px 20px; }
+.header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
+
+/* Lebar kontainer bendahara dibikin fleksibel lebar (900px) agar muat tabel kas tanggal harian */
+.container { max-width: 900px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+.card {
+  background: var(--card-bg);
+  padding: 26px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
+}
+
+.card h3 { margin-top: 0; font-size: 18px; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; }
+
+input, select {
+  width: 100%; padding: 14px 16px; margin-bottom: 14px; border-radius: 14px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;
+}
+input:focus, select:focus { border-color: var(--primary); }
+
+.btn {
+  width: 100%; padding: 15px; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px;
+}
+.btn-primary { background: var(--primary); color: #0b0f19; }
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-secondary { background: var(--btn-mapel); color: var(--text-main); border: 1px solid var(--btn-mapel-border); }
+.btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.btn-danger:hover { transform: translateY(-2px); background: #ef4444; color: white; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+
+/* TABLE KEUANGAN STYLING */
+.table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 16px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.05); }
+body.light .table-wrapper { background: rgba(0,0,0,0.01); }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: 'Poppins', sans-serif; text-align: left; }
+th { background: rgba(255, 211, 105, 0.08); color: var(--primary); font-weight: 600; padding: 14px; text-align: center; white-space: nowrap; }
+body.light th { color: #1e293b; background: #f1f5f9; }
+td { padding: 12px 14px; border-top: 1px solid var(--card-border); text-align: center; color: var(--text-main); min-width: 50px; }
+td.namaSiswa { text-align: left; font-weight: 500; min-width: 150px; }
+
+/* Keterangan Info Finansial */
+.info-kas { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--primary); padding: 4px 8px; }
+
+/* Style Teks Link Buat Kelas */
+.link-buat-kelas {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.link-buat-kelas a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.link-buat-kelas a:hover {
+  text-decoration: underline;
+}
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
-<body class="dark">
+<body>
 
 <div class="header">
+  <h1>Keuangan Digital</h1>
+</div>
+
 <div class="container">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
-
-
-<div class="cardjudul">
-<h1>Tujuan Pembuatan</h1>
-<p>Fitur ini dibuat untuk mengelola laporan keuangan secara digital dan berbasis database dengan tujuan mempermudah pengguna dalam mencatat laporan keuangan serta mendukung transparansi data.</p>
-</div>
-
-<div class="cardjudul">
-<h1>Tata Cara Penggunaan</h1>
-<ul>
-<li><p>Masukkan username dan password kelas. Jika belum memiliki akun, klik 'Daftar' pada halaman absensi untuk membuat akun baru.</p></li>
-<li><p>Tentukan nominal iuran (tetap atau fleksibel) dan daftarkan nama-nama murid yang akan mengikuti pembayaran.</p></li>
-<li><p>Masukkan nominal pembayaran yang dibayarkan oleh murid dan pilih nama murid yang melakukan pembayaran.</p></li>
-</ul>
-</div>
-
-
-  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
-
-
-  <div class="menu">
-    <h2>Kelola Keuangan Digital</h2>
-    <button onclick="showCard('loginCard')">Kelola Keuangan</button>
-    <h2>Kembali Pilih Fitur</h2>
-    <button onclick="logoutBendahara()">Kembali</button>
-  </div>
-
-  <div class="card" id="loginCard" style="max-width: 500px; margin: auto;">
-    <h2>Login Kelas</h2>
-    <input type="text" id="kelasName" placeholder="Nama Kelas">
-    <input type="password" id="kelasPW" placeholder="Password Kelas">
-    <button class="action-btn" onclick="loginKelas()">Login Kelas</button>
-  </div>
-
-  <div class="card" id="dashboardCard">
-    <h2>Dashboard Keuangan</h2>
-
-    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px; border: 1px solid var(--glass-border);">
-      <h2>Tambah Nama Murid</h2>
-      <div style="display:flex; gap:10px;">
-        <input type="text" id="tambahmurid" placeholder="Nama Lengkap Siswa">
-        <button class="action-btn" style="width:150px; margin:10px 0" onclick="tambahBaris()">Daftarkan</button>
-      </div>
-    </div>
-
-    <div style="margin-top: 30px;">
-      <h2>Pilih Bulan</h2>
-      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
-        <select id="bulan">
-          <option value="0">Januari</option><option value="1">Februari</option><option value="2">Maret</option>
-          <option value="3">April</option><option value="4">Mei</option><option value="5">Juni</option>
-          <option value="6">Juli</option><option value="7">Agustus</option><option value="8">September</option>
-          <option value="9">Oktober</option><option value="10">November</option><option value="11">Desember</option>
-        </select>
-        <input type="number" id="tahun" value="2026">
-      </div>
-      <button class="action-btn" onclick="renderTable()">Tampilkan Tabel Kas</button>
-    </div>
+  <div class="card" id="setupBox">
+    <h3>Masuk Kelas (Login)</h3>
+    <input type="text" id="loginNamaKelas" placeholder="Masukkan Nama Kelas">
+    <input type="password" id="loginPw" placeholder="Masukkan Password Kelas">
+    <button class="btn btn-primary" onclick="loginKelas()">Masuk Kelas</button>
     
-    <div class="table-wrapper">
-      <div id="tabelContainer"></div>
-    </div>
-
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
-      <button class="action-btn" style="background:transparent; border:1px solid var(--primary); color:var(--primary)" onclick="resetBulan()">Reset Bulan Ini</button>
-      <button class="action-btn" style="background:#ff7675; color:white;" onclick="logout()">Tutup Sesi</button>
+    <div class="link-buat-kelas">
+      Belum memiliki kelas?, <a href="sekretaris.html">Buat kelas</a>
     </div>
   </div>
+
+  <div class="card" id="bendaharaBox" style="display:none;">
+    <h3>Tambah Murid Keuangan</h3>
+    <div class="grid-2">
+      <div>
+        <input type="text" id="inputSiswa" placeholder="Nama Murid...">
+        <button class="btn btn-primary" onclick="tambahSiswa()">Tambah Murid</button>
+      </div>
+      <div>
+        <input type="number" id="nominalWajib" placeholder="Set Nominal Kas Wajib (Rp)">
+        <button class="btn btn-secondary" onclick="setNominalWajib()">Set Nominal</button>
+      </div>
+    </div>
+
+    <div style="height: 1px; background: var(--card-border); margin: 20px 0;"></div>
+
+    <h3>Pilih Bulan Keuangan</h3>
+    
+    <div class="grid-3">
+      <div>
+        <label style="font-size:12px; color:var(--text-muted);">Pilih Bulan:</label>
+        <select id="bulanSelect" onchange="changeBulan()" style="margin-top:5px;">
+          <option value="Januari">Januari</option>
+          <option value="Februari">Februari</option>
+          <option value="Maret">Maret</option>
+          <option value="April">April</option>
+          <option value="Mei">Mei</option>
+          <option value="Juni">Juni</option>
+          <option value="Juli">Juli</option>
+          <option value="Agustus">Agustus</option>
+          <option value="September">September</option>
+          <option value="Oktober">Oktober</option>
+          <option value="November">November</option>
+          <option value="Desember">Desember</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px; color:var(--text-muted);">Frekuensi :</label>
+        <input type="number" id="jumlahHariInput" value="31" min="1" max="31" style="margin-top:5px;">
+      </div>
+      <div style="display:flex; align-items:flex-end;">
+        <button class="btn btn-secondary" onclick="updateJumlahHari()" style="margin-bottom:14px; height:48px;">Terapkan Hari</button>
+      </div>
+    </div>
+
+    <div style="height: 1px; background: var(--card-border); margin: 24px 0;"></div>
+
+    <h3>Tabel Keuangan</h3>
+    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">* Tips: Klik dua kali (double click) pada kolom tanggal tabel atau nama siswa untuk mengubah isi data secara langsung!</p>
+
+    <div class="table-wrapper">
+      <table id="pembayaranTable">
+        <thead>
+          <tr id="tableHeader"></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div style="height: 1px; background: var(--card-border); margin: 24px 0;"></div>
+    
+    <div class="grid-2">
+      <button class="btn btn-danger" onclick="resetBulan()">Reset Kas Bulan Ini</button>
+      <button class="btn btn-secondary" onclick="logoutBendahara()">Keluar Kelas</button>
+    </div>
+  </div>
+  
+<div class="card">
+  <button class="btn btn-secondary" style="max-width:600px; margin: 0 auto;" onclick="window.location.href='pendukung.html'">Kembali ke Beranda</button>
+</div>
 </div>
 
 <div class="footer-wrapper">
-  <div class="sponsor">Created By <strong>Star Prosperous</strong></div>
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
+</div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
 <script>
-// UI Theme Logic
-document.getElementById('modeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
-});
-
-function showCard(id){
-  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
-  const target = document.getElementById(id);
-  target.style.display='block';
-}
-
-// Firebase Initialization
 const firebaseConfig = {
- apiKey: "AIzaSyA7foZX8BpYVX6JC1rOpTRiKOuCpmL8BPc",
- authDomain: "absensi-bintang-586a1.firebaseapp.com",
- databaseURL: "https://absensi-bintang-586a1-default-rtdb.asia-southeast1.firebasedatabase.app",
- projectId: "absensi-bintang-586a1",
- storageBucket: "absensi-bintang-586a1.appspot.com",
- messagingSenderId: "805938764052",
- appId: "1:805938764052:web:a59bf3afc8176308ea8a01"
+  apiKey: "AIzaSyDgr_nHqvpMsiG4lBkYckzxRErkskXj_6E",
+  authDomain: "laporanstartools-c18b2.firebaseapp.com",
+  databaseURL: "https://laporanstartools-c18b2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "laporanstartools-c18b2",
+  storageBucket: "laporanstartools-c18b2.firebasestorage.app",
+  messagingSenderId: "596585220522",
+  appId: "1:596585220522:web:d61e13c60daff6daca43d3"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-function isUserLogin(){
-  const user = firebase.auth().currentUser;
-  return !!user && localStorage.getItem("isGuest") !== "true";
-}
-
-firebase.auth().onAuthStateChanged(user => {
-
-  const isGuest = localStorage.getItem("isGuest") === "true";
-
-  // kalau guest → blok
-  if(isGuest){
-    alert("Fitur ini hanya untuk akun login!");
-    localStorage.setItem("redirectAfterLogin", "bendahara.html");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // kalau BELUM ada user → tunggu (jangan redirect dulu)
-  if(!user){
-    return; // ⛔ penting! jangan paksa redirect
-  }
-  console.log("User login:", user.uid);
-
-});
-
+let kelasAktif = "";
 let kelasRef = null;
 let siswa = [];
+let nominalWajibSatuHari = 0;
+let jumlahHari = 31;
 
-// Login & Persistence
-function loginKelas(){
-  const nInput = document.getElementById("kelasName").value.trim();
-  const pInput = document.getElementById("kelasPW").value.trim();
-  const stored = JSON.parse(localStorage.getItem("kelasLogin"));
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if(savedTheme === "light") {
+    document.body.classList.add("light");
+  }
+  const sa = localStorage.getItem("kelasLogin");
+  if(sa){
+    initKelas(sa);
+  }
+});
 
-  const nama = nInput || (stored ? stored.nama : null);
-  const pw = pInput || (stored ? stored.pw : null);
-
-  if(!nama || !pw) return alert("Lengkapi data login!");
-
-  kelasRef = db.ref("kelas/"+nama);
-  kelasRef.once("value", snap=>{
-    const data = snap.val();
-    if(!data || data.password!==pw) return alert("Kombinasi ID/PW Salah!");
-
-    localStorage.setItem("kelasLogin", JSON.stringify({nama, pw}));
-    document.getElementById("loginCard").style.display="none";
-    document.getElementById("dashboardCard").style.display="block";
-    loadSiswa();
+// Fungsi cadangan agar tidak merusak baris script bawaan
+function simpanPassword(){
+  const n = document.getElementById("namaKelas").value.trim().toUpperCase();
+  const p = document.getElementById("pwKelas").value.trim();
+  if(!n||!p) return alert("Isi nama kelas & password!");
+  db.ref(`kelas/${n}/password`).once("value").then(snap => {
+    if(snap.exists()) return alert("Kelas sudah terdaftar!");
+    db.ref(`kelas/${n}/password`).set(p).then(() => {
+      alert("Kelas berhasil dibuat! Silakan login.");
+    });
   });
 }
 
-function loadSiswa(){
-  if(!kelasRef) return;
-  kelasRef.child("siswa").once("value", snap=>{
-    siswa=[];
-    snap.forEach(child=>{
-      siswa.push({id:child.key, ...child.val()});
+// PERBAIKAN DISINI: Sekarang membaca folder 'kelas' yang dibuat oleh sekretaris
+function loginKelas(){
+  const n = document.getElementById("loginNamaKelas").value.trim().toUpperCase();
+  const p = document.getElementById("loginPw").value.trim();
+  if(!n||!p) return alert("Isi nama kelas & password login!");
+  
+  // Mengarah ke 'kelas/' bukan 'bendahara_kelas/' lagi agar sinkron
+  db.ref(`kelas/${n}/password`).once("value").then(snap => {
+    if(!snap.exists()) return alert("Kelas tidak ditemukan! Buat kelas terlebih dahulu di halaman Absensi.");
+    if(snap.val() === p){
+      localStorage.setItem("kelasLogin", n);
+      initKelas(n);
+    } else {
+      alert("Password salah!");
+    }
+  });
+}
+
+function initKelas(namaKelas) {
+  kelasAktif = namaKelas;
+  // Menyimpan data keuangan di dalam sub-folder kelas masing-masing agar aman dan tidak bentrok
+  kelasRef = db.ref(`kelas/${namaKelas}/keuangan_bendahara`);
+  document.getElementById("setupBox").style.display = "none";
+  document.getElementById("bendaharaBox").style.display = "block";
+  
+  kelasRef.child("nominalWajib").on("value", snap => {
+    nominalWajibSatuHari = snap.val() || 0;
+    document.getElementById("nominalWajib").value = nominalWajibSatuHari;
+    fetchSiswa();
+  });
+}
+
+function setNominalWajib() {
+  const val = parseInt(document.getElementById("nominalWajib").value) || 0;
+  kelasRef.child("nominalWajib").set(val, () => {
+    alert("Nominal wajib berhasil diperbarui!");
+  });
+}
+
+function changeBulan() {
+  fetchSiswa();
+}
+
+function updateJumlahHari() {
+  const v = parseInt(document.getElementById("jumlahHariInput").value) || 31;
+  jumlahHari = Math.max(1, Math.min(31, v));
+  fetchSiswa();
+}
+
+function fetchSiswa() {
+  const bulan = document.getElementById("bulanSelect").value;
+  kelasRef.child("siswa").once("value", snap => {
+    siswa = [];
+    snap.forEach(child => {
+      const d = child.val();
+      siswa.push({
+        id: child.key,
+        nama: d.nama,
+        pembayaran: (d.pembayaran && d.pembayaran[bulan]) ? d.pembayaran[bulan] : {}
+      });
     });
     renderTable();
   });
 }
 
-function getMondays(month, year){
-  let d = new Date(year, month, 1);
-  let mondays = [];
-  while(d.getMonth()===month){
-    if(d.getDay()===1) mondays.push(new Date(d));
-    d.setDate(d.getDate()+1);
+function tambahSiswa() {
+  const nama = document.getElementById("inputSiswa").value.trim();
+  if(!nama) return alert("Masukkan nama siswa!");
+  kelasRef.child(`siswa/${nama}`).set({ nama: nama }, () => {
+    document.getElementById("inputSiswa").value = "";
+    fetchSiswa();
+  });
+}
+
+function renderTable() {
+  const headerTr = document.getElementById("tableHeader");
+  const bodyTbody = document.getElementById("tableBody");
+  
+  headerTr.innerHTML = "<th>Nama Siswa</th>";
+  for(let i=1; i<=jumlahHari; i++) {
+    headerTr.innerHTML += `<th>${i}</th>`;
   }
-  return mondays;
-}
-
-function tambahBaris() {
-  const input = document.getElementById("tambahmurid");
-  const namaBaru = input.value.trim();
-  if (!namaBaru) return alert("Nama tidak valid!");
-
-  const sRef = kelasRef.child("siswa/" + namaBaru);
-  sRef.once("value", snap => {
-    if (snap.exists()) return alert("Siswa sudah terdaftar!");
-    sRef.set({ nama: namaBaru, pembayaran: {} }, () => {
-      input.value = "";
-      loadSiswa();
-    });
+  headerTr.innerHTML += "<th>Total Bayar</th><th>Sisa Tagihan</th>";
+  
+  bodyTbody.innerHTML = "";
+  if(siswa.length === 0) {
+    bodyTbody.innerHTML = `<tr><td colspan="${jumlahHari+3}">Belum ada data siswa.</td></tr>`;
+    return;
+  }
+  
+  siswa.forEach((s, idx) => {
+    let tr = document.createElement("tr");
+    
+    let tdNama = document.createElement("td");
+    tdNama.className = "namaSiswa";
+    tdNama.contentEditable = true;
+    tdNama.innerText = s.nama;
+    tdNama.dataset.siswa = idx;
+    tr.appendChild(tdNama);
+    
+    let totalBayar = 0;
+    for(let d=1; d<=jumlahHari; d++) {
+      let td = document.createElement("td");
+      td.contentEditable = true;
+      let val = s.pembayaran[d] || "";
+      td.innerText = val;
+      td.dataset.siswa = idx;
+      td.dataset.tanggal = d;
+      
+      let num = parseInt(val) || 0;
+      totalBayar += num;
+      
+      tr.appendChild(td);
+    }
+    
+    let totalTagihan = nominalWajibSatuHari * jumlahHari;
+    let sisa = totalTagihan - totalBayar;
+    if(sisa < 0) sisa = 0;
+    
+    let tdTotal = document.createElement("td");
+    tdTotal.className = "info-kas";
+    tdTotal.innerText = "Rp " + totalBayar.toLocaleString();
+    tr.appendChild(tdTotal);
+    
+    let tdSisa = document.createElement("td");
+    tdSisa.className = "info-kas";
+    tdSisa.style.color = sisa > 0 ? "#ef4444" : "#10b981";
+    tdSisa.innerText = "Rp " + sisa.toLocaleString();
+    tr.appendChild(tdSisa);
+    
+    bodyTbody.appendChild(tr);
   });
 }
 
-function renderTable(){
-  const bulan = parseInt(document.getElementById("bulan").value);
-  const tahun = parseInt(document.getElementById("tahun").value);
-  const mondays = getMondays(bulan, tahun);
-  const container = document.getElementById("tabelContainer");
-  
-  let html=`<table><thead><tr><th>Nama Siswa</th>`;
-  mondays.forEach(d=>{ html+=`<th title="Senin">Senin ${d.getDate()}</th>`; });
-  html+="<th style='background:rgba(255,255,255,0.1)'>Aksi</th></tr></thead><tbody>";
-  
-  siswa.forEach((s,i)=>{
-    html+=`<tr>
-      <td contenteditable="true" data-siswa="${i}" class="namaSiswa" style="font-weight:600">${s.nama||""}</td>`;
-    mondays.forEach(d=>{
-      const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-      const val = s.pembayaran?.[key]||"";
-      html+=`<td contenteditable="true" data-siswa="${i}" data-tanggal="${key}">${val}</td>`;
-    });
-    html+=`<td><button class="btn-delete" onclick="hapusSiswa('${s.id}')">Hapus</button></td>`;
-    html+="</tr>";
-  });
-  
-  html+="</tbody></table>";
-  container.innerHTML=html;
-}
-
-function hapusSiswa(id){
-  if(!confirm(`Hapus data ${id}? Tindakan ini permanen.`)) return;
-  kelasRef.child("siswa/"+id).remove(()=>{ loadSiswa(); });
-}
-
-function resetBulan(){
-  if(!confirm("Kosongkan semua inputan di tabel bulan ini?")) return;
-  siswa.forEach(s=> s.pembayaran={} );
-  renderTable();
-}
-
-function logout(){
-  localStorage.removeItem("kelasLogin");
-  location.reload();
-}
-
-function logoutBendahara() {
-  localStorage.clear();
-  window.location.href = "pendukung.html";
-}
-
-// Auto-Save Event
 document.addEventListener("input", function(e){
   const target = e.target;
+  const bulan = document.getElementById("bulanSelect").value;
   
   if(target.tagName==="TD" && target.dataset.siswa!==undefined && target.dataset.tanggal){
     const i = parseInt(target.dataset.siswa);
@@ -502,7 +417,7 @@ document.addEventListener("input", function(e){
 
     if(!siswa[i].pembayaran) siswa[i].pembayaran = {};
     siswa[i].pembayaran[key] = val;
-    kelasRef.child(`siswa/${siswa[i].id}/pembayaran/${key}`).set(val);
+    kelasRef.child(`siswa/${siswa[i].id}/pembayaran/${bulan}/${key}`).set(val);
   }
 
   if(target.tagName==="TD" && target.classList.contains("namaSiswa")){
@@ -523,11 +438,23 @@ document.addEventListener("input", function(e){
   }
 });
 
-window.onload = ()=>{
-  const stored = JSON.parse(localStorage.getItem("kelasLogin"));
-  if(stored) loginKelas();
-};
+function resetBulan(){
+  const bulan = document.getElementById("bulanSelect").value;
+  if(!confirm(`Kosongkan semua inputan kas di tabel bulan ${bulan}?`)) return;
+  siswa.forEach(s => {
+    s.pembayaran = {};
+    kelasRef.child(`siswa/${s.id}/pembayaran/${bulan}`).remove();
+  });
+  fetchSiswa();
+}
 
+function logoutBendahara() {
+  localStorage.removeItem("kelasLogin");
+  kelasAktif = "";
+  kelasRef = null;
+  document.getElementById("setupBox").style.display = "block";
+  document.getElementById("bendaharaBox").style.display = "none";
+}
 </script>
 
 </body>

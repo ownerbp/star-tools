@@ -5,179 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matematika - Star Tools</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+/* MENYELARASKAN DENGAN INDEX.HTML */
 :root {
   --primary: #ffd369;
-  --dark-bg: #0f172a;
-  --glass: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-* { box-sizing: border-box; transition: all 0.3s ease; }
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
+}
+
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease; }
 
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: var(--dark-bg);
-  color: #e2e8f0;
-  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: var(--dark-bg);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
 }
 
-/* BACKGROUND GLOW */
-body::before {
-  content: "";
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(circle at 20% 30%, #1e3c72 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, #2a5298 0%, transparent 40%);
-  z-index: -1;
-  opacity: 0.4;
-}
+.header { text-align: center; padding: 40px 20px; animation: fadeDown 0.6s ease; }
+.header h1 { font-size: 36px; font-weight: 800; margin: 0; color: var(--text-main); }
 
-/* ANIMASI */
-@keyframes fadeUp {
-  from {opacity:0; transform:translateY(30px);}
-  to {opacity:1; transform:translateY(0);}
-}
-@keyframes fadeDown {
-  from {opacity:0; transform:translateY(-30px);}
-  to {opacity:1; transform:translateY(0);}
-}
+.container { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 20px 40px; }
 
-/* HEADER */
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
-}
-
-.header h1 {
-  font-size: 32px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* CONTAINER */
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* CARD */
 .card {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s ease;
 }
 
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
+.card h3 { margin-top: 0; font-size: 18px; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; }
 
-/* BUTTON */
+.instruction-list { padding-left: 20px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+.instruction-list li { margin-bottom: 8px; }
+
 .btn {
-  width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 15px;
-  border: none;
-  background: linear-gradient(135deg, #4fc3f7, #0288d1);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+  width: 100%; padding: 16px; margin-bottom: 12px; border-radius: 18px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-weight: 600; cursor: pointer; text-align: left;
+  display: flex; align-items: center; justify-content: space-between;
 }
+.btn:hover { border-color: var(--primary); transform: translateY(-3px); }
 
-.btn:hover {
-  transform: scale(1.03);
-}
+.back-btn { background: transparent; color: var(--text-muted); text-align: center; justify-content: center; }
+.back-btn:hover { color: white; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); }
 
-/* BACK BUTTON */
-.back-btn {
-  background: #444;
-}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* TEXT */
-h3 {
-  text-align: center;
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
 }
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
 
-ul {
-  padding-left: 18px;
-  line-height: 1.6;
-}
-
-.footer {
-  text-align: center;
-  font-size: 12px;
-  margin-top: 30px;
-  opacity: 0.6;
-}
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
 
 <body>
 
-
 <div class="header">
   <h1>Matematika</h1>
 </div>
 
-
 <div class="container">
-
-  <!-- CARA PAKAI -->
   <div class="card">
     <h3>Tata Cara Penggunaan</h3>
-    <ul>
-      <li>Pilih jenjang pendidikan terlebih dahulu (SD, SMP, atau SMK).</li>
-      <li>Setelah itu pilih kelas sesuai tingkat kamu.</li>
-      <li>Kemudian pilih Semester 1 atau Semester 2.</li>
-      <li>Setelah masuk, kamu dapat menggunakan kalkulator sesuai materi yang tersedia.</li>
-      <li>Gunakan fitur ini untuk membantu memahami konsep, bukan sekadar menghitung.</li>
+    <ul class="instruction-list">
+      <li>Pilih jenjang pendidikan (SD, SMP, atau SMK).</li>
+      <li>Pilih kelas yang sesuai dengan tingkat kamu.</li>
+      <li>Pilih Semester 1 atau Semester 2.</li>
+      <li>Gunakan kalkulator untuk memahami konsep, bukan sekadar mencari hasil.</li>
     </ul>
   </div>
 
-  <!-- PILIH JENJANG -->
   <div class="card">
     <h3>Pilih Jenjang</h3>
-
-    <button class="btn" onclick="goPage('sd.html')">
-      SD (Sekolah Dasar)
-    </button>
-
-    <button class="btn" onclick="goPage('smp.html')">
-      SMP (Sekolah Menengah Pertama)
-    </button>
-
-    <button class="btn" onclick="goPage('smk.html')">
-      SMK (Sekolah Menengah Kejuruan)
-    </button>
-
-    <button class="btn back-btn" onclick="goPage('index.html')">
-      Kembali
-    </button>
+    <button class="btn" onclick="goPage('sd.html')">Sekolah Dasar (SD) </button>
+    <button class="btn" onclick="goPage('smp.html')">Sekolah Menengah Pertama (SMP)</button>
+    <button class="btn" onclick="goPage('smk.html')">Sekolah Menengah Kejuruan (SMK)</button>
+    
+    <button class="btn back-btn" onclick="goPage('index.html')">Kembali ke Beranda</button>
   </div>
-
 </div>
 
-<div class="footer">
-  <p>© 2026 Star Tools</p>
+<div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
 </div>
 
 <script>
-function goPage(page){
-  window.location.href = page;
-}
+// Logic sinkronisasi tema dari index.html
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if(savedTheme === "light") {
+    document.body.classList.add("light");
+  }
+});
+
+function goPage(page){ window.location.href = page; }
 </script>
 
 </body>

@@ -3,393 +3,352 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Total Nilai</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Total Nilai - Star Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-    :root {
-      --primary: #ffd369;
-      --secondary: #2a5298;
-      --accent: #f3c969;
-      --dark-bg: #0f172a;
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --text-glow: 0 0 10px rgba(255, 211, 105, 0.5);
-    }
-
-    * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--dark-bg);
-      color: #e2e8f0;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body.light {
-      --dark-bg: #f8fafc;
-      --glass: rgba(0, 0, 0, 0.05);
-      --glass-border: rgba(0, 0, 0, 0.1);
-      color: #1e293b;
-    }
-
-    /* Cosmic BG Effect */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 50%);
-      z-index: -1;
-      opacity: 0.5;
-    }
-
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
+/* TEMA PREMIUM SINKRON TOTAL DENGAN RANGKING & RAPOT */
+:root {
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
+  --primary: #ffd369;
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-.header h1 {
-  font-size: 40px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
 }
 
-.badge {
-  background: var(--primary);
-  color: #000;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  font-size: 10px;
-  display: inline-block;
-  margin-top: 10px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
-}
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-    /* Menu Navigation */
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-
-    .menu button {
-      background: var(--glass);
-      color: white;
-      width: 100%;
-      border: 1px solid var(--glass-border);
-      padding: 20px 15px;
-      border-radius: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    body.light .menu button { color: #1e3c72; border-color: #ddd; }
-
-    .menu button:hover {
-      background: var(--primary);
-      color: #000;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(238, 195, 109, 0.3);
-    }
-
-    /* Card Styling */
-.card {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
-
-.cardjudul {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.cardjudul:nth-child(1){ animation-delay: 0.2s; }
-.cardjudul:nth-child(2){ animation-delay: 0.4s; }
-
-
-h2 {
-  text-align: center;
-  font-size: 18.72px;
-}
-
- h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-
-    input, select {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-      background: rgba(255,255,255,0.05);
-      color: white;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    body.light input, body.light select { background: white; color: #333; border: 1px solid #ccc; }
-
-    .action-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 15px;
-      border-radius: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .btn-secondary:hover { background: var(--primary); color: #000; }
-
-    /* Tables Style */
-    .table-wrapper {
-      margin-top: 20px;
-      border-radius: 15px;
-      overflow-x: auto;
-      border: 1px solid var(--glass-border);
-      background: rgba(0,0,0,0.2);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 800px;
-    }
-
-    th { background: rgba(255,211,105,0.15); padding: 15px; text-align: left; font-size: 13px; color: var(--primary); }
-    td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 13px; }
-
-    .result-box {
-      background: rgba(255, 235, 153, 0.05);
-      padding: 20px;
-      border-radius: 15px;
-      margin: 20px 0;
-      border-left: 5px solid var(--primary);
-    }
-
-    .mode-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 50px;
-      font-weight: 700;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto 30px;
-    }
-
-
-/* Footer */
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sponsor { font-size: 14px; margin-bottom: 5px; }
-.sponsor strong { color: var(--primary); }
-
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--dark-bg); }
-    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mode {
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background-color: var(--dark-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
+.header { text-align: center; padding: 40px 20px 20px; }
+.header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
+.badge { background: var(--primary); color: #0b0f19; padding: 4px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; display: inline-block; margin-top: 8px; }
+
+.container { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+.card {
+  background: var(--card-bg);
+  padding: 26px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
+}
+
+.card h3 { margin-top: 0; font-size: 18px; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; }
+.card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+.card ul { margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+.card ul li { margin-bottom: 8px; }
+
+input, select {
+  width: 100%; padding: 14px 16px; margin-bottom: 14px; border-radius: 14px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;
+}
+input:focus, select:focus { border-color: var(--primary); }
+
+.flex-group { display: flex; gap: 10px; align-items: center; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.btn {
+  padding: 15px; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;
+}
+.btn-primary { background: var(--primary); color: #0b0f19; width: 100%; }
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-secondary { background: var(--btn-mapel); color: var(--text-main); border: 1px solid var(--btn-mapel-border); width: 100%; }
+.btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.btn-success { background: #10b981; color: white; width: 100%; }
+.btn-success:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); width: 100%; }
+.btn-danger:hover { transform: translateY(-2px); background: #ef4444; color: white; }
+
+/* REKAP TABLES STYLE */
+.table-wrapper {
+  margin-top: 15px;
+  border-radius: 16px;
+  overflow-x: auto;
+  border: 1px solid var(--btn-mapel-border);
+  background: var(--btn-mapel);
+}
+table { width: 100%; border-collapse: collapse; min-width: 100%; }
+th { background: rgba(255, 211, 105, 0.08); padding: 14px; text-align: left; font-size: 13px; color: var(--primary); font-weight: 700; border-bottom: 1px solid var(--card-border); }
+td { padding: 14px; border-bottom: 1px solid var(--card-border); font-size: 13.5px; color: var(--text-main); }
+tr:last-child td { border-bottom: none; }
+.td-rank { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--primary); }
+.td-skor { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
 <body class="dark">
 
 <div class="header">
+  <div class="container">
+    <h1>Star Tools</h1>
+    <div class="badge">Versi 1.7</div>
+  </div>
+</div>
+
 <div class="container">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
-
-
-<div class="cardjudul">
-<h1>Tujuan Pembuatan</h1>
-<p>Fitur ini dibuat untuk mempermudah pengguna dalam menggabungkan nilai utama dan nilai tambahan secara lebih cepat dan terstruktur.</p>
-</div>
-
-<div class="cardjudul">
-<h1>Tata Cara Penggunaan</h1>
-<ul>
-<li><p>Masukkan nama murid yang ingin digabungkan antara nilai utama dan nilai tambahan.</p></li>
-<li><p>Masukkan nilai utama dan nilai tambahan yang ingin diberikan kepada murid tersebut.</p></li>
-<li><p>Nama beserta nilai akan otomatis masuk ke dalam tabel, dan data nilai akan diurutkan secara otomatis dari tertinggi hingga terendah.</p></li>
-</ul>
-</div>
-
-  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
-
+  <!-- DETAIL INFO -->
+  <div class="card">
+    <h3>Tujuan Pembuatan</h3>
+    <p>Fitur ini dibuat untuk mempermudah pengguna dalam menggabungkan nilai utama dan nilai tambahan secara lebih cepat dan terstruktur.</p>
+  </div>
 
   <div class="card">
-    <h2>Rekapitulasi Total Nilai</h2>
-    <div class="result" style="margin-bottom: 20px;">
-      <label>Tambah Siswa Baru:</label>
-      <div style="display:flex; gap:10px;">
-        <input type="text" id="inputNamaSiswa" placeholder="Nama Lengkap">
-        <button class="action-btn" style="width:150px; margin:10px 0" onclick="tambahSiswa()">Tambah</button>
-      </div>
+    <h3>Tata Cara Penggunaan</h3>
+    <ul>
+      <li>Masukkan nama murid yang ingin digabungkan antara nilai utama dan nilai tambahan.</li>
+      <li>Masukkan nilai utama dan nilai tambahan yang ingin diberikan kepada murid tersebut.</li>
+      <li>Nama beserta nilai akan otomatis masuk ke dalam tabel, dan data nilai akan diurutkan secara otomatis dari tertinggi hingga terendah.</li>
+    </ul>
+  </div>
+
+  <!-- MAIN APP CARD -->
+  <div class="card">
+    <h3>Rekapitulasi Total Nilai</h3>
+    
+    <!-- Bagian Tambah Murid Baru -->
+    <label style="font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 4px;">Tambah Siswa Baru:</label>
+    <div class="flex-group" style="margin-bottom: 16px;">
+      <input type="text" id="inputNamaSiswa" placeholder="Nama Lengkap Siswa" style="margin-bottom: 0;">
+      <button class="btn btn-primary" style="width: 130px; margin-bottom: 0; padding: 14px;" onclick="tambahSiswa()">Tambah</button>
     </div>
 
-    <label>Pilih Siswa & Masukkan Nilai:</label>
-    <select id="dropdownMurid"><option value="">Pilih Siswa</option></select>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-      <input type="number" id="nilaiUtama" placeholder="Nilai Utama">
-      <input type="number" id="nilaiTambahan" placeholder="Nilai Tambahan">
+    <!-- Bagian Pengisian Nilai -->
+    <label style="font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 4px;">Pilih Siswa & Masukkan Nilai:</label>
+    <select id="dropdownMurid">
+      <option value="">Pilih Siswa</option>
+    </select>
+    
+    <div class="grid-2">
+      <input type="number" step="any" id="nilaiUtama" placeholder="Nilai Utama">
+      <input type="number" step="any" id="nilaiTambahan" placeholder="Nilai Tambahan">
     </div>
     
-    <button class="action-btn" onclick="tambahNilai()">Simpan & Urutkan</button>
+    <button class="btn btn-primary" onclick="tambahNilai()" style="margin-top: 5px;">Simpan & Urutkan Nilai</button>
     
+    <div style="height: 1px; background: var(--card-border); margin: 20px 0;"></div>
+
+    <!-- Hasil Tabel Evaluasi Ranking -->
+    <h3>Daftar Hasil Rekapitulasi</h3>
     <div class="table-wrapper">
       <table id="tableNilaiFull">
         <thead>
           <tr>
-            <th>Rank</th>
+            <th style="width: 70px;">Rank</th>
             <th>Nama Siswa</th>
-            <th>Total Skor</th>
+            <th style="text-align: right; width: 110px;">Total Skor</th>
           </tr>
         </thead>
-        <tbody id="tabelUrutNilai"></tbody>
+        <tbody id="tabelUrutNilai">
+          <!-- Diisi otomatis lewat JS -->
+        </tbody>
       </table>
     </div>
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
-      <button class="action-btn btn-secondary" onclick="resetNilai()">Reset Semua</button>
-      <button class="action-btn" style="background:#27ae60; color:white;" onclick="exportPDF()">Export PDF</button>
+    <div style="height: 1px; background: var(--card-border); margin: 25px 0 20px 0;"></div>
+    
+    <!-- Action Reset & Export -->
+    <div class="grid-2">
+      <button class="btn btn-secondary" style="margin-bottom: 0;" onclick="resetNilai()">Reset Semua</button>
+      <button class="btn btn-success" style="margin-bottom: 0;" onclick="exportPDF()">Export TXT</button>
     </div>
   </div>
 
-
-    <div class="menu">
-    <div class="card">
-    <h2>Kembali Pilih Fitur</h2>
-    <button onclick="logoutSekertaris()">Kembali</button>
-   </div>
-  </div>
-
-<div class="footer-wrapper">
-  <div class="sponsor">Created By <strong>Star Prosperous</strong></div>
+  <!-- NAVIGATION BACK -->
+<div class="card">
+  <button class="btn btn-secondary" onclick="logoutSekertaris()">Kembali Pilih Fitur</button>
+</div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<!-- FOOTER -->
+<div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
+</div>
+</div>
 
 <script>
-// UI Logic
-document.getElementById('modeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
+// Logic Management sinkronisasi UI Theme
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") {
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+  }
+  
+  // RESTORE DRAFT DATA DARI LOCALSTORAGE BIAR ANTI-REFRESH!
+  const localMurid = localStorage.getItem("total_murid_list");
+  const localNilai = localStorage.getItem("total_nilai_data");
+  
+  if (localMurid) {
+    muridList = JSON.parse(localMurid);
+    updateDropdown();
+  }
+  
+  if (localNilai) {
+    dataNilai = JSON.parse(localNilai);
+    renderUrutNilai();
+  }
 });
 
-function showCard(id){
-  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
-  const target = document.getElementById(id);
-  target.style.display='block';
-  target.scrollIntoView({ behavior: 'smooth' });
-}
+let muridList = []; 
+let dataNilai = [];  
 
-
-
-// --- LOGIKA TOTAL NILAI ---
-let muridList = []; let dataNilai = [];  
+// FUNGSI: Tambah List Murid Baru
 function tambahSiswa(){  
   const n = document.getElementById("inputNamaSiswa").value.trim();  
-  if(!n || muridList.includes(n)) return;  
-  muridList.push(n); updateDropdown();  
+  if(!n) return alert("Masukkan nama lengkap siswa!");
+  if(muridList.includes(n)) return alert("Nama siswa tersebut sudah terdaftar!");  
+  
+  muridList.push(n); 
+  
+  // Simpan list murid ke localStorage
+  localStorage.setItem("total_murid_list", JSON.stringify(muridList));
+  
+  updateDropdown();  
   document.getElementById("inputNamaSiswa").value = "";  
+  document.getElementById("dropdownMurid").value = n; // Otomatis pilih murid yg baru dibuat
 }
 
+// FUNGSI: Sinkronisasi List ke Elemen HTML Dropdown <select>[span_12](start_span)[span_12](end_span)
 function updateDropdown(){  
   const d = document.getElementById("dropdownMurid");  
   d.innerHTML = '<option value="">-- Pilih Siswa --</option>';  
-  muridList.forEach(n => { d.innerHTML += `<option value="${n}">${n}</option>`; });  
+  muridList.forEach(n => { 
+    d.innerHTML += `<option value="${n}">${n}</option>`; 
+  });  
 }
 
+// FUNGSI: Simpan Nilai Tambahan + Utama[span_13](start_span)[span_13](end_span)
 function tambahNilai(){  
   const n = document.getElementById("dropdownMurid").value;  
   const u = parseFloat(document.getElementById("nilaiUtama").value) || 0;  
   const t = parseFloat(document.getElementById("nilaiTambahan").value) || 0;  
+  
+  if(!n) return alert("Silakan pilih nama siswa dari dropdown terlebih dahulu!");
+  
   const tot = u + t;  
   const idx = dataNilai.findIndex(x => x.nama === n);  
-  if(idx >= 0) dataNilai[idx].total = tot; else dataNilai.push({nama:n, total:tot});  
+  
+  if(idx >= 0) {
+    dataNilai[idx].total = tot; 
+  } else {
+    dataNilai.push({nama: n, total: tot});  
+  }
+  
+  // Simpan data nilai rekap ke localStorage
+  localStorage.setItem("total_nilai_data", JSON.stringify(dataNilai));
+  
   renderUrutNilai();  
+  
+  // Reset kolom input nilai setelah disimpan biar bisa input anak lain
+  document.getElementById("nilaiUtama").value = "";
+  document.getElementById("nilaiTambahan").value = "";
+  document.getElementById("dropdownMurid").value = "";
 }
 
+// FUNGSI: Render Tampilan Tabel & Sorting Otomatis dari Tertinggi[span_14](start_span)[span_14](end_span)
 function renderUrutNilai(){  
   dataNilai.sort((a,b) => b.total - a.total);  
-  const b = document.getElementById("tabelUrutNilai"); b.innerHTML = "";  
-  dataNilai.forEach((d,i) => {  
-    b.innerHTML += `<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.total}</td></tr>`;  
+  const b = document.getElementById("tabelUrutNilai"); 
+  b.innerHTML = "";  
+  
+  if(dataNilai.length === 0) {
+    b.innerHTML = `<tr><td colspan="3" style="text-align: center; font-size: 13px; color: var(--text-muted); font-style: italic; padding: 20px 0;">Belum ada rekap data nilai siswa.</td></tr>`;
+    return;
+  }
+  
+  dataNilai.forEach((d, i) => {  
+    let badgeRank = `#${i+1}`;
+    if(i === 0) badgeRank = "🥇 #1";
+    if(i === 1) badgeRank = "🥈 #2";
+    if(i === 2) badgeRank = "🥉 #3";
+
+    b.innerHTML += `
+      <tr>
+        <td class="td-rank">${badgeRank}</td>
+        <td>${d.nama}</td>
+        <td class="td-skor" style="text-align: right;">${d.total}</td>
+      </tr>
+    `;  
   });  
 }
 
-function resetNilai(){ dataNilai=[]; muridList=[]; updateDropdown(); renderUrutNilai(); }
-
-function exportPDF(){  
-  let txt = "LAPORAN TOTAL NILAI SISWA\n========================\n\nRank\tNama\tTotal\n";  
-  dataNilai.forEach((d,i) => { txt += `${i+1}\t${d.nama}\t${d.total}\n`; });  
-  const blob = new Blob([txt], {type:"text/plain"});  
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Laporan_Nilai.txt"; a.click();  
+// FUNGSI: Reset Total Permanen[span_15](start_span)[span_15](end_span)
+function resetNilai(){ 
+  if(!confirm("Apakah Anda yakin ingin menghapus seluruh data siswa beserta total nilainya?")) return;
+  
+  dataNilai = []; 
+  muridList = []; 
+  
+  localStorage.removeItem("total_murid_list");
+  localStorage.removeItem("total_nilai_data");
+  
+  updateDropdown(); 
+  renderUrutNilai(); 
 }
 
+// FUNGSI: Export File Data Laporan[span_16](start_span)[span_16](end_span)
+function exportPDF(){  
+  if(dataNilai.length === 0) return alert("Tidak ada data laporan yang bisa diexport!");
+  
+  let txt = "LAPORAN TOTAL NILAI SISWA - STAR TOOLS\n========================================\n\nRank\tNama Murid\t\tTotal Skor\n";  
+  dataNilai.forEach((d, i) => { 
+    txt += `${i+1}\t${d.nama.padEnd(20, ' ')}\t${d.total}\n`; 
+  });  
+  
+  const blob = new Blob([txt], {type: "text/plain"});  
+  const a = document.createElement("a"); 
+  a.href = URL.createObjectURL(blob); 
+  a.download = "Laporan_Total_Nilai.txt"; 
+  a.click();  
+}
 
 function logoutSekertaris() {
-  localStorage.clear();
   window.location.href = "pendukung.html";
 }
 </script>

@@ -3,342 +3,264 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Star Tools - Rangking</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<title>Sistem Ranking - Star Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-    :root {
-      --primary: #ffd369;
-      --secondary: #2a5298;
-      --accent: #f3c969;
-      --dark-bg: #0f172a;
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --text-glow: 0 0 10px rgba(255, 211, 105, 0.5);
-    }
-
-    * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--dark-bg);
-      color: #e2e8f0;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body.light {
-      --dark-bg: #f8fafc;
-      --glass: rgba(0, 0, 0, 0.05);
-      --glass-border: rgba(0, 0, 0, 0.1);
-      color: #1e293b;
-    }
-
-    /* Cosmic BG Effect */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 0%, #1e3c72 0%, transparent 50%);
-      z-index: -1;
-      opacity: 0.5;
-    }
-
-.header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  animation: fadeDown 0.6s ease;
+/* TEMA MODERN NYAMBUNG DENGAN SEKRETARIS & BENDAHARA */
+:root {
+  --primary: #ffd369;
+  --dark-bg: #0b0f19;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --btn-mapel: #1f2937;
+  --btn-mapel-border: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-.header h1 {
-  font-size: 40px;
-  font-weight: 800;
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+body.light {
+  --dark-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --btn-mapel: #f1f5f9;
+  --btn-mapel-border: rgba(0, 0, 0, 0.04);
+  --shadow: rgba(15, 23, 42, 0.04);
 }
 
-.badge {
-  background: var(--primary);
-  color: #000;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  font-size: 10px;
-  display: inline-block;
-  margin-top: 10px;
-  box-shadow: 0 4px 15px rgba(255, 211, 105, 0.3);
-}
+* { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-    /* Menu Navigation */
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-
-    .menu button {
-      background: var(--glass);
-      color: white;
-      width: 100%;
-      border: 1px solid var(--glass-border);
-      padding: 20px 15px;
-      border-radius: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    body.light .menu button { color: #1e3c72; border-color: #ddd; }
-
-    .menu button:hover {
-      background: var(--primary);
-      color: #000;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(238, 195, 109, 0.3);
-    }
-
-    /* Card Styling */
-.card {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay: 0.2s; }
-.card:nth-child(2){ animation-delay: 0.4s; }
-
-.cardjudul {
-  background: var(--glass);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.cardjudul:nth-child(1){ animation-delay: 0.2s; }
-.cardjudul:nth-child(2){ animation-delay: 0.4s; }
-
-
-h2 {
-  text-align: center;
-  font-size: 18.72px;
-}
-
- h3 { color: var(--primary); margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-
-    input, select {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-      background: rgba(255,255,255,0.05);
-      color: white;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    body.light input, body.light select { background: white; color: #333; border: 1px solid #ccc; }
-
-    .action-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 15px;
-      border-radius: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .btn-secondary:hover { background: var(--primary); color: #000; }
-
-    /* Tables Style */
-    .table-wrapper {
-      margin-top: 20px;
-      border-radius: 15px;
-      overflow-x: auto;
-      border: 1px solid var(--glass-border);
-      background: rgba(0,0,0,0.2);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 800px;
-    }
-
-    th { background: rgba(255,211,105,0.15); padding: 15px; text-align: left; font-size: 13px; color: var(--primary); }
-    td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 13px; }
-
-    .result-box {
-      background: rgba(255, 235, 153, 0.05);
-      padding: 20px;
-      border-radius: 15px;
-      margin: 20px 0;
-      border-left: 5px solid var(--primary);
-    }
-
-    .mode-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 50px;
-      font-weight: 700;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto 30px;
-    }
-
-
-/* Footer */
-.footer-wrapper {
-  margin-top: auto;
-  padding: 50px 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sponsor { font-size: 14px; margin-bottom: 5px; }
-.sponsor strong { color: var(--primary); }
-
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--dark-bg); }
-    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mode {
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background-color: var(--dark-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
+.header { text-align: center; padding: 40px 20px 20px; }
+.header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
+.badge { background: var(--primary); color: #0b0f19; padding: 4px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; display: inline-block; margin-top: 8px; }
+
+.container { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+.card {
+  background: var(--card-bg);
+  padding: 26px;
+  border-radius: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-bottom: 24px;
+}
+
+.card h3 { margin-top: 0; font-size: 18px; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 20px; }
+.card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+.card ul { margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+.card ul li { margin-bottom: 8px; }
+
+input {
+  width: 100%; padding: 14px 16px; margin-bottom: 14px; border-radius: 14px;
+  border: 1px solid var(--btn-mapel-border); background: var(--btn-mapel);
+  color: var(--text-main); font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;
+}
+input:focus { border-color: var(--primary); }
+
+.btn {
+  width: 100%; padding: 15px; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;
+}
+.btn-primary { background: var(--primary); color: #0b0f19; }
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-secondary { background: var(--btn-mapel); color: var(--text-main); border: 1px solid var(--btn-mapel-border); }
+.btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.btn-danger:hover { transform: translateY(-2px); background: #ef4444; color: white; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* RANKING LIST DESIGN */
+.rank-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--btn-mapel);
+  border: 1px solid var(--btn-mapel-border);
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+.rank-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--primary);
+  margin-right: 12px;
+}
+.rank-name { font-weight: 500; flex-grow: 1; color: var(--text-main); }
+.rank-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text-main); background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 8px; }
+
+.report-container { margin-bottom: 15px; }
+.report-link {
+  color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+}
+.report-link:hover { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+
+.footer-wrapper { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: var(--card-bg); }
+.sponsor { font-size: 14px; margin-bottom: 6px; }
+.sponsor strong { color: var(--primary); }
 </style>
 </head>
 <body class="dark">
 
 <div class="header">
+  <div class="container">
+    <h1>Star Tools</h1>
+    <div class="badge">Versi 1.7</div>
+  </div>
+</div>
+
 <div class="container">
-  <h1>Star Tools</h1>
-  <div class="badge">Versi 1.7</div>
-</div>
-
-
-<div class="cardjudul">
-<h1>Tujuan Pembuatan</h1>
-<p>Fitur ini dibuat untuk mempermudah pengguna dalam mengurutkan peringkat siswa berdasarkan hasil nilai rata-rata secara lebih cepat dan terstruktur.</p>
-</div>
-
-<div class="cardjudul">
-<h1>Tata Cara Penggunaan</h1>
-<ul>
-<li><p>Masukkan nama siswa dan nilai rata-rata pada kolom yang tersedia.</p></li>
-<li><p>Data yang dimasukkan akan ditampilkan dalam tabel dan diurutkan secara otomatis dari nilai tertinggi.</p></li>
-<li><p>Nilai rata-rata dapat diperoleh dari fitur hitung nilai rata-rata.</p></li>
-</ul>
-</div>
-
-  <button id="modeToggle" class="mode-btn">🌓 Switch Theme</button>
-
+  <!-- DETAIL INFO -->
+  <div class="card">
+    <h3>Tujuan Pembuatan</h3>
+    <p>Fitur ini dibuat untuk mempermudah pengguna dalam mengurutkan peringkat siswa berdasarkan hasil nilai rata-rata secara lebih cepat, terstruktur, dan otomatis.</p>
+  </div>
 
   <div class="card">
-    <h2>Sistem Ranking Kelas</h2>
+    <h3>Tata Cara Penggunaan</h3>
+    <ul>
+      <li>Masukkan nama siswa dan nilai rata-rata pada kolom yang tersedia.</li>
+      <li>Data yang dimasukkan akan ditampilkan dalam daftar peringkat secara otomatis dari nilai tertinggi.</li>
+      <li>Nilai rata-rata dapat diperoleh dari fitur hitung nilai rata-rata.</li>
+    </ul>
+  </div>
+
+  <!-- INPUT AREA -->
+  <div class="card">
+    <h3>Sistem Ranking Kelas</h3>
     <input type="text" id="namaSiswaRank" placeholder="Nama Siswa">
-    <input type="number" id="nilaiSiswaRank" placeholder="Nilai Rata-Rata">
-    <button class="action-btn" onclick="tambahRanking()">Update Ranking</button>
-    <button class="action-btn btn-secondary" onclick="resetRanking()">Bersihkan Data</button>
-    <div class="result" id="daftarRanking"></div>
+    <input type="number" step="any" id="nilaiSiswaRank" placeholder="Nilai Rata-Rata">
+    <button class="btn btn-primary" onclick="tambahRanking()">Update Ranking</button>
+    
+    <div style="height: 1px; background: var(--card-border); margin: 20px 0;"></div>
+    
+    <h3>Daftar Peringkat Kelas</h3>
+    <div id="daftarRanking" style="margin-top: 15px; max-height: 400px; overflow-y: auto; padding-right: 4px;">
+      <!-- Data Ranking Masuk Sini -->
+    </div>
+    
+    <div style="height: 1px; background: var(--card-border); margin: 20px 0;"></div>
+    
+    <button class="btn btn-danger" onclick="resetRanking()">Bersihkan Semua Data</button>
   </div>
 
-
-    <div class="menu">
-    <div class="card">
-    <h2>Kembali Pilih Fitur</h2>
-    <button onclick="logoutSekertaris()">Kembali</button>
-   </div>
-  </div>
-
-<div class="footer-wrapper">
-  <div class="sponsor">Created By <strong>Star Prosperous</strong></div>
+  <!-- NAVIGATION -->
+<div class="card">
+  <button class="btn btn-secondary" onclick="logoutSekertaris()">Kembali Ke Beranda</button>
+</div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<!-- FOOTER -->
+<div class="footer-wrapper">
+  <div class="report-container">
+    <a href="mailto:starprosperous13@gmail.com?subject=Laporkan Bug Pada Star Tools" class="report-link">
+      <svg style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Laporkan Masalah Sistem (Bug)
+    </a>
+  </div>
+  <div class="sponsor">Developed By <strong>Star Prosperous</strong></div>
+  <p>© 2026 Star Tools. All rights reserved.</p>
+</div>
 
 <script>
-// UI Logic
-document.getElementById('modeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
+// UI Theme State (Sinkron otomatis dari localstorage bawaan apps mu)
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") {
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+  }
+  
+  // Ambil data ranking yang tersimpan dari LocalStorage saat halaman dimuat
+  const localData = localStorage.getItem("star_tools_ranking");
+  if (localData) {
+    dataSiswa = JSON.parse(localData);
+    tampilRanking();
+  }
 });
 
-function showCard(id){
-  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
-  const target = document.getElementById(id);
-  target.style.display='block';
-  target.scrollIntoView({ behavior: 'smooth' });
-}
-
-
-// --- LOGIKA RANKING ---
 let dataSiswa = [];  
-function tambahRanking(){  
-  let nama = document.getElementById("namaSiswaRank").value.trim();  
-  let nilai = parseFloat(document.getElementById("nilaiSiswaRank").value) || 0;  
-  if(!nama) return alert("Masukkan nama siswa!");  
-  dataSiswa.push({nama, nilai});  
-  dataSiswa.sort((a,b) => b.nilai - a.nilai);  
+
+function tambahRanking() {  
+  let namaInput = document.getElementById("namaSiswaRank");
+  let nilaiInput = document.getElementById("nilaiSiswaRank");
+  
+  let nama = namaInput.value.trim();  
+  let nilai = parseFloat(nilaiInput.value);  
+  
+  if (!nama) return alert("Masukkan nama siswa!");  
+  if (isNaN(nilai)) return alert("Masukkan nilai rata-rata yang valid!");  
+  
+  // Tambah data ke dalam array
+  dataSiswa.push({ nama, nilai });  
+  
+  // Sort otomatis dari nilai yang paling tinggi ke rendah
+  dataSiswa.sort((a, b) => b.nilai - a.nilai);  
+  
+  // Simpan data terbaru ke dalam LocalStorage biar anti-refresh
+  localStorage.setItem("star_tools_ranking", JSON.stringify(dataSiswa));
+  
+  // Render ulang list tampilannya
   tampilRanking();  
+  
+  // Reset kolom inputan setelah berhasil input
+  namaInput.value = "";
+  nilaiInput.value = "";
+  namaInput.focus();
 }
 
-function tampilRanking(){  
-  document.getElementById("daftarRanking").innerHTML = dataSiswa.map((d,i) => 
-    `<div style="padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.1)">
-      <span style="color:var(--primary); font-weight:700;">#${i+1}</span> ${d.nama} 
-      <span style="float:right">${d.nilai}</span>
-    </div>`).join("");  
+function tampilRanking() {  
+  const container = document.getElementById("daftarRanking");
+  
+  if (dataSiswa.length === 0) {
+    container.innerHTML = `<p style="text-align: center; font-size: 13px; color: var(--text-muted); font-style: italic; padding: 20px 0;">Belum ada data ranking siswa.</p>`;
+    return;
+  }
+  
+  container.innerHTML = dataSiswa.map((d, i) => {
+    // Tambah visual estetik medali emas, perak, perunggu untuk top 3
+    let badgeDisplay = `#${i + 1}`;
+    if (i === 0) badgeDisplay = "🥇 #1";
+    if (i === 1) badgeDisplay = "🥈 #2";
+    if (i === 2) badgeDisplay = "🥉 #3";
+    
+    return `
+      <div class="rank-item">
+        <span class="rank-badge">${badgeDisplay}</span>
+        <span class="rank-name">${d.nama}</span>
+        <span class="rank-value">${d.nilai}</span>
+      </div>
+    `;
+  }).join("");  
 }
 
-function resetRanking(){ dataSiswa=[]; document.getElementById("daftarRanking").innerHTML=''; }
-
+function resetRanking() { 
+  if (!confirm("Apakah Anda yakin ingin menghapus seluruh data ranking kelas?")) return;
+  dataSiswa = []; 
+  localStorage.removeItem("star_tools_ranking"); 
+  tampilRanking(); 
+}
 
 function logoutSekertaris() {
-  localStorage.clear();
+  // Hanya menghapus data login/fitur tertentu, data ranking dibiarkan aman tersimpan di localStorage
   window.location.href = "pendukung.html";
 }
 </script>
