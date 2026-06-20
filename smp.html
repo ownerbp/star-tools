@@ -156,6 +156,7 @@ input:focus, select:focus { border-color: var(--primary); }
       <button class="btn btn-secondary" onclick="showCard('aljabar')">Kalkulator Aljabar Sederhana</button>
       <h3 class="sub-title">Semester 2</h3>
       <button class="btn btn-secondary" onclick="showCard('persentase7')">Kalkulator Persentase</button>
+      <button class="btn btn-secondary" onclick="showCard('perbandingan7')">Kalkulator Perbandingan</button>
       <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
       <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
     </div>
@@ -206,6 +207,17 @@ input:focus, select:focus { border-color: var(--primary); }
 <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas7')">Kembali</button>
 </div>
 
+<!-- Perbandingan -->
+<div class="card" id="perbandingan7">
+<h3>Perbandingan</h3>
+<input type="number" id="a7" placeholder="A">
+<input type="number" id="b7" placeholder="B">
+<button class="btn btn-primary" onclick="hitungPerbandingan7()">Hitung</button>
+<button class="btn btn-primary" onclick="copyperbandingan2()">Salin Hasil</button>
+<div class="result" id="hasilBanding7"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas7')">Kembali</button>
+</div>
+
 
   <div id="kelas8" class="mode-menu" style="display:none">
     <div class="card">
@@ -214,6 +226,7 @@ input:focus, select:focus { border-color: var(--primary); }
       <button class="btn btn-secondary" onclick="showCard('bangunRuangLengkung')">Kalkulator Bangun Lengkung</button>
       <h3 class="sub-title">Semester 2</h3>
       <button class="btn btn-secondary" onclick="showCard('phytagoras')">Kalkulator Rumus Phytagoras</button>
+      <button class="btn btn-secondary" onclick="showCard('gradien8')">Kalkulator Gradien Garis</button>
       <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
       <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
     </div>
@@ -273,6 +286,19 @@ input:focus, select:focus { border-color: var(--primary); }
     <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas8')">Kembali</button>
   </div>
 
+<!-- Gradien -->
+<div class="card" id="gradien8">
+<h3>Gradien</h3>
+<input type="number" id="x1_8" placeholder="x1">
+<input type="number" id="y1_8" placeholder="y1">
+<input type="number" id="x2_8" placeholder="x2">
+<input type="number" id="y2_8" placeholder="y2">
+<button class="btn btn-primary" onclick="hitungGradien()">Hitung</button>
+<button class="btn btn-primary" onclick="copygradien4()">Salin Hasil</button>
+<div class="result" id="hasilGradien"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas8')">Kembali</button>
+</div>
+
 
   <div id="kelas9" class="mode-menu" style="display:none">
     <div class="card">
@@ -281,6 +307,7 @@ input:focus, select:focus { border-color: var(--primary); }
       <button class="btn btn-secondary" onclick="showCard('kuadrat')">Kalkulator Persamaan Kuadrat</button>
       <h3 class="sub-title">Semester 2</h3>
       <button class="btn btn-secondary" onclick="showCard('statistika9')">Kalkulator Nilai Rata-Rata</button>
+      <button class="btn btn-secondary" onclick="showCatd('fungsi9')">Kalkulator Nilai Fungsi</button>
       <div style="height: 1px; background: var(--card-border); margin: 20px 0 15px 0;"></div>
       <button class="btn btn-danger" style="margin-bottom:0;" onclick="backToMode()">Kembali Pilih Kelas</button>
     </div>
@@ -329,6 +356,16 @@ input:focus, select:focus { border-color: var(--primary); }
 <input type="text" id="data9" placeholder="Contoh: 1,2,3,4">
 <button class="btn btn-primary" onclick="hitungRata()">Hitung</button>
 <div class="result" id="hasilRata" style="display:none;"></div>
+<button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas9')">Kembali</button>
+</div>
+
+<!-- Fungsi -->
+<div class="card" id="fungsi9">
+<h3>Fungsi f(x)</h3>
+<input type="number" id="x9" placeholder="Nilai x">
+<button class="btn btn-primary" onclick="hitungFungsi()">Hitung</button>
+<button class="btn btn-primary" onclick="copyfungsi7()">Salin Hasil</button>
+<div class="result" id="hasilFungsi"></div>
 <button class="btn btn-danger" style="margin-top: 15px; margin-bottom:0;" onclick="backToMenuKelas('kelas9')">Kembali</button>
 </div>
 
